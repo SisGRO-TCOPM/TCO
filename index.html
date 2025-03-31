@@ -2536,8 +2536,11 @@ let Autor01doFatoGlobal = nomeAutor
     y += 6;
     verificapagina()
     
-   doc.text(`   CONDIÇÕES FISICAS: ${localtrabalhoAutor}`, 10, y);
-   doc.line(10, y+1, 200, y+1);
+  // doc.text(`   CONDIÇÕES FISICAS: ${localtrabalhoAutor}`, 10, y);
+   
+  const textoLimitadoAutor = `CONDIÇÕES FISICAS: ${localtrabalhoAutor.slice(0, 67)}`;
+doc.text(textoLimitadoAutor, 10, y);
+  doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina()
    //doc.text(`   RELATO DO AUTOR DO FATO: ${relatoAutor}`, 20, y);
@@ -2678,6 +2681,17 @@ const naturalidadeufVitima = document.getElementsByName("naturalidadeuf_vitima[]
    doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina2()
+
+   // doc.text(`   CONDIÇÕES FISICAS: ${localtrabalhoVitima}`, 10, y);
+   
+   const textoLimitadoVitima = `CONDIÇÕES FISICAS: ${localtrabalhoVitima.slice(0, 67)}`;
+doc.text(textoLimitadoVitima, 10, y);
+   
+   doc.line(10, y+1, 200, y+1);
+    y += 6;
+    verificapagina2()
+   
+
    //doc.text(`   RELATO DO AUTOR DO FATO: ${relatoAutor}`, 20, y);
     y += 15;
 
@@ -2813,7 +2827,11 @@ const naturalidadeufTestemunha = document.getElementsByName("naturalidadeuf_test
     y += 6;
     verificapagina3()
     
-   doc.text(`   LOCAL DE TRABALHO: ${profissaoTestemunha}`, 10, y);
+   //doc.text(`   CONDIÇÕES FISICAS: ${localtrabalhoTestemunha}`, 10, y);
+   
+   const textoLimitado = `CONDIÇÕES FISICAS: ${localtrabalhoTestemunha.slice(0, 67)}`;
+doc.text(textoLimitado, 10, y);
+   
    doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina3()
