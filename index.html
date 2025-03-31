@@ -1955,6 +1955,7 @@ document.getElementById("paginaAnexos").checked = true;
     <label><input type="checkbox" id="paginaVitima"> Não gerar Cadastro de Vítima/Testemunha</label><br>
     <label><input type="checkbox" id="paginaHistorico"> Não gerar Histórico</label><br>
     <label><input type="checkbox" id="paginaConclusao"> Não gerar Conclusão Policial</label><br>>-->
+    <label><input type="checkbox" id="PaginaçãoAutomatica"> Paginação Autormatica</label><br>
     <label><input type="checkbox" id="paginaAnexos"> Considerar Termo Anexos</label><br>
     <label><input type="checkbox" id="Termo_Apreensão_de_Materias"> Considerar termo de Material Apreendido</label><br>
 
@@ -2303,14 +2304,27 @@ let nomeAutor = document.querySelector('input[name="nome_autor[]"]').value;
 doc.text("Autor do Fato: " +nomeAutor, 20, 80, { maxWidth: 170, align: 'justify'});
 
 //-------------------------------------------------
- 
+
+
+
+
+
+
+
+
+
 
 function assinaturaefolhas(){
+    const checkbox = document.getElementById('PaginaçãoAutomatica');
+
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
  doc.line(185, 10, 200, 10);
  doc.text("Folhas", 187, 13, { maxWidth: 170, align: 'justify'});
- doc.text("Nº___", 187, 16, { maxWidth: 170, align: 'justify'});
+ 
+ if (checkbox.checked){doc.text(`Nº ${pageCount}`, 187, 16, { maxWidth: 170, align: 'justify'});}else{
+ doc.text("Nº___", 187, 16, { maxWidth: 170, align: 'justify'});}
+
  doc.text("______", 187, 23, { maxWidth: 170, align: 'justify'});
  doc.line(185, 25, 200, 25);
 
@@ -3260,28 +3274,6 @@ y += 7
 doc.line(20, y-3, 170, y-3);
 y += 7 
 
-const omitirMaterialApreendido = document.getElementById("paginaAnexos").checked;
-if (!omitirMaterialApreendido) {
-                // nao gera a pagina anexo
-
-            } else {
-                
-//aqui começa a pagina anexo
-//doc.addPage(); // Cria uma nova página
-pageCount++; // Incrementa contador de páginas
-assinaturaefolhas()
-adicionarCabecalho()
-adicionarRodape()
-y += 7 
-//doc.text("Referência: Termo Circunstanciado de Ocorrência de nº ___/UPM/ANO", 30, y , { maxWidth: 175, align: 'justify'});
-
-
-window.onload = function() {
-    gerarPDF23(); // Função que você deseja executar automaticamente
-};
-               
-
-            }
 
 
 document.getElementsByName("nome_autor[]").forEach((input, index) => {
@@ -3811,6 +3803,36 @@ doc.text(`FILIAÇÃO: ${filiacaoVitimaExame}`, 103, 248,{ align: "center" });
 }
 });
 //// fim do termo de exame pericia
+
+
+const omitirMaterialApreendido = document.getElementById("paginaAnexos").checked;
+if (!omitirMaterialApreendido) {
+                // nao gera a pagina anexo
+
+            } else {
+                
+//aqui começa a pagina anexo
+//doc.addPage(); // Cria uma nova página
+pageCount++; // Incrementa contador de páginas
+//assinaturaefolhas()
+adicionarCabecalho()
+adicionarRodape()
+y += 7 
+//doc.text("Referência: Termo Circunstanciado de Ocorrência de nº ___/UPM/ANO", 30, y , { maxWidth: 175, align: 'justify'});
+
+
+//window.onload = function() {
+  //  gerarPDF23(); // Função que você deseja executar automaticamente
+//};
+               
+
+            }
+
+
+
+
+
+
 
 // termo de encerramento e remessa
 let nomesAutores = [];
