@@ -2217,7 +2217,7 @@ inputs.forEach(input => {
             doc.setFontSize(10);
             doc.text("ESTADO DE MATO GROSSO", 103, 30, { align: "center" });
             doc.text("POLÍCIA MILITAR", 103, 35, { align: "center" });
-            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/CR07" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
+            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
             
                 doc.line(10, 38, 200, 38);
             }
@@ -2237,7 +2237,7 @@ inputs.forEach(input => {
             if (quartel === "1ª CIPM NOVA OLIMPIA") {
             doc.text("QUARTEL DA 1ª COMPANHIA DE POLICIA MILITAR (1ª CIAPM)", 105, 285, { align: "center" });
             doc.text("CEP 78.370-000, RUA PARÁ, Nº1062 - W, CENTRO, NOVA OLIMPIA - MT", 105, 288, { align: "center" });
-            doc.text("CONTATO/FONE: (65) 3331-1190 OU (65) 9 9955-5192 | E-mail: 1CIANOVAOLIMPIA@pm.mt.gov.br", 105, 291, { align: "center" });
+            doc.text("CONTATO/FONE: (65) 3331-1190 OU (65) 9 98170-0443 | E-mail: 1CIANOVAOLIMPIA@pm.mt.gov.br", 105, 291, { align: "center" });
             }
             if (quartel === "12ª CIPM BARRA DO BUGRES") {
             doc.text("12ª COMPANHIA INDEPENDENTE DE POLICIA MILITAR", 105, 285, { align: "center" });
@@ -2375,8 +2375,8 @@ doc.text("PONTO DE REFERRÊNCIA: ", 20, 110, { maxWidth: 170, align: 'justify' }
 doc.setFont("helvetica", "normal");
 //doc.text(" " + naturezaa, 20 + doc.getTextWidth("NATUREZA DA OCORRÊNCIA: "), 70, { maxWidth: 870, align: 'justify' });
 doc.text(" " + artigo + " " + lei, 20 + doc.getTextWidth("TIPIFICAÇÃO LEGAL: "), 85, { maxWidth: 170, align: 'justify' });
-doc.text(" " + dataFormatada, 10 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
-doc.text(" " + dataFormatada, 130 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}` , 10 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}`, 130 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
 doc.text(" " + hora_fato, 20 + doc.getTextWidth("HORA DO FATO: "), 95, { maxWidth: 170, align: 'justify' });
 doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), 100, { length:24, maxWidth: 170, align: 'justify' });
 doc.text(" " + cep, 130 + doc.getTextWidth("CEP: "), 105, { length:24, maxWidth: 170, align: 'justify' });
