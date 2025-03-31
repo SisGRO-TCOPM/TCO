@@ -2930,102 +2930,6 @@ doc.text(`  CPF: ${cpfVVitima}`, 100, y, { align: "center" });
 y += 10;
 
            
-doc.addPage(); // Cria uma nova página
-pageCount++; // Incrementa contador de páginas
-adicionarCabecalho()
-adicionarRodape()
-y = 80 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(12);
-doc.text(`TERMO DE MANIFESTAÇÃO DA VITIMA`, 100, y, { align: "center" });
-doc.setFont("helvetica", "normal");
-doc.setFontSize(12);
-
-y += 20
-
-
-
-
-//if (nomeVitimaw) {
-    //console.log("A variável é verdadeira e tem valor!");
-    if (typeof nomeVVitima === "undefined") {
-
-} else {doc.text("Eu, " + nomeVVitima +", por este instrumento, manifesto o meu interesse:", 20, y, { maxWidth: 170, align: 'justify'});}
-//} else {
-//}
-y += 10
-
-doc.line(20, y-3, 180, y-3);
-
-doc.setFontSize(10)
-doc.line(48, y-3, 48, y+57);
-doc.text("Em exercer o direito de representação ou queixa contra o autor do fato. (fica cientificada que em caso de queixa-crime, a vítima deverá constituir advogado)", 50, y+6, { maxWidth: 120, align: 'justify'});
-doc.line(20, y-3, 20, y+57);
-y += 30
-doc.line(20, y-3, 180, y-3);
-doc.text("Em decidir posteriormente, estando ciente, para os fins previstos no art. 103 do Código Penal e art. 38 Código de Processo Penal que devo exercer o direito de representação ou de queixa, no prazo de 06 (seis) meses, a contar desta data, sendo certo que meu silêncio, acarretará a extinção de punibilidade, na forma do art. 107, inc. IV, do Código Penal.", 50, y+2, { maxWidth: 120, align: 'justify'});
-doc.line(180, y-33, 180, y+27);
-y += 30
-doc.line(20, y-3, 180, y-3);
-y += 10
-doc.setFont("helvetica", "bold");
-doc.text("Notifico Vossa Senhoria para comparecer no Fórum da Comarca de Barra do Bugres, sito a avenida deputado Hitler Sansão nº1129 centro na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo Whatsapp (65) 99688-0622 ou pelo QR Code:", 20, y, { maxWidth: 160, align: 'justify'});
-
-y += 25
-
-
-// Criar o QR Code
-let qrv = new QRious({
-                value: url,
-                size: 80
-            });
-
-            // Adicionar texto ao PDF
-            doc.setFontSize(16);
-            //doc.text("Acesse o link pelo QR Code abaixo:", 20, 20);
-
-            // Adicionar QR Code ao PDF
-            doc.addImage(qrv.toDataURL(), 'PNG', 155, y-16, 40, 40);
-
-          
-            doc.setFontSize(10);
- 
-           
-      
-///fim da função qr code
-
-//assinatura da vitima
-doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
-doc.text(`   ${nomeVVitima}`, 100, y, { align: "center" });
-y += 5;
-doc.text(`  CPF: ${cpfVVitima}`, 100, y, { align: "center" });
-
-
-y += 10
-doc.text("POLICIAL MILITAR", 30, y , { maxWidth: 175, align: 'justify'});
-y += 10
-
-doc.line(20, y-3, 180, y-3);
-doc.text(posto_grad + " - " + nomeCondutor + "- RGPM: " + rgPM, 30, y+2 , { maxWidth: 175, align: 'justify'});
-y += 7
-doc.line(20, y-3, 180, y-3);
-//doc.text("SD PMMT - DOUGLAS BEZERRA DE OLIVEIRA - RGPM: 887.192", 30, y+2 , { maxWidth: 175, align: 'justify'});
-//doc.text(posto_grad_componente2 + " - " + nome_completo_componente2 + "- RGPM: " + rg_componente2, 30, y+2 , { maxWidth: 175, align: 'justify'});
-y += 7
-doc.line(20, y-3, 180, y-3);
-//doc.text(posto_grad_componente3 + " - " + nome_completo_componente3 + "- RGPM: " + rg_componente3, 30, y+2 , { maxWidth: 175, align: 'justify'});
-y += 7    
-doc.line(20, y-3, 180, y-3);
-//doc.text(posto_grad_componente4 + " - " + nome_completo_componente4 + "- RGPM: " + rg_componente4, 30, y+2 , { maxWidth: 175, align: 'justify'});
-y += 7  
-doc.line(20, y-3, 180, y-3);
-y += 7  
-
-
-doc.setFontSize(12)
-// fim do manifestação da vitima
-
-
 
 ///-----------------------------------------------------------------------------------------------------------------
 
@@ -3417,6 +3321,113 @@ y += 40
 
 });
 
+//manifestação de vitima novo ordem
+
+document.getElementsByName("nome_vitima[]").forEach((input, index) => {
+                const nomeVVvitima = input.value;
+            const relatoVvitimacorreto = document.getElementsByName("relato_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+const cpfVVvitima = document.getElementsByName("cpf_passaporte_vitima[]")[index]?.value || "N/A"; // Se não houver nome social,
+
+doc.addPage(); // Cria uma nova página
+pageCount++; // Incrementa contador de páginas
+adicionarCabecalho()
+adicionarRodape()
+y = 80 
+doc.setFont("helvetica", "bold");
+doc.setFontSize(12);
+doc.text(`TERMO DE MANIFESTAÇÃO DA VITIMA`, 100, y, { align: "center" });
+doc.setFont("helvetica", "normal");
+doc.setFontSize(12);
+
+y += 20
+
+
+
+
+//if (nomeVitimaw) {
+    //console.log("A variável é verdadeira e tem valor!");
+    if (typeof nomeVVvitima === "undefined") {
+
+} else {doc.text("Eu, " + nomeVVvitima +", por este instrumento, manifesto o meu interesse:", 20, y, { maxWidth: 170, align: 'justify'});}
+//} else {
+//}
+y += 10
+
+doc.line(20, y-3, 180, y-3);
+
+doc.setFontSize(10)
+doc.line(48, y-3, 48, y+57);
+doc.text("Em exercer o direito de representação ou queixa contra o autor do fato. (fica cientificada que em caso de queixa-crime, a vítima deverá constituir advogado)", 50, y+6, { maxWidth: 120, align: 'justify'});
+doc.line(20, y-3, 20, y+57);
+y += 30
+doc.line(20, y-3, 180, y-3);
+doc.text("Em decidir posteriormente, estando ciente, para os fins previstos no art. 103 do Código Penal e art. 38 Código de Processo Penal que devo exercer o direito de representação ou de queixa, no prazo de 06 (seis) meses, a contar desta data, sendo certo que meu silêncio, acarretará a extinção de punibilidade, na forma do art. 107, inc. IV, do Código Penal.", 50, y+2, { maxWidth: 120, align: 'justify'});
+doc.line(180, y-33, 180, y+27);
+y += 30
+doc.line(20, y-3, 180, y-3);
+y += 10
+doc.setFont("helvetica", "bold");
+doc.text("Notifico Vossa Senhoria para comparecer no Fórum da Comarca de Barra do Bugres, sito a avenida deputado Hitler Sansão nº1129 centro na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo Whatsapp (65) 99688-0622 ou pelo QR Code:", 20, y, { maxWidth: 160, align: 'justify'});
+
+y += 25
+
+
+// Criar o QR Code
+let qrv = new QRious({
+                value: url,
+                size: 80
+            });
+
+            // Adicionar texto ao PDF
+            doc.setFontSize(16);
+            //doc.text("Acesse o link pelo QR Code abaixo:", 20, 20);
+
+            // Adicionar QR Code ao PDF
+            doc.addImage(qrv.toDataURL(), 'PNG', 155, y-16, 40, 40);
+
+          
+            doc.setFontSize(10);
+ 
+           
+      
+///fim da função qr code
+
+//assinatura da vitima
+doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
+doc.text(`   ${nomeVVvitima}`, 100, y, { align: "center" });
+y += 5;
+doc.text(`  CPF: ${cpfVVvitima}`, 100, y, { align: "center" });
+
+
+y += 10
+doc.text("POLICIAL MILITAR", 30, y , { maxWidth: 175, align: 'justify'});
+y += 10
+
+doc.line(20, y-3, 180, y-3);
+doc.text(posto_grad + " - " + nomeCondutor + "- RGPM: " + rgPM, 30, y+2 , { maxWidth: 175, align: 'justify'});
+y += 7
+doc.line(20, y-3, 180, y-3);
+//doc.text("SD PMMT - DOUGLAS BEZERRA DE OLIVEIRA - RGPM: 887.192", 30, y+2 , { maxWidth: 175, align: 'justify'});
+//doc.text(posto_grad_componente2 + " - " + nome_completo_componente2 + "- RGPM: " + rg_componente2, 30, y+2 , { maxWidth: 175, align: 'justify'});
+y += 7
+doc.line(20, y-3, 180, y-3);
+//doc.text(posto_grad_componente3 + " - " + nome_completo_componente3 + "- RGPM: " + rg_componente3, 30, y+2 , { maxWidth: 175, align: 'justify'});
+y += 7    
+doc.line(20, y-3, 180, y-3);
+//doc.text(posto_grad_componente4 + " - " + nome_completo_componente4 + "- RGPM: " + rg_componente4, 30, y+2 , { maxWidth: 175, align: 'justify'});
+y += 7  
+doc.line(20, y-3, 180, y-3);
+y += 7  
+
+
+doc.setFontSize(12)
+
+
+
+
+
+});
+// fim de manifestação da vitima ordem 
 
 document.getElementsByName("nome_autor[]").forEach((input, index) => {
                 const nomeAutorDroga = input.value;
