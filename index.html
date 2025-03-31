@@ -1887,7 +1887,22 @@ document.getElementById("Termo_Apreensão_de_Materias").checked = true;
             
                 doc.line(10, 38, 200, 38);
 
+                //assinaturaefolhas()
 
+                doc.setFont("helvetica", "normal");
+ doc.line(185, 10, 200, 10);
+ doc.text("Folhas", 187, 13, { maxWidth: 170, align: 'justify'});
+ doc.text("Nº___", 187, 16, { maxWidth: 170, align: 'justify'});
+ doc.text("______", 187, 23, { maxWidth: 170, align: 'justify'});
+ doc.line(185, 25, 200, 25);
+
+
+ doc.line(185, 10, 185, 25);
+ doc.line(200, 10, 200, 25);
+
+
+
+                //////
 
             doc.setFontSize(12);
 doc.setFont("helvetica", "bold");
@@ -2288,10 +2303,30 @@ let nomeAutor = document.querySelector('input[name="nome_autor[]"]').value;
 doc.text("Autor do Fato: " +nomeAutor, 20, 80, { maxWidth: 170, align: 'justify'});
 
 //-------------------------------------------------
- // inicio da segunda pagina
+ 
+
+function assinaturaefolhas(){
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+ doc.line(185, 10, 200, 10);
+ doc.text("Folhas", 187, 13, { maxWidth: 170, align: 'justify'});
+ doc.text("Nº___", 187, 16, { maxWidth: 170, align: 'justify'});
+ doc.text("______", 187, 23, { maxWidth: 170, align: 'justify'});
+ doc.line(185, 25, 200, 25);
+
+
+ doc.line(185, 10, 185, 25);
+ doc.line(200, 10, 200, 25);
+
+}
+
+
+// inicio da segunda pagina
  doc.addPage();
  pageCount++; // Incrementa contador de páginas   
- adicionarCabecalho()
+ assinaturaefolhas()
+ doc.setFont("helvetica", "bold");
+ adicionarCabecalho();
  adicionarRodape()
             doc.setFontSize(14);
 doc.text("A- DADOS GERAIS:", 30, 60, { maxWidth: 170, align: 'justify' });
@@ -2403,7 +2438,7 @@ let Autor01doFatoGlobal = nomeAutor
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
-            
+            assinaturaefolhas()
     }
         }
     
@@ -2416,7 +2451,7 @@ let Autor01doFatoGlobal = nomeAutor
             y = 60; // Reinicia a posição no topo da nova página
            // doc.setFontSize(10);
            pageCount++; // Incrementa contador de páginas
-
+           assinaturaefolhas()
 
 
 
@@ -2522,6 +2557,7 @@ function verificapagina2() {
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 
@@ -2659,6 +2695,7 @@ const naturalidadeufVitima = document.getElementsByName("naturalidadeuf_vitima[]
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 
@@ -2796,6 +2833,7 @@ const naturalidadeufTestemunha = document.getElementsByName("naturalidadeuf_test
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 verificapagina7()
@@ -2877,6 +2915,7 @@ verificapagina7()
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 verificapagina4()
@@ -2904,6 +2943,7 @@ const numeroDeLinhasmultiplcado = linhas.length * 6;
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
 
 
@@ -2944,6 +2984,7 @@ y += 10;
 
 doc.addPage(); // Cria uma nova página
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 
 adicionarCabecalho()
 adicionarRodape()
@@ -2959,6 +3000,7 @@ function verificapagina5() {
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 verificapagina5()
@@ -3028,6 +3070,7 @@ function verificapagina6() {
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
         }
 verificapagina6()
@@ -3055,6 +3098,7 @@ const numeroDeLinhasmultiplcado3 = linhas3.length * 6;
             doc.setFontSize(10);
             y = 60; // Reinicia a posição no topo da nova página
             pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
     }
 
 
@@ -3096,6 +3140,7 @@ doc.setFont("helvetica", "normal");
             const artigoo = document.getElementById("artigo").value
            // const condicoesFisicas = document.getElementById("local_trabalho_autor").value
            pageCount++; // Incrementa contador de páginas
+           assinaturaefolhas()
            
 y = 60    
 
@@ -3206,7 +3251,7 @@ if (!omitirMaterialApreendido) {
 //aqui começa a pagina anexo
 //doc.addPage(); // Cria uma nova página
 pageCount++; // Incrementa contador de páginas
-
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y += 7 
@@ -3232,6 +3277,7 @@ const cpfAAAutor = document.getElementsByName("cpf_passaporte_autor[]")[index]?.
 //aqui começa a pagina DO TERMO DE COMPROMISSO
 doc.addPage(); // Cria uma nova página
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y = 80 
@@ -3330,6 +3376,7 @@ const cpfVVvitima = document.getElementsByName("cpf_passaporte_vitima[]")[index]
 
 doc.addPage(); // Cria uma nova página
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y = 80 
@@ -3445,6 +3492,7 @@ if (!omitirtermopreliminardedrogas) {
 
 doc.addPage(); // termo de constatação preliminar de drogas
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 
 adicionarCabecalho()
 adicionarRodape()
@@ -3537,6 +3585,7 @@ y += 7
 
  doc.addPage(); // termo de ABUSO
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 
 adicionarCabecalho()
 adicionarRodape()
@@ -3626,7 +3675,7 @@ if (!omitirTermodeapreensao) {
 
 doc.addPage(); // TERMO DE APREENSAO...
 pageCount++; // Incrementa contador de páginas
-
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y = 60
@@ -3706,7 +3755,9 @@ document.getElementsByName("nome_vitima[]").forEach((input, index) => {
         //Lesão corporal culposa - aqui tenho que criar o termo de solicitação de exame com condição que somente quando for lesao corporal 
         if (["Lesão corporal culposa", "Lesão corporal"].includes(naturezaa)) {
     doc.addPage(); // Cria uma nova página para o termo de encerramento ...
+
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y = 60
@@ -3762,6 +3813,7 @@ const cpfAAAAutor = document.getElementsByName("cpf_passaporte_autor[]")[0]?.val
 
 doc.addPage(); // Cria uma nova página para o termo de encerramento ...
 pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
 adicionarCabecalho()
 adicionarRodape()
 y = 80 
