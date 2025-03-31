@@ -1955,7 +1955,9 @@ document.getElementById("paginaAnexos").checked = true;
     <label><input type="checkbox" id="paginaVitima"> Não gerar Cadastro de Vítima/Testemunha</label><br>
     <label><input type="checkbox" id="paginaHistorico"> Não gerar Histórico</label><br>
     <label><input type="checkbox" id="paginaConclusao"> Não gerar Conclusão Policial</label><br>>-->
-    <label><input type="checkbox" id="PaginaçãoAutomatica"> Paginação Autormatica</label><br>
+    <label><input type="checkbox" id="PaginaçãoAutomatica" checked> Paginação Autormatica</label><br>
+    
+
     <label><input type="checkbox" id="paginaAnexos"> Considerar Termo Anexos</label><br>
     <label><input type="checkbox" id="Termo_Apreensão_de_Materias"> Considerar termo de Material Apreendido</label><br>
 
@@ -3916,108 +3918,128 @@ doc.save("tco.pdf");
     <hr>
     <hr>
     <h2> COMBINAÇÃO DE ARQUIVOS: TCO + Termo de Anexos.</h2>
-    <hr>
-    <hr>
- <!DOCTYPE html>
- <html lang="pt-br">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
 
-   <title>Juntar PDFs e Manipular Páginas</title>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
- </head>
- <body>
- 
- <h2>Selecione 2 arquivos PDF para juntar</h2>
- <h2>1º| O primeiro arquivo selecionado deve ser o TCO Gerado no (Gerar PDF Completo, de cor verde)!</h2>
- <h2>2º| O segundo arquivo selecionado deve ser o Termo de imagens gerado no (Gerar Termo de Anexo, de cor verde)!</h2>
- <br><br>
- <input type="file" id="file1" accept=".pdf" />
- <br><br>
- <input type="file" id="file2" accept=".pdf" />
- <br><br>
- 
- <br><br>
- <button onclick="combinePDFs()">Juntar PDFs</button>
- <br><br>
- <hr>
- <br><br>
- <hr>
- <script>
-   async function combinePDFs() {
-     // Coleta os arquivos selecionados e filtra os que não foram escolhidos
-     const fileInputs = [
-       document.getElementById('file1').files[0],
-       document.getElementById('file2').files[0],
-       document.getElementById('file3').files[0]
-     ];
-     const files = fileInputs.filter(file => file != null);
- 
-     if (files.length < 2) {
-       alert("Selecione pelo menos dois arquivos PDF.");
-       return;
-     }
- 
-     // Carrega os arquivos selecionados
-     const pdfBytesList = await Promise.all(files.map(file => file.arrayBuffer()));
-     const { PDFDocument, StandardFonts } = PDFLib;
-     const newPdf = await PDFDocument.create();
- 
-     // Carrega o primeiro PDF
-     const pdfDoc1 = await PDFDocument.load(pdfBytesList[0]);
-     const numPages1 = pdfDoc1.getPages().length;
- 
-     // Copia todas as páginas do primeiro PDF, exceto a última
-     const pages1Indices = pdfDoc1.getPages().map((_, i) => i).filter(i => i < numPages1 - 1);
-     const pages1 = await newPdf.copyPages(pdfDoc1, pages1Indices);
+  <title>Juntar PDFs e Manipular Páginas</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+</head>
+<body>
+
+<h2>Selecione 2 arquivos PDF para juntar</h2>
+<h2>1º| O primeiro arquivo selecionado deve ser o TCO Gerado no (Gerar PDF Completo, de cor verde)!</h2>
+<h2>2º| O segundo arquivo selecionado deve ser o Termo de imagens gerado no (Gerar Termo de Anexo, de cor verde)!</h2>
+<br><br>
+<input type="file" id="file1" accept=".pdf" />
+<br><br>
+<input type="file" id="file2" accept=".pdf" />
+<br><br>
+<br><br>
+<button onclick="combinePDFs()">Juntar PDFs</button>
+<br><br>
+<hr>
+<br><br>
+<hr>
+<script>
+  async function combinePDFs() {
+    // Coleta os arquivos selecionados e filtra os que não foram escolhidos
+    const fileInputs = [
+      document.getElementById('file1').files[0],
+      document.getElementById('file2').files[0],
+      //document.getElementById('file3').files[0]
+    ];
+    const files = fileInputs.filter(file => file != null);
+
+    if (files.length < 2) {
+      alert("Selecione pelo menos dois arquivos PDF.");
+      return;
+    }
+
+    // Carrega os arquivos selecionados
+    const pdfBytesList = await Promise.all(files.map(file => file.arrayBuffer()));
+    const { PDFDocument, StandardFonts, rgb } = PDFLib;
+    const newPdf = await PDFDocument.create();
+
+    // Carrega o primeiro PDF
+    const pdfDoc1 = await PDFDocument.load(pdfBytesList[0]);
+    const numPages1 = pdfDoc1.getPages().length;
+
+    // Copia todas as páginas do primeiro PDF, exceto a última
+    const pages1Indices = pdfDoc1.getPages().map((_, i) => i).filter(i => i < numPages1 - 1);
+    const pages1 = await newPdf.copyPages(pdfDoc1, pages1Indices);
+
+    // Copia a última página do primeiro PDF
+    const lastPage1 = await newPdf.copyPages(pdfDoc1, [numPages1 - 1]);
+
+    // Adiciona as páginas do primeiro arquivo, exceto a última
+    pages1.forEach(page => newPdf.addPage(page));
+
+    // Se houver 2 arquivos, adiciona as páginas do segundo PDF
+    if (files.length === 2) {
+      const pdfDoc2 = await PDFDocument.load(pdfBytesList[1]);
+
+      // Copia as páginas do segundo PDF
+      const pages2 = await newPdf.copyPages(pdfDoc2, pdfDoc2.getPages().map((_, i) => i));
+
+      // Adiciona texto ao lado esquerdo da folha, acima do número da página
+      const font = await newPdf.embedFont(StandardFonts.Helvetica);
+      
+      // Para cada página do segundo PDF
+      pages2.forEach((page, index) => {
      
-     // Copia a última página do primeiro PDF
-     const lastPage1 = await newPdf.copyPages(pdfDoc1, [numPages1 - 1]);
- 
-     // Adiciona as páginas do primeiro arquivo, exceto a última
-     pages1.forEach(page => newPdf.addPage(page));
- 
-     // Se houver 2 arquivos, adiciona as páginas do segundo PDF
-     if (files.length === 2) {
-       const pdfDoc2 = await PDFDocument.load(pdfBytesList[1]);
-       const pages2 = await newPdf.copyPages(pdfDoc2, pdfDoc2.getPages().map((_, i) => i));
-       pages2.forEach(page => newPdf.addPage(page));
-     }
-     // Se houver 3 arquivos, adiciona as páginas do segundo e terceiro PDFs
-     else if (files.length === 3) {
-       const pdfDoc2 = await PDFDocument.load(pdfBytesList[1]);
-       const pdfDoc3 = await PDFDocument.load(pdfBytesList[2]);
-       
-       const pages2 = await newPdf.copyPages(pdfDoc2, pdfDoc2.getPages().map((_, i) => i));
-       pages2.forEach(page => newPdf.addPage(page));
-       
-       const pages3 = await newPdf.copyPages(pdfDoc3, pdfDoc3.getPages().map((_, i) => i));
-       pages3.forEach(page => newPdf.addPage(page));
-     }
- 
-     // Adiciona a última página do primeiro arquivo no final
-     newPdf.addPage(lastPage1[0]);
- 
-     // Contabiliza o número total de páginas
-     const totalPages = newPdf.getPages().length;
-     console.log(`Total de páginas no documento combinado: ${totalPages}`);
- 
-    
- 
-     // Salva o novo PDF
-     const newPdfBytes = await newPdf.save();
-     const link = document.createElement('a');
-     link.href = URL.createObjectURL(new Blob([newPdfBytes], { type: 'application/pdf' }));
-     link.download = 'TCO.COMPLETO.pdf';
-     link.click();
- 
-     alert(`Documento combinado com sucesso! Total de páginas: ${totalPages}`);
-   }
- </script>
-  
-    </body>
+        const text = ``+ pdfDoc1.getPages().length;  // O texto que você quer adicionar
+        
+        // Desenha o texto na posição desejada (lado esquerdo, acima do número da página)
+        page.drawText(text, {
+          x: 547,  // Posição X (lado esquerdo)
+          y: page.getHeight() - 45,  // Posição Y (um pouco acima do número da página)
+          size: 10,  // Tamanho da fonte
+          font: font,  // Fonte
+          color: rgb(0, 0, 0),  // Cor do texto (preto)
+        });
+
+        newPdf.addPage(page);
+      });
+    }
+
+    // Se houver 3 arquivos, adiciona as páginas do segundo e terceiro PDFs
+//    else if (files.length === 3) {
+//      const pdfDoc2 = await PDFDocument.load(pdfBytesList[1]);
+//      const pdfDoc3 = await PDFDocument.load(pdfBytesList[2]);
+//
+//      const pages2 = await newPdf.copyPages(pdfDoc2, pdfDoc2.getPages().map((_, i) => i));
+//      pages2.forEach(page => newPdf.addPage(page));
+//
+ //     const pages3 = await newPdf.copyPages(pdfDoc3, pdfDoc3.getPages().map((_, i) => i));
+  //    pages3.forEach(page => newPdf.addPage(page));
+   // }
+
+    // Adiciona a última página do primeiro arquivo no final
+    newPdf.addPage(lastPage1[0]);
+
+    // Contabiliza o número total de páginas
+    const totalPages = newPdf.getPages().length;
+    console.log(`Total de páginas no documento combinado: ${totalPages}`);
+const numeroTCOcompleto = document.getElementById("numero_tco").value
+    // Salva o novo PDF
+    const newPdfBytes = await newPdf.save();
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([newPdfBytes], { type: 'application/pdf' }));
+    link.download = "TCO-7ºCR.pdf";
+    link.click();
+
+    alert(`Documento combinado com sucesso! Total de páginas: ${totalPages}`);
+  }
+</script>
+
+</body>
+</html>
     </html>
     
 
