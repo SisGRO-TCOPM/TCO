@@ -1226,7 +1226,7 @@ let Vitima04Global = [];
 
     <div class="date-group">
         <label for="cep">CEP:</label>
-        <input type="text" id="cep" value="78.380-000" required style="width: 90px";>
+        <input type="text" id="cep" value="" required style="width: 90px";>
 
         
 
@@ -1258,9 +1258,9 @@ let Vitima04Global = [];
         <hr>
        
         <label for="relato_policial_correto">RELATO DO POLICIAL:</label>
-        <!--<textarea  class="form-control" id="relato_policial_correto" value="tets" rows="10">Às h do dia , deparamos com (), e em decorrência do fato dei voz de prisão a autor do fato, conduzindo o mesmo para unidade de policia militar de Denise-MT, para adoção das providências legais.                                    </textarea>-->
+        <!--<textarea  class="form-control" id="relato_policial_correto" value="tets" rows="10">Às h do dia , deparamos com (), e em decorrência do fato dei ciência a autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar de Denise-MT, para adoção das providências legais.                                    </textarea>-->
 
-        <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100">Às h do dia , deparamos com (), e em decorrência do fato dei voz de prisão a autor do fato, conduzindo o mesmo para unidade de policia militar de Denise-MT, para adoção das providências legais.                                    </textarea>
+        <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100">Às h do dia , deparamos com (), e em decorrência do fato dei ciência ao autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar, para adoção das providências legais.                                    </textarea>
 
 
         <!--inicio do reconhecimento de voz-->
@@ -1906,7 +1906,7 @@ document.getElementById("Termo_Apreensão_de_Materias").checked = true;
 
             doc.setFontSize(12);
 doc.setFont("helvetica", "bold");
-doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/CR07" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
+doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
 
 
 //doc.text("ANEXOS"), 100, 90, { align: "center"});
@@ -2041,13 +2041,13 @@ const chaveBase = `${tipo.toLowerCase()}_${contador}`;
         <input type="text" class="form-control input-save" name="endereco_${tipo.toLowerCase()}[]" data-key="endereco_${chaveBase}" placeholder="Digite o endereço">
 
         <label>MUNICIPIO</label>
-        <input type="text" class="form-control input-save" name="municipio_${tipo.toLowerCase()}[]" data-key="municipio_${chaveBase}" value="DENISE">
+        <input type="text" class="form-control input-save" name="municipio_${tipo.toLowerCase()}[]" data-key="municipio_${chaveBase}" value="">
 
         <label>UF</label>
         <input type="text" class="form-control input-save" name="uf_municipio_${tipo.toLowerCase()}[]" data-key="uf_municipio_${chaveBase}" value="MT">
 
         <label>CEP</label>
-        <input type="text" class="form-control input-save" name="cep_municipio_${tipo.toLowerCase()}[]" data-key="cep_municipio_${chaveBase}" value="78.380-000">
+        <input type="text" class="form-control input-save" name="cep_municipio_${tipo.toLowerCase()}[]" data-key="cep_municipio_${chaveBase}" value="">
 
         <label>PONTO DE REFERÊNCIA</label>
         <input type="text" class="form-control input-save" name="ponto_referencia_endereco_${chaveBase}" data-key="ponto_referencia_endereco_${tipo.toLowerCase()}[]" placeholder="Digite um ponto de referência do endereço">
@@ -3611,7 +3611,7 @@ doc.setFontSize(10);
 y += 10;
 
 
-let textoPart11 = `Requisito a POLITEC - Perícia Oficial e Identificação Técnica, nos termos dos artigos 159 e seguintes do Código de Processo Penal, combinado com o Artigo 69, Caput da Lei 9.099/95, combinado com Artigo 48, § 2º e Artigo 50, § 1º da Lei 11343/06, solicito a realização de exame químico na substância análoga a entorpecente apensada, encontrada em posse do (a) Sr.(a) ${nomeAutorDroga}, - autor do fato – qualificado no Termo Circunstanciado de Ocorrência nº ${numero_tco}/CR07/${ano}, de natureza ${naturezaa}, ocorrido no dia ${dia} de ${mesExtenso2} de ${ano}.`;
+let textoPart11 = `Requisito a POLITEC - Perícia Oficial e Identificação Técnica, nos termos dos artigos 159 e seguintes do Código de Processo Penal, combinado com o Artigo 69, Caput da Lei 9.099/95, combinado com Artigo 48, § 2º e Artigo 50, § 1º da Lei 11343/06, solicito a realização de exame químico na substância análoga a entorpecente apensada, encontrada em posse do (a) Sr.(a) ${nomeAutorDroga}, - autor do fato – qualificado no Termo Circunstanciado de Ocorrência nº ${numero_tco}/7ºCR/${ano}, de natureza ${naturezaa}, ocorrido no dia ${dia} de ${mesExtenso2} de ${ano}.`;
 
 doc.setFont("helvetica", "normal");
 doc.text(textoPart11, 20, y, { maxWidth: 170, align: 'justify'});
@@ -3781,7 +3781,7 @@ doc.setFontSize(10);
 y += 20
 
 
-let textoExamePart1 = `Requisito a POLITEC - Perícia Oficial e Identificação Técnica, nos termos dos artigos 158 e seguintes do Código de Processo Penal e artigo 69 Caput da Lei n.º 9.099/1995, a realização de exame de corpo de delito no (a) Sr. (a) ${nomeVitimaExame},  vítima qualificado no Termo Circunstanciado de Ocorrência nº ${numero_tco}/CR07/${ano}, onde causou uma ${lesaoVitimaExame}. Tipificando o crime de: ${naturezaa}, ocorrido no dia ${dia} de ${mesExtenso2} de ${ano}, respondendo para tal os seguintes quesitos:\n\nPara tanto, solicito que Vossa Senhoria responda aos quesitos oficiais, conforme abaixo:\n\n      1. Há ofensa à integridade corporal do paciente?\n      2. Qual o instrumento ou meio que produziu a ofensa?\n      3. Resultou incapacidade para as ocupações habituais por mais de 30 (trinta) dias?\n\n\nDESTINO DO LAUDO: Corregedoria da Policia Militar.\n\n\n\n${cidade}, ${dia} de ${mesExtenso2} de ${ano}.`;
+let textoExamePart1 = `Requisito a POLITEC - Perícia Oficial e Identificação Técnica, nos termos dos artigos 158 e seguintes do Código de Processo Penal e artigo 69 Caput da Lei n.º 9.099/1995, a realização de exame de corpo de delito no (a) Sr. (a) ${nomeVitimaExame},  vítima qualificado no Termo Circunstanciado de Ocorrência nº ${numero_tco}/7ºCR/${ano}, onde causou uma ${lesaoVitimaExame}. Tipificando o crime de: ${naturezaa}, ocorrido no dia ${dia} de ${mesExtenso2} de ${ano}, respondendo para tal os seguintes quesitos:\n\nPara tanto, solicito que Vossa Senhoria responda aos quesitos oficiais, conforme abaixo:\n\n      1. Há ofensa à integridade corporal do paciente?\n      2. Qual o instrumento ou meio que produziu a ofensa?\n      3. Resultou incapacidade para as ocupações habituais por mais de 30 (trinta) dias?\n\n\nDESTINO DO LAUDO: Corregedoria da Policia Militar.\n\n\n\n${cidade}, ${dia} de ${mesExtenso2} de ${ano}.`;
 
 doc.setFont("helvetica", "normal");
 doc.text(textoExamePart1, 20, y, { maxWidth: 170});
