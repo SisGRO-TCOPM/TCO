@@ -2415,7 +2415,7 @@ doc.text(natuureza, 20, 75, { maxWidth: 170, align: 'justify'});
             doc.text("B- ENVOLVIDOS:", 30, y);
             y += 20;
             doc.setFontSize(10);
-            //doc.setFont("helvetica", "bold");
+            doc.setFont("helvetica", "normal");
 
 
             document.getElementsByName("nome_autor[]").forEach((input, index) => {
@@ -2850,11 +2850,11 @@ doc.text(textoLimitado, 10, y);
    
    doc.line(10, y+1, 200, y+1);
     y += 6;
-    verificapagina3()
+    
    //doc.text(`   RELATO DO AUTOR DO FATO: ${relatoTestemunha}`, 10, y);
     y += 15;
 
-    verificapagina3()
+    
 
             });
 
@@ -2870,7 +2870,16 @@ doc.text(textoLimitado, 10, y);
             assinaturaefolhas()
     }
         }
-verificapagina7()
+
+
+        doc.addPage(); // Cria uma nova página
+            adicionarCabecalho()
+            adicionarRodape()
+            doc.setFontSize(10);
+            y = 60; // Reinicia a posição no topo da nova página
+            pageCount++; // Incrementa contador de páginas
+            assinaturaefolhas()
+
 
 doc.setFont("helvetica", "bold");
 doc.setFontSize(14);
@@ -2930,7 +2939,7 @@ doc.text(textoFormatado, 20, y, { maxWidth: 170, align: 'justify'});
 
 
 y += numeroDeLinhas4 * 5;
-y += 10;
+y += 5;
 doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
 doc.text(`   ${nomeCondutor}- ${posto_grad}`, 100, y, { align: "center" });
 y += 5;
@@ -3231,6 +3240,12 @@ if (document.getElementById("paginaAnexos").checked) {
         textoDocAnexo += "; TERMO DE MATERIAL APREENDIDO";
     }
 
+    // Verifica se o checkbox "Termo_deposito" está marcado
+    if (document.getElementById("Termo_deposito").checked) {
+        textoDocAnexo += "; TERMO DE DEPÓSITO";
+    }
+
+    
     
 
 ///~fim da verificação
@@ -3772,7 +3787,7 @@ adicionarRodape()
 y = 60
 doc.setFont("helvetica", "bold");
 doc.setFontSize(12);
-doc.text(`TERMO DE DEPÓSITO`, 100, y, { align: "center" });
+doc.text(`TERMO DE DEPÓSITO - EM DESENVOLVIMENTO...`, 100, y, { align: "center" });
 doc.setFont("helvetica", "normal");
 doc.setFontSize(10);
 y += 20
