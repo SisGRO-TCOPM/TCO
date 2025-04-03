@@ -1960,7 +1960,7 @@ document.getElementById("paginaAnexos").checked = true;
 
     <label><input type="checkbox" id="paginaAnexos"> Considerar Termo Anexos</label><br>
     <label><input type="checkbox" id="Termo_Apreensão_de_Materias"> Considerar termo de Material Apreendido</label><br>
-
+    <label><input type="checkbox" id="Termo_deposito"> Considerar termo de depósito</label><br>
 
     
     <label><input type="checkbox" id="Termo_Preliminar_de_Drogas"> Considerar termo preliminar de drogas</label><br>
@@ -3761,8 +3761,8 @@ doc.setFont("helvetica", "normal");
 // inicio do termo de deposito
 
 let condicaoTermoDeposito = 0
-
-if (condicaoTermoDeposito === 0){}else{
+let Termo_depositosele = document.getElementById('Termo_deposito');
+if (!document.getElementById('Termo_deposito').checked){}else{
 
 doc.addPage(); // TERMO DE DEPOSITO...
 pageCount++; // Incrementa contador de páginas
