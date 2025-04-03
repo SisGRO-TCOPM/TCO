@@ -2273,7 +2273,7 @@ inputs.forEach(input => {
             
            // doc.text("teste numero de tco",10, y)
 
-            doc.text("AUTUAÇÃO", 105, 100, { align: "center" });
+            doc.text("AUTUAÇÃO", 105, 120, { align: "center" });
 
 const diaExtenso = numerosPorExtenso[dia];
   const mesExtenso = mesesPorExtenso[mes];
@@ -2284,26 +2284,55 @@ let texto = `Aos ${diaExtenso} dias do mês de ${mesExtenso} do ano de dois mil 
 
 
 doc.setFont("helvetica", "normal");
-doc.text(texto, 20, 120, { maxWidth: 165, align: 'justify'});
+doc.text(texto, 20, 140, { maxWidth: 165, align: 'justify'});
 
 
 doc.setFont("helvetica", "bold");
 let texto2ass =` ______________________________________________________________ `;
-doc.text(texto2ass, 103, 195,{ align: "center" });
+doc.text(texto2ass, 103, 210,{ align: "center" });
 
 let texto2 =` ${nome_completo} - ${posto_grad} `;
-doc.text(texto2, 103, 200,{ align: "center" });
+doc.text(texto2, 103, 215,{ align: "center" });
 
 let texto3 = `RG nº ${rg} PMMT`;
-doc.text(texto3, 103, 206,{ align: "center" });
+doc.text(texto3, 103, 221,{ align: "center" });
 let texto4 = `Comandante de GUPM`;
-doc.text(texto4, 103, 212,{ align: "center" });
+doc.text(texto4, 103, 227,{ align: "center" });
 doc.setFontSize(10);
-doc.text("Natureza: "+ naturezaa, 20, 70, { maxWidth: 170, align: 'justify'});
+//----
+let espaço = 6;  // Espaço inicial entre os textos
+let xx = 70;  // Posição vertical inicial
 
+// Função para calcular a altura do texto com base na fonte e no tamanho
+function calcularAlturaTexto(texto, maxWidth) {
+    // Ajuste a altura com base no tamanho da fonte
+    let alturaLinha = 3; // Valor estimado, ajuste conforme necessário
+    // Você pode realizar cálculos baseados no tamanho da fonte e largura máxima
+    let numLinhas = Math.ceil(doc.getTextWidth(texto) / maxWidth);
+    return alturaLinha * numLinhas;
+}
+
+// Texto da natureza
+doc.text("Natureza: " + naturezaa, 20, xx, { maxWidth: 170, align: 'justify' });
+
+// Calcular a altura do texto da natureza
+let alturaTextoNatureza = calcularAlturaTexto("Natureza: " + naturezaa, 170);
+
+// Atualiza a posição 'xx' para o próximo texto, considerando a altura do primeiro texto
+xx += alturaTextoNatureza + espaço;
+
+// Texto do nome do autor
 let nomeAutor = document.querySelector('input[name="nome_autor[]"]').value;
+doc.text("Autor do Fato: " + nomeAutor, 20, xx, { maxWidth: 170, align: 'justify' });
 
-doc.text("Autor do Fato: " +nomeAutor, 20, 80, { maxWidth: 170, align: 'justify'});
+//--------
+
+let nomeVitimaautuacao = document.querySelector('input[name="nome_vitima[]"]');
+
+if (nomeVitimaautuacao && nomeVitimaautuacao.value) {
+  // Se o campo existir e tiver valor, usa o valor
+  doc.text("Vítima: " + nomeVitimaautuacao.value, 20, xx+6, { maxWidth: 170, align: 'justify' });
+}
 
 //-------------------------------------------------
 
