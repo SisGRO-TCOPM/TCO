@@ -3758,6 +3758,121 @@ doc.setFont("helvetica", "normal");
 });
 /// FIM DO TERMO DE APREENSAO
 
+// inicio do termo de deposito
+
+let condicaoTermoDeposito = 0
+
+if (condicaoTermoDeposito === 0){}else{
+
+doc.addPage(); // TERMO DE DEPOSITO...
+pageCount++; // Incrementa contador de páginas
+assinaturaefolhas()
+adicionarCabecalho()
+adicionarRodape()
+y = 60
+doc.setFont("helvetica", "bold");
+doc.setFontSize(12);
+doc.text(`TERMO DE DEPÓSITO`, 100, y, { align: "center" });
+doc.setFont("helvetica", "normal");
+doc.setFontSize(10);
+y += 20
+
+let z = 6
+
+doc.line(20, y, 185, y);
+doc.text("Nomeio como fiel depositário, ficando ciente de que não poderá vender, usufruir, emprestar os bens mencionados, conforme os artigos 647 e 648 do CC.", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += 11
+doc.line(20, y, 20, y-11);
+doc.line(185, y, 185, y-11);
+//------------------------------------------------
+doc.line(20, y, 185, y);
+doc.text("NOME OU RAZÃO SOCIAL:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//---------------------------------------
+doc.line(20, y, 185, y);
+doc.text("CPF/CNPJ:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("FILIAÇÃO PAI:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("FILIAÇÃO MÃE:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("ENDEREÇO:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("BAIRRO:", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("MUNICÍPIO:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("UF:", 165, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+doc.line(20, y, 185, y);
+doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+
+
+
+
+
+
+
+}
+// fim do termo de deposito
+
 
 
 document.getElementsByName("nome_vitima[]").forEach((input, index) => {
