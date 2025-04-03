@@ -2393,26 +2393,28 @@ let dataInput = document.getElementById("data_registro").value; // Pegando a dat
 //doc.text("NATUREZA DA OCORRÊNCIA: " + naturezaa, 20, 90, { maxWidth: 170, align: 'justify' });
 // Texto em negrito
 doc.setFont("helvetica", "bold");
+let xxx = 3
+
 doc.text("NATUREZA DA OCORRÊNCIA: ", 20, 70, { maxWidth: 170, align: 'justify' });
-doc.text("TIPIFICAÇÃO LEGAL: ", 20, 85, { maxWidth: 170, align: 'justify' });
-doc.text("DATA DO FATO: ", 20, 90, { maxWidth: 170, align: 'justify' });
-doc.text("DATA DO REGISTRO: ", 130, 90, { maxWidth: 170, align: 'justify' });
-doc.text("HORA DO FATO: ", 20, 95, { maxWidth: 170, align: 'justify' });
-doc.text("ENDEREÇO: ", 20, 100, { maxWidth: 170, align: 'justify' });
-doc.text("CEP:", 130, 105, { maxWidth: 170, align: 'justify' });
-doc.text("MUNICIPIO: ", 20, 105, { maxWidth: 170, align: 'justify' });
-doc.text("PONTO DE REFERRÊNCIA: ", 20, 110, { maxWidth: 170, align: 'justify' });
+doc.text("TIPIFICAÇÃO LEGAL: ", 20, 85 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("DATA DO FATO: ", 20, 90 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("DATA DO REGISTRO: ", 130, 90 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("HORA DO FATO: ", 20, 95 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("ENDEREÇO: ", 20, 100 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("CEP:", 130, 105 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("MUNICIPIO: ", 20, 105 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text("PONTO DE REFERRÊNCIA: ", 20, 110 + xxx, { maxWidth: 170, align: 'justify' });
 // Texto normal (a variável `naturezaa`)
 doc.setFont("helvetica", "normal");
 //doc.text(" " + naturezaa, 20 + doc.getTextWidth("NATUREZA DA OCORRÊNCIA: "), 70, { maxWidth: 870, align: 'justify' });
-doc.text(" " + artigo + " " + lei, 20 + doc.getTextWidth("TIPIFICAÇÃO LEGAL: "), 85, { maxWidth: 170, align: 'justify' });
-doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}` , 10 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
-doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}`, 130 + doc.getTextWidth("DATA DO REGISTRO: "), 90, { maxWidth: 170, align: 'justify' });
-doc.text(" " + hora_fato, 20 + doc.getTextWidth("HORA DO FATO: "), 95, { maxWidth: 170, align: 'justify' });
-doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), 100, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + cep, 130 + doc.getTextWidth("CEP: "), 105, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + cidade, 20 + doc.getTextWidth("MUNICIPIO: "), 105, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + ponto_referencia, 20 + doc.getTextWidth("PONTO DE REFERRÊNCIA: "), 110, { length:24, maxWidth: 170, align: 'justify' });      
+doc.text(" " + artigo + " " + lei, 20 + doc.getTextWidth("TIPIFICAÇÃO LEGAL: "), 85 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}` , 10 + doc.getTextWidth("DATA DO REGISTRO: "), 90 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}`, 130 + doc.getTextWidth("DATA DO REGISTRO: "), 90 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text(" " + hora_fato, 20 + doc.getTextWidth("HORA DO FATO: "), 95 + xxx, { maxWidth: 170, align: 'justify' });
+doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), 100 + xxx, { length:24, maxWidth: 170, align: 'justify' });
+doc.text(" " + cep, 130 + doc.getTextWidth("CEP: "), 105 + xxx, { length:24, maxWidth: 170, align: 'justify' });
+doc.text(" " + cidade, 20 + doc.getTextWidth("MUNICIPIO: "), 105 + xxx, { length:24, maxWidth: 170, align: 'justify' });
+doc.text(" " + ponto_referencia, 20 + doc.getTextWidth("PONTO DE REFERRÊNCIA: "), 110 + xxx, { length:24, maxWidth: 170, align: 'justify' });      
 
 let natuureza = naturezaa;
 
