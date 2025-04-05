@@ -4167,13 +4167,28 @@ doc.text("RECEBI OS BENS DEPOSITADOS EM: ", 21, y+4, { maxWidth: 160, align: 'ju
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
+doc.line(20, y, 185, y);
 
 
+y += z*4
 
+doc.text("____________________________________________________", 100, y-5, { align: "center" });
+doc.text(document.getElementById("nome_deposito").value, 100, y, { align: "center" });
 
-
-
-
+y += z+2
+doc.setFont("helvetica", "bold");
+doc.text("TESTEMUNHA", 35, y, { align: "center" });
+doc.setFont("helvetica", "normal");
+y += 3
+doc.line(20, y, 185, y);
+doc.line(20, y, 20, y+z*2);
+doc.line(185, y, 185, y+z*2);
+y += z
+doc.text("NOME:", 30, y, { align: "center" });
+doc.text("ASSINATURA:", 120, y, { align: "center" });
+doc.line(107, y-z, 107, y+z);
+y += z
+doc.line(20, y, 185, y);
 }
 // fim do termo de deposito
 
