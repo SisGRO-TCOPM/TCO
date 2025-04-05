@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
 
+    <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault(); // Desabilita o clique direito
+        });
+    </script>
+
     <title>TCO - Cadastro</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -1963,11 +1969,251 @@ document.getElementById("paginaAnexos").checked = true;
     <label><input type="checkbox" id="Termo_deposito"> Considerar termo de depósito</label><br>
 
     
+
+    
     <label><input type="checkbox" id="Termo_Preliminar_de_Drogas"> Considerar termo preliminar de drogas</label><br>
 </div>
 
-   <!-- <button type="button" class="btn btn-success mt-3" onclick="gerarPDF()">Gerar PDF Completo</button>-->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title>Formulário com Variáveis Globais</title>-->
+    <style>
+        #formulario-suspenso {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none; /* Inicialmente escondido */
+        }
 
+       
+     
+           
+
+
+        #formulario-suspenso button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #formulario-suspenso button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- Formulário suspenso -->
+<div id="formulario-suspenso">
+    <h3>Em desenvolvimento...:</h3><br>
+
+    <h3>Preencha os dados para o Termo de Depósito:</h3><br>
+    <!-- Opções de radio buttons -->
+
+    <label>    <input type="radio" name="grupo_opcoes" id="opcao1" value="Autor"> Considerar os dados do Autor </label><br>
+        <label> <input type="radio" name="grupo_opcoes" id="opcao2" value="Testemunha"> Considerar os dados da Testemunha qualificada </label><br>
+            <label><input type="radio" name="grupo_opcoes" id="opcao3" value="Novos"> Cadastrar novos dados </label><br><br>
+
+
+    <form id="form-dados">
+        <div>
+        <label for="nome_deposito">Nome:</label>
+        <input type="text" id="nome_deposito" name="nome_deposito" width="300">
+
+        <label for="cpf_deposito">CPF/CNPJ:</label>
+        <input type="text" id="cpf_deposito" name="cpf_deposito">
+    </div>
+        <div>
+        <label for="filiacao_deposito">Filiação:</label>
+        <input type="text" id="filiacao_deposito" name="filiacao_deposito"><br>
+    </div>
+    <label for="endereço_deposito">Endereço:</label>
+        <input type="text" id="endereço_deposito" name="endereço_deposito">
+        
+        <label for="bairro_deposito">Bairro:</label>
+        <input type="text" id="bairro_deposito" name="bairro_deposito"><br>
+
+        <label for="municipio_deposito">Municipio</label>
+        <input type="text" id="municipio_deposito" name="municipio_deposito">
+        
+        <label for="uf_deposito">UF:</label>
+        <input type="text" id="uf_deposito" name="uf_deposito" maxlength="2" pattern="[A-Za-z]{2} ">
+
+        <label for="cep_deposito">CEP:</label>
+        <input type="text" id="cep_deposito" name="cep_deposito" maxlength="10" pattern="[A-Za-z]{2}"> <button type="button" onclick="consultarCEP()">Consulta cep</button> 
+       
+        <div>
+        <label for="telefone_deposito">Telefone:</label>
+        <input type="text" id="telefone_deposito" name="telefone_deposito">
+
+        <label for="local_deposito">Local de Deposito:</label>
+        <input type="text" id="local_deposito" name="local_deposito">
+    </div>
+    <div>
+
+        <label for="data_deposito">Data:</label>
+        <input type="text" id="data_deposito" name="data_deposito">
+        <label for="hora_deposito">Hora:</label>
+        <input type="text" id="hora_deposito" name="hora_deposito">
+
+    </div>
+
+        <br>
+<!------------------------------------------------------->
+
+<div id="resultado">
+    <!-- Dados serão exibidos aqui -->
+</div>
+<script>
+
+    // Função para consultar o CEP
+    function consultarCEP() {
+        const cep = document.getElementById('cep_deposito').value.replace("-", "");  // Remove o hífen
+        const resultadoDiv = document.getElementById('resultado');
+        const Endereço_deposito = document.getElementById('endereço_deposito');
+        
+        // Verifica se o CEP é válido
+        if (!cep.match(/^\d{8}$/)) {
+            resultadoDiv.innerHTML = "Por favor, insira um CEP válido.";
+            document.getElementById('endereço_deposito').value = "";
+                    document.getElementById('bairro_deposito').value = "";
+                    document.getElementById('municipio_deposito').value = "";
+                    document.getElementById('uf_deposito').value = "";
+            return;
+        }
+
+        // Faz a consulta utilizando a API dos Correios (via JSON)
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.erro) {
+                    resultadoDiv.innerHTML = "CEP não encontrado.";
+                    document.getElementById('endereço_deposito').value = "";
+                    document.getElementById('bairro_deposito').value = "";
+                    document.getElementById('municipio_deposito').value = "";
+                    document.getElementById('uf_deposito').value = "";
+                } else {
+                    resultadoDiv.innerHTML = `
+                        
+                    `
+                    document.getElementById('endereço_deposito').value = data.logradouro;
+                    document.getElementById('bairro_deposito').value = data.bairro;
+                    document.getElementById('municipio_deposito').value = data.localidade;
+                    document.getElementById('uf_deposito').value = data.uf;
+                    ;
+                }
+            })
+            .catch(error => {
+                resultadoDiv.innerHTML = "Erro ao consultar o CEP.";
+                console.error(error);
+                document.getElementById('endereço_deposito').value = "";
+                    document.getElementById('bairro_deposito').value = "";
+                    document.getElementById('municipio_deposito').value = "";
+                    document.getElementById('uf_deposito').value = "";
+            });
+    }
+</script>
+
+
+
+
+<!------------------------------------------>
+
+
+        <button type="button" onclick="salvarDados()">Confirmar Dados</button>
+    </form>
+</div>
+
+<!-- Uma parte do PDF ou área que usará os dados -->
+<div>
+    <!--<h2>Dados preenchidos para o termo de Deposito:</h2>-->
+
+    
+    <p id="dados-exibidos"></p>
+</div>
+
+<style>
+    /* Estilo para os campos de input */
+    input[type="text"] {       
+        height: 25px;
+        padding: 10px;  /* Adiciona espaçamento interno */
+        font-size: 16px;  /* Aumenta o tamanho da fonte dentro dos campos */
+        margin-bottom: 15px;  /* Adiciona um espaçamento entre os campos */
+    }
+
+    input[id="nome_deposito"] {
+        width: 600px;  /* Define a largura de todos os campos */       
+    }
+
+    input[id="cpf_deposito"] {
+        width: 150px;  /* Define a largura de todos os campos */        
+    }
+
+    input[id="filiacao_deposito"] {
+        width: 820px;  /* Define a largura de todos os campos */        
+    }
+
+    input[id="endereço_deposito"] {width: 570px;  /* Define a largura de todos os campos */    }
+
+    input[id="local_deposito"] {width: 45%;  /* Define a largura de todos os campos */    }
+
+</style>
+
+
+<hr>
+<hr>
+
+<script>
+    // Variáveis globais para armazenar os dados
+    let nomeGlobal = '';
+    let cpfGlobal = '';
+    let filiacaoGlobal = '';
+    let endereçoGlobal = '';
+
+
+    // Função para mostrar o formulário suspenso quando o checkbox for marcado
+    function mostrarFormulario() {
+        const formulario = document.getElementById('formulario-suspenso');
+        formulario.style.display = 'block'; // Mostra o formulário
+    }
+
+    // Função para esconder o formulário quando o checkbox for desmarcado
+    function esconderFormulario() {
+        const formulario = document.getElementById('formulario-suspenso');
+        formulario.style.display = 'none'; // Esconde o formulário
+    }
+
+    // Adicionar o evento de "change" ao checkbox
+    document.getElementById('Termo_deposito').addEventListener('change', function() {
+        if (this.checked) {
+            mostrarFormulario();  // Mostra o formulário se o checkbox estiver marcado
+        } else {
+            esconderFormulario();  // Esconde o formulário se o checkbox não estiver marcado
+        }
+    });
+
+    // Função para salvar os dados do formulário e atualizar as variáveis globais
+    function salvarDados() {
+        nomeGlobal = document.getElementById('nome_deposito').value;
+        cpfGlobal = document.getElementById('cpf_deposito').value;
+        filiacaoGlobal = document.getElementById('filiacao_deposito').value;
+        endereçoGlobal = document.getElementById('endereço_deposito').value;
+        // Atualizar a área para mostrar os dados preenchidos
+        document.getElementById('dados-exibidos').innerText = `Nome: ${nomeGlobal}, CPF: ${cpfGlobal}, Filiação: ${filiacaoGlobal}, Endereço: ${endereçoGlobal}`;
+    }
+
+    </script>
    <button type="button" class="btn btn-success mt-3" onclick="confirmarGeracaoPDF()">Gerar PDF Completo</button>
 
    <script>
