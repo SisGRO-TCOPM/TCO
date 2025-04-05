@@ -4090,80 +4090,75 @@ doc.line(20, y, 20, y-11);
 doc.line(185, y, 185, y-11);
 //------------------------------------------------
 doc.line(20, y, 185, y);
-doc.text("NOME OU RAZÃO SOCIAL:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("NOME OU RAZÃO SOCIAL: " + document.getElementById("nome_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //---------------------------------------
 doc.line(20, y, 185, y);
-doc.text("CPF/CNPJ:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("CPF/CNPJ: "+ document.getElementById("cpf_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("FILIAÇÃO PAI:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("FILIAÇÃO PAI: "+ document.getElementById("filiacao_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z
+doc.line(20, y, 20, y-z);
+doc.line(185, y, 185, y-z);
+//------------------------------------
+
+doc.line(20, y, 185, y);
+doc.text("ENDEREÇO: "+ document.getElementById("endereço_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("FILIAÇÃO MÃE:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("BAIRRO: "+ document.getElementById("bairro_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("ENDEREÇO:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("MUNICÍPIO: "+ document.getElementById("municipio_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("UF: "+ document.getElementById("uf_deposito").value, 165, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("BAIRRO:", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("TELEFONE: " + document.getElementById("telefone_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("MUNICÍPIO:", 21, y+4, { maxWidth: 160, align: 'justify'});
-doc.text("UF:", 165, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("LOCAL DO DEPOSITO: "+ document.getElementById("local_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("DATA: ", 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("HORA: ", 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
-y += z
-doc.line(20, y, 20, y-z);
-doc.line(185, y, 185, y-z);
+doc.text(`DESCRIÇÃO DO BEM: ${textoOutros}`, 21, y+4, { maxWidth: 160, align: 'justify'});
+y += z *6
+doc.line(20, y, 20, y-z*6);
+doc.line(185, y, 185, y-z*6);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
-y += z
-doc.line(20, y, 20, y-z);
-doc.line(185, y, 185, y-z);
-//------------------------------------
-doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
-y += z
-doc.line(20, y, 20, y-z);
-doc.line(185, y, 185, y-z);
-//------------------------------------
-doc.line(20, y, 185, y);
-doc.text("XXX", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("RECEBI OS BENS DEPOSITADOS EM: ", 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
