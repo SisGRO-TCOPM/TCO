@@ -2022,7 +2022,6 @@ document.getElementById("paginaAnexos").checked = true;
 </head>
 <body>
 
-
 <!-- Formulário suspenso -->
 <div id="formulario-suspenso">
     <h3>Em desenvolvimento...:</h3><br>
@@ -2077,6 +2076,10 @@ document.getElementById("paginaAnexos").checked = true;
         <input type="text" id="hora_deposito" name="hora_deposito">
 
     </div>
+
+    <label for="descricao_deposito">Descrição do Bem:</label>
+    <input type="text" id="descricao_deposito" name="descricao_deposito">
+
 
         <br>
 <!------------------------------------------------------->
@@ -2179,6 +2182,7 @@ document.getElementById("paginaAnexos").checked = true;
 
     input[id="local_deposito"] {width: 45%;  /* Define a largura de todos os campos */    }
     input[id="uf_deposito"] {width: 60px;  /* Define a largura de todos os campos */    }
+    input[id="descricao_deposito"] {width: 90%;  /* Define a largura de todos os campos */    }
 
 </style>
 
@@ -2198,6 +2202,7 @@ document.getElementById("paginaAnexos").checked = true;
     function mostrarFormulario() {
         const formulario = document.getElementById('formulario-suspenso');
         formulario.style.display = 'block'; // Mostra o formulário
+        document.getElementById('descricao_deposito').value = textoOutros
     }
 
     // Função para esconder o formulário quando o checkbox for desmarcado
@@ -4140,19 +4145,19 @@ doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("DATA: ", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("DATA: " + document.getElementById("data_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text("HORA: ", 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("HORA: "+ document.getElementById("hora_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z
 doc.line(20, y, 20, y-z);
 doc.line(185, y, 185, y-z);
 //------------------------------------
 doc.line(20, y, 185, y);
-doc.text(`DESCRIÇÃO DO BEM: ${textoOutros}`, 21, y+4, { maxWidth: 160, align: 'justify'});
+doc.text("DESCRIÇÃO DO BEM:" + document.getElementById("descricao_deposito").value, 21, y+4, { maxWidth: 160, align: 'justify'});
 y += z *6
 doc.line(20, y, 20, y-z*6);
 doc.line(185, y, 185, y-z*6);
