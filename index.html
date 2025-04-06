@@ -4175,7 +4175,7 @@ y += z*4
 doc.text("____________________________________________________", 100, y-5, { align: "center" });
 doc.text(document.getElementById("nome_deposito").value, 100, y, { align: "center" });
 
-y += z+2
+y += z+6
 doc.setFont("helvetica", "bold");
 doc.text("TESTEMUNHA", 35, y, { align: "center" });
 doc.setFont("helvetica", "normal");
@@ -4189,6 +4189,23 @@ doc.text("ASSINATURA:", 120, y, { align: "center" });
 doc.line(107, y-z, 107, y+z);
 y += z
 doc.line(20, y, 185, y);
+//----gu
+y += 15
+doc.setFont("helvetica", "bold");
+doc.text("POLICIAL MILITAR:", 35, y, { align: "center" });
+y += z
+doc.setFont("helvetica", "normal");
+doc.line(20, y-3, 170, y-3);
+doc.text(posto_grad + " - " + nomeCondutor + "- RGPM: " + rgPM, 30, y+2 , { maxWidth: 175, align: 'justify'});
+y += 7
+doc.line(20, y-3, 170, y-3);
+
+
+
+
+
+// fim gu
+
 }
 // fim do termo de deposito
 
