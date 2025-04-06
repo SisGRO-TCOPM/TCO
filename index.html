@@ -1304,22 +1304,25 @@ let Vitima04Global = [];
         
 
         <label for="endereco">ENDEREÇO:</label>
-        <input type="text" id="endereco" value="endereço do local do fato" required style="width: 700px";>
+        <input type="text" id="endereco" value="endereço do local do fato" required style="width: 500px";>
+        
+        <label for="bairro">BAIRRO:</label>
+        <input type="text" id="bairro" value="" required style="width: 300px";>
         </div>
 
-        <div class="date-group"></div>
+        <div class="date-group">
 
         <label for="local_fato">LOCAL DO FATO:</label>
-        <input type="text" id="local_fato" value="AVENIDA JULIO CAMPOS" required style="width: 800px";>
-    </div>
-    <div class="date-group"></div>
+        <input type="text" id="local_fato" value="AVENIDA JULIO CAMPOS" required style="width: 35%";>
+    
+   
         <label for="ponto_referencia">PONTO DE REFERRÊNCIA:</label>
-        <input type="text" id="ponto_referencia" value="Proximo do que ?" required style="width: 800px";>
+        <input type="text" id="ponto_referencia" value="Proximo do que ?" required style="width: 35%";>
         
 </div>
 <div class="date-group"></div>
         <label for="comunicante">COMUNICANTE:</label>
-        <input type="text" id="comunicante" value="" required style="width: 800px";>
+        <input type="text" id="comunicante" value="" required style="width: 500px";>
 </div>
 
         <hr>
@@ -2500,6 +2503,7 @@ inputs.forEach(input => {
             //const data_fato = document.getElementById('data_fato').value;
             const data_registro = document.getElementById('data_registro').value;
             const endereco = document.getElementById('endereco').value;
+            const bairro = document.getElementById('bairro').value;
             const comunicante = document.getElementById('comunicante').value;
             const ponto_referencia = document.getElementById('ponto_referencia').value;
             const cep = document.getElementById("cep").value;
@@ -2757,7 +2761,11 @@ posi += xxx +1
 doc.setFont("helvetica", "bold");
 doc.text("ENDEREÇO: ", 20, posi+ xxx +xxx, { maxWidth: 170, align: 'justify' });
 doc.setFont("helvetica", "normal");
-doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), posi + xxx+xxx, { length:24, maxWidth: 170, align: 'justify' });
+doc.text(" " + endereco + "," + bairro, 20 + doc.getTextWidth("ENDEREÇO: "), posi + xxx+xxx, { length:24, maxWidth: 170, align: 'justify' });
+
+
+
+
 
 posi += xxx+2 *2
 doc.setFont("helvetica", "bold");
