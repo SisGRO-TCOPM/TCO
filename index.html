@@ -373,12 +373,62 @@
 
 </select>
         </div>
+<script>
+        function concatenarN() {
+           // document.getElementById("natureza_concatenada").value = document.getElementById("natureza_concatenada").value; document.getElementById("natureza").value;
+             // Campos de nome completo}
+
+             document.getElementById("natureza_concatenada").value = document.getElementById("natureza_concatenada").value + (document.getElementById("natureza_concatenada").value ? "; |<>| " : "") + document.getElementById("naturezaa").value;
+             
+             document.getElementById("artigo_concatenado").value = document.getElementById("artigo_concatenado").value + (document.getElementById("artigo_concatenado").value ? "; |<>| " : "") + document.getElementById("artigo").value;
+             
+             document.getElementById("lei_concatenada").value = document.getElementById("lei_concatenada").value + (document.getElementById("lei_concatenada").value ? "; |<>| " : "") + document.getElementById("lei").value;
+             
+        }
+            </script>
+
+ <!-- Botão verde para chamar a função concatenarN -->
+
+ <style>
+    /* Estilo do botão verde */
+    .botao-verde {
+        background-color: #44a000; /* Cor verde */
+        color: white; /* Cor do texto */
+        padding: 10px 20px; /* Espaçamento interno */
+        border: none; /* Remover borda */
+        border-radius: 5px; /* Bordas arredondadas */
+        cursor: pointer; /* Cursor de clique */
+        font-size: 16px; /* Tamanho da fonte */
+    }
+    .botao-verde:hover {
+        background-color: #369000; /* Cor verde mais escura no hover */
+    }
+</style>
+ <button class="botao-verde" onclick="concatenarN()">Definir Natureza</button>
+
+
+
 
 <label for="artigo">Artigo:</label>
 <input type="text" id="artigo" required style="width: 120px;" readonly>
 
 <label for="lei">Lei:</label>
 <input type="text" id="lei" required style="width: 550px;" readonly>
+<br>
+<!--<label for="natureza_concatenada">Naturezas Selecionadas:</label>
+<input type="text" id="natureza_concatenada" required style="width: 100%; height: 100%;" readonly>-->
+
+<hr>
+
+<label for="natureza_concatenada">Naturezas Selecionadas:</label>
+<textarea id="natureza_concatenada" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
+
+
+<label for="artigo_cancatenado">Artigo selecionados:</label>
+<textarea type="text" id="artigo_concatenado" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
+
+<label for="lei_concatenada">Lei selecionadas:</label>
+<textarea type="text" id="lei_concatenada" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
 
 <script>
     const searchInput = document.getElementById("search");
@@ -2423,9 +2473,9 @@ inputs.forEach(input => {
 
 
             const numero_tco = parseInt(document.getElementById('numero_tco').value);
-            const naturezaa = document.getElementById('naturezaa').value;
-            const artigo = document.getElementById("artigo").value
-            const lei = document.getElementById("lei").value;
+            const naturezaa = document.getElementById('natureza_concatenada').value;
+            const artigo = document.getElementById("artigo_concatenado").value
+            const lei = document.getElementById("lei_concatenada").value;
             const dia = parseInt(document.getElementById('dia').value);
             const mes = parseInt(document.getElementById('mes').value);
             const ano = document.getElementById('ano').value;
@@ -2582,7 +2632,7 @@ doc.text("Natureza: " + naturezaa, 20, xx, { maxWidth: 170, align: 'justify' });
 let alturaTextoNatureza = calcularAlturaTexto("Natureza: " + naturezaa, 170);
 
 // Atualiza a posição 'xx' para o próximo texto, considerando a altura do primeiro texto
-xx += alturaTextoNatureza + espaço;
+xx += alturaTextoNatureza + espaço + 7;
 
 // Texto do nome do autor
 let nomeAutor = document.querySelector('input[name="nome_autor[]"]').value;
@@ -2652,43 +2702,96 @@ let dataInput = document.getElementById("data_registro").value; // Pegando a dat
     let dataFormatada = formatarData(dataInput); // Formatando a data
 
 
-
 //doc.text("NATUREZA DA OCORRÊNCIA: " + naturezaa, 20, 90, { maxWidth: 170, align: 'justify' });
 // Texto em negrito
 doc.setFont("helvetica", "bold");
 let xxx = 3
 
-doc.text("NATUREZA DA OCORRÊNCIA: ", 20, 70, { maxWidth: 170, align: 'justify' });
-doc.text("TIPIFICAÇÃO LEGAL: ", 20, 85 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("DATA DO FATO: ", 20, 90 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("DATA DO REGISTRO: ", 130, 90 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("HORA DO FATO: ", 20, 95 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("ENDEREÇO: ", 20, 100 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("CEP:", 130, 105 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("MUNICIPIO: ", 20, 105 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text("PONTO DE REFERRÊNCIA: ", 20, 110 + xxx, { maxWidth: 170, align: 'justify' });
-// Texto normal (a variável `naturezaa`)
-doc.setFont("helvetica", "normal");
-//doc.text(" " + naturezaa, 20 + doc.getTextWidth("NATUREZA DA OCORRÊNCIA: "), 70, { maxWidth: 870, align: 'justify' });
-doc.text(" " + artigo + " " + lei, 20 + doc.getTextWidth("TIPIFICAÇÃO LEGAL: "), 85 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}` , 10 + doc.getTextWidth("DATA DO REGISTRO: "), 90 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}`, 130 + doc.getTextWidth("DATA DO REGISTRO: "), 90 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text(" " + hora_fato, 20 + doc.getTextWidth("HORA DO FATO: "), 95 + xxx, { maxWidth: 170, align: 'justify' });
-doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), 100 + xxx, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + cep, 130 + doc.getTextWidth("CEP: "), 105 + xxx, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + cidade, 20 + doc.getTextWidth("MUNICIPIO: "), 105 + xxx, { length:24, maxWidth: 170, align: 'justify' });
-doc.text(" " + ponto_referencia, 20 + doc.getTextWidth("PONTO DE REFERRÊNCIA: "), 110 + xxx, { length:24, maxWidth: 170, align: 'justify' });      
 
 let natuureza = naturezaa;
 
 
 doc.setFont("helvetica", "normal");
-doc.text(natuureza, 20, 75, { maxWidth: 170, align: 'justify'});
+doc.text(natuureza, 20 , 75, { maxWidth: 170, align: 'justify'});
+let linnhas;
+let numerocaracteres = natuureza.length;
+if (numerocaracteres < 120){linnhas =1}else{
+linnhas = Math.ceil(numerocaracteres / 120)}
+let posi = 70 + linnhas * 6
+
+doc.setFont("helvetica", "bold");
+doc.text("NATUREZA DA OCORRÊNCIA: ", 20, 70, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(natuureza, 20 , 75, { maxWidth: 170, align: 'justify'});
+
+doc.setFont("helvetica", "bold");
+doc.text("TIPIFICAÇÃO LEGAL: ", 20, posi + xxx +1, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + artigo + " " + lei, 20, posi + 5 + xxx, { maxWidth: 170, align: 'justify' });
+
+
+let linnhass2;
+let numerocaracteress2 = lei.length;
+if (numerocaracteress2 < 90){linnhass2 =1}else{
+linnhass2 = Math.ceil(numerocaracteress2 / 90)}
+posi = posi + 2 + linnhass2 * 6
+
+
+
+doc.setFont("helvetica", "bold");
+doc.text("DATA DO FATO: ", 20, posi + xxx + xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}` , 10 + doc.getTextWidth("DATA DO REGISTRO: "), posi + xxx +xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "bold");
+doc.text("DATA DO REGISTRO: ", 130, posi + xxx +xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(`  ${dia < 10 ? '0' + dia : dia}/${mes  < 10 ? '0' + mes : mes}/${ano}`, 130 + doc.getTextWidth("DATA DO REGISTRO: "), posi + xxx +xxx, { maxWidth: 170, align: 'justify' });
+
+posi += xxx +1
+doc.setFont("helvetica", "bold");
+doc.text("HORA DO FATO: ", 20, posi + xxx +xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + hora_fato, 20 + doc.getTextWidth("HORA DO FATO: "), posi + xxx+xxx, { maxWidth: 170, align: 'justify' });
+
+posi += xxx +1
+doc.setFont("helvetica", "bold");
+doc.text("ENDEREÇO: ", 20, posi+ xxx +xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + endereco, 20 + doc.getTextWidth("ENDEREÇO: "), posi + xxx+xxx, { length:24, maxWidth: 170, align: 'justify' });
+
+posi += xxx+2 *2
+doc.setFont("helvetica", "bold");
+doc.text("CEP:", 130, posi + xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + cep, 130 + doc.getTextWidth("CEP: "), posi + xxx, { length:24, maxWidth: 170, align: 'justify' });
+
+ 
+doc.setFont("helvetica", "bold");
+doc.text("MUNICIPIO: ", 20, posi + xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + cidade, 20 + doc.getTextWidth("MUNICIPIO: "), posi + xxx, { length:24, maxWidth: 170, align: 'justify' });
+
+posi += xxx *2-2
+doc.setFont("helvetica", "bold");
+doc.text("PONTO DE REFERRÊNCIA: ", 20, posi + xxx, { maxWidth: 170, align: 'justify' });
+doc.setFont("helvetica", "normal");
+doc.text(" " + ponto_referencia, 20 + doc.getTextWidth("PONTO DE REFERRÊNCIA: "), posi + xxx, { length:24, maxWidth: 170, align: 'justify' });  
+
+// Texto normal (a variável `naturezaa`)
+doc.setFont("helvetica", "normal");
+//doc.text(" " + naturezaa, 20 + doc.getTextWidth("NATUREZA DA OCORRÊNCIA: "), 70, { maxWidth: 870, align: 'justify' });
+
+
+
+
+
+
+
+    
+
           
             // fim da segundapagina
           //------------------------------------------
-
-
 
 
            
@@ -2703,11 +2806,11 @@ doc.text(natuureza, 20, 75, { maxWidth: 170, align: 'justify'});
        
 
             
-            let y = 140;
+            let y = posi +xxx +xxx+7 *2;
             doc.setFontSize(14);
             doc.setFont("helvetica", "bold");
             doc.text("B- ENVOLVIDOS:", 30, y);
-            y += 20;
+            y += 16;
             doc.setFontSize(10);
             doc.setFont("helvetica", "normal");
 
@@ -3166,13 +3269,13 @@ doc.text(textoLimitado, 10, y);
         }
 
 
-        doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
+       // doc.addPage(); // Cria uma nova página
+         //   adicionarCabecalho()
+          //  adicionarRodape()
+           // doc.setFontSize(10);
+            //y = 60; // Reinicia a posição no topo da nova página
+            //pageCount++; // Incrementa contador de páginas
+            //assinaturaefolhas()
 
 
 doc.setFont("helvetica", "bold");
