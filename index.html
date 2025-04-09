@@ -1465,27 +1465,51 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
         "relato_policial_correto": `Às ${horaOcorrido} do dia ${diaRegistro} de ${mesExtenso2} de ${AnO} , deparamos com autor do fato, () e em decorrência do fato dei voz de ciência a autor do fato, conduzindo o mesmo para o Nucleo de policia militar de Denise-MT, para adoção das providências legais.`
     };
 
-    // 🔹 Carregar os valores salvos ao abrir a página
-    window.onload = function() {
+   // 🔹 Carregar os valores salvos ao abrir a página
+   window.onload = function() {
         Object.keys(campos).forEach(id => {
             const campo = document.getElementById(id);
-            const valorSalvo = localStorage.getItem(id);
-            campo.value = valorSalvo !== null ? valorSalvo : campos[id];
+            if (campo) { // Verifica se o campo existe
+                const valorSalvo = localStorage.getItem(id);
+                campo.value = valorSalvo !== null ? valorSalvo : campos[id];
+            }
         });
     };
 
     // 🔹 Salvar automaticamente sempre que o usuário digitar algo
     Object.keys(campos).forEach(id => {
-        document.getElementById(id).addEventListener("input", function() {
-            localStorage.setItem(id, this.value);
-        });
+        const campo = document.getElementById(id);
+        if (campo) { // Verifica se o campo existe
+            campo.addEventListener("input", function() {
+                localStorage.setItem(id, this.value);
+            });
+        }
     });
+
+// 🔹 Funcionalidade adicional para salvar campos que são preenchidos programaticamente
+function salvarCampoProgramaticamente(id, valor) {
+    const campo = document.getElementById(id);
+    if (campo) {
+        campo.value = valor;
+        localStorage.setItem(id, valor);  // Salva o valor no localStorage
+    }
+}
+
+// Exemplo de como salvar valores automaticamente preenchidos:
+salvarCampoProgramaticamente("natureza_concatenada", document.getElementById("natureza_concatenada").value);
+salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("artigo_concatenado").value);
+
+
+
 
     // 🔹 Resetar os campos para os valores originais e limpar o localStorage
     function resetarCampos() {
         Object.keys(campos).forEach(id => {
-            document.getElementById(id).value = campos[id];  // Restaurar valor original
-            localStorage.removeItem(id); // Remover do localStorage
+            const campo = document.getElementById(id);
+            if (campo) { // Verifica se o campo existe
+                campo.value = campos[id];  // Restaurar valor original
+                localStorage.removeItem(id); // Remover do localStorage
+            }
         });
         localStorage.clear();
     }
@@ -2085,6 +2109,49 @@ document.getElementById("paginaAnexos").checked = true;
 </head>
 <body>
 
+    
+<script>
+
+
+
+function carrega_autor(){
+
+    if (nomeVitimaautuacao && nomeVitimaautuacao.value) {
+  // Se o campo existir e tiver valor, usa o valor
+  //doc.text("Vítima: " + nomeVitimaautuacao.value, 20, xx+6, { maxWidth: 170, align: 'justify' });
+}
+
+
+
+   // let nomeAutorDeposito = document.querySelector('input[name="nome_autor[]"]');
+   let nomeAutorDeposito = document.getElementById("nome_autor").value 
+   let cpfAutorDeposito = document.querySelector('input[name="cpf_passaporte_autor[]"]');
+    //let filiacaoAutorDeposito = document.querySelector('input[name="filiacao_autor[]"]');
+
+if (nomeAutorDeposito && 
+AutorDeposito.value) {
+  // Se o campo existir e tiver valor, usa o valor
+ // doc.text("Vítima: " + nomeAutorDeposito.value, 20, xx+6, { maxWidth: 170, align: 'justify' });
+ //if (cpfAutorDeposito && cpfAutorDeposito.value) {
+  // Se o campo existir e tiver valor, usa o valor
+ // doc.text("Vítima: " + nomeAutorDeposito.value, 20, xx+6, { maxWidth: 170, align: 'justify' });
+
+
+
+    document.getElementById("nome_deposito").value = nomeAutorDeposito.value
+
+    //document.getElementById("cpf_deposito").value = cpfAutorDeposito.value
+
+   
+
+
+}
+}
+
+
+</script>
+
+
 <!-- Formulário suspenso -->
 <div id="formulario-suspenso">
    
@@ -2092,9 +2159,9 @@ document.getElementById("paginaAnexos").checked = true;
     <h3>Preencha os dados para o Termo de Depósito:</h3><br>
     <!-- Opções de radio buttons -->
 
-    <label>    <input type="radio" name="grupo_opcoes" id="opcao1" value="Autor"> Considerar os dados do Autor </label><br>
+   <!-- <label>    <input type="radio" name="grupo_opcoes" id="opcao1" value="Autor" onclick="carrega_autor()"> Considerar dados do Autor do fato </label><br>
         <label> <input type="radio" name="grupo_opcoes" id="opcao2" value="Testemunha"> Considerar os dados da Testemunha qualificada </label><br>
-            <label><input type="radio" name="grupo_opcoes" id="opcao3" value="Novos"> Cadastrar novos dados </label><br><br>
+            <label><input type="radio" name="grupo_opcoes" id="opcao3" value="Novos"> Cadastrar novos dados </label><br><br>-->
 
 
     <form id="form-dados">
