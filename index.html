@@ -2413,7 +2413,7 @@ const chaveBase = `${tipo.toLowerCase()}_${contador}`;
         <input type="text" class="form-control input-save" name="nome_social_${tipo.toLowerCase()}[]" data-key="nome_social_${chaveBase}" placeholder="Digite o nomeSocial">
         
         <label>Cpf ou Passaporte</label>
-        <input type="text" class="form-control input-save" name="cpf_passaporte_${tipo.toLowerCase()}[]" data-key="cpf_passaporte_${chaveBase}" placeholder="Digite o CPF ou Passaporte">
+        <input type="text" class="form-control input-save" name="cpf_passaporte_${tipo.toLowerCase()}[]" data-key="cpf_passaporte_${chaveBase}" placeholder="Digite o CPF ou Passaporte. CAMPO OBRIGATÓRIO! ATENÇÃO PARA COLOCAR CORRETO!">
        
         <label>RG/CNH Nº</label>
         <input type="text" class="form-control input-save" name="rg_cnh_${tipo.toLowerCase()}[]" data-key="rg_cnh_${chaveBase}" placeholder="Digite o RG ou CNH">
@@ -2433,14 +2433,17 @@ const chaveBase = `${tipo.toLowerCase()}_${contador}`;
         <label>ENDEREÇO</label>
         <input type="text" class="form-control input-save" name="endereco_${tipo.toLowerCase()}[]" data-key="endereco_${chaveBase}" placeholder="Digite o endereço">
 
+         <label>BAIRRO</label>
+        <input type="text" class="form-control input-save" name="bairro_${tipo.toLowerCase()}[]" data-key="bairro_${chaveBase}" placeholder="Digite o bairro. CAMPO OBRIGATÓTIO!">
+
         <label>MUNICIPIO</label>
-        <input type="text" class="form-control input-save" name="municipio_${tipo.toLowerCase()}[]" data-key="municipio_${chaveBase}" value="">
+        <input type="text" class="form-control input-save" name="municipio_${tipo.toLowerCase()}[]" data-key="municipio_${chaveBase}" placeholder="Digite o municipio">
 
         <label>UF</label>
         <input type="text" class="form-control input-save" name="uf_municipio_${tipo.toLowerCase()}[]" data-key="uf_municipio_${chaveBase}" value="MT">
 
         <label>CEP</label>
-        <input type="text" class="form-control input-save" name="cep_municipio_${tipo.toLowerCase()}[]" data-key="cep_municipio_${chaveBase}" value="">
+        <input type="text" class="form-control input-save" name="cep_municipio_${tipo.toLowerCase()}[]" data-key="cep_municipio_${chaveBase}" placeholder="Digite o CEP">
 
         <label>PONTO DE REFERÊNCIA</label>
         <input type="text" class="form-control input-save" name="ponto_referencia_endereco_${chaveBase}" data-key="ponto_referencia_endereco_${tipo.toLowerCase()}[]" placeholder="Digite um ponto de referência do endereço">
@@ -2910,6 +2913,7 @@ doc.setFont("helvetica", "normal");
     const dataexpedicaoufAutor = document.getElementsByName("data_expedicao_uf_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoAutor = document.getElementsByName("filiacao_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoAutor = document.getElementsByName("endereco_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroAutor = document.getElementsByName("bairro_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const municipioAutor = document.getElementsByName("municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioAutor = document.getElementsByName("uf_municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioAutor = document.getElementsByName("cep_municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -2989,6 +2993,7 @@ let Autor01doFatoGlobal = nomeAutor
     y += 6;
     verificapagina()
     doc.text(`   ENDEREÇO: ${enderecoAutor}`, 10, y);
+    doc.text(`   BAIRRO: ${bairroAutor}`, 120, y);
     doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina()
@@ -3076,6 +3081,7 @@ doc.setFontSize(10);
     const dataexpedicaoufVitima = document.getElementsByName("data_expedicao_uf_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoVitima = document.getElementsByName("filiacao_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoVitima = document.getElementsByName("endereco_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroVitima = document.getElementsByName("bairro_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const municipioVitima = document.getElementsByName("municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioVitima = document.getElementsByName("uf_municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioVitima = document.getElementsByName("cep_municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -3130,6 +3136,7 @@ const naturalidadeufVitima = document.getElementsByName("naturalidadeuf_vitima[]
     y += 6;
     verificapagina2()
     doc.text(`   ENDEREÇO: ${enderecoVitima}`, 10, y);
+    doc.text(`   BAIRRO: ${bairroVitima}`, 120, y);
     doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina2()
@@ -3224,6 +3231,7 @@ doc.setFontSize(10);
     const dataexpedicaoufTestemunha = document.getElementsByName("data_expedicao_uf_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoTestemunha = document.getElementsByName("filiacao_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoTestemunha = document.getElementsByName("endereco_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroTestemunha = document.getElementsByName("bairro_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const municipioTestemunha = document.getElementsByName("municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioTestemunha = document.getElementsByName("uf_municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioTestemunha = document.getElementsByName("cep_municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -3280,6 +3288,7 @@ const naturalidadeufTestemunha = document.getElementsByName("naturalidadeuf_test
     y += 6;
     verificapagina3()
     doc.text(`   ENDEREÇO: ${enderecoTestemunha}`, 10, y);
+    doc.text(`   BAIRRO: ${bairroTestemunha}`, 120, y);
     doc.line(10, y+1, 200, y+1);
     y += 6;
     verificapagina3()
