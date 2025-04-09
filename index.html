@@ -2660,6 +2660,12 @@ inputs.forEach(input => {
             doc.text("Fone: (65) 3326-5885 | E-mail: cr07@pm.mt.gov.br", 105, 291, { align: "center" });
             }
 
+            if (quartel === "6ª Cia PM Sapezal") {
+            doc.text("6ª COMPANHIA DE POLICIA MILITAR - SAPEZAL", 105, 285, { align: "center" });
+            doc.text("Avenida Antonio Andre Maggi, Nº500 - Centro - Sapezal-MT, CEP 78.365-054", 105, 288, { align: "center" });
+            doc.text("Fone: (65) 3383-1190 WhatsApp (65) 99617-3110 | E-mail: 5ciasapezal@pm.mt.gov.br", 105, 291, { align: "center" });
+            }
+
 
         }
 
@@ -3383,11 +3389,7 @@ doc.text(textoLimitado, 10, y);
             verificapagina7()
 doc.setFont("helvetica", "bold");
 doc.setFontSize(14);
-            doc.text("C- HISTORICO:", 30, y);
-            y += 20;
-            doc.setFontSize(10);
-            verificapagina7()
-
+            
 
             const relatoCondutorCorreto = document.getElementById("relato_policial_correto").value;
           const nomeCondutor = document.getElementById("nome_completo").value
@@ -3413,6 +3415,11 @@ const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
             assinaturaefolhas()
            
     }
+
+    doc.text("C- HISTORICO:", 30, y);
+            y += 20;
+            doc.setFontSize(10);
+            verificapagina7()
 
 
           doc.setFont("helvetica", "bold");
@@ -3513,7 +3520,7 @@ doc.text(`__________________________________________________`, 100, y-4, { align
 doc.text(`   ${nomeVVitima}`, 100, y, { align: "center" });
 y += 5;
 doc.text(`  CPF: ${cpfVVitima}`, 100, y, { align: "center" });
-y += 10;
+y += 15;
 
            
 
@@ -3527,15 +3534,15 @@ y += 10;
 
 });
 
+//--------------- parte para pag nova 
+//doc.addPage(); // Cria uma nova página
+//pageCount++; // Incrementa contador de páginas
+//assinaturaefolhas()
 
-doc.addPage(); // Cria uma nova página
-pageCount++; // Incrementa contador de páginas
-assinaturaefolhas()
-
-adicionarCabecalho()
-adicionarRodape()
-y = 60
-
+//adicionarCabecalho()
+//adicionarRodape()
+//y = 60
+//////
 
 //-------------------------------------------------------
 function verificapagina5() {
@@ -3825,16 +3832,24 @@ doc.setFont("helvetica", "normal");
 doc.text(textoTermodecompromissso, 20, y, { maxWidth: 170, align: 'justify'});
 
 let cOmarca
+let eNdereçocomarca
+let tElefonecomarca
  // Verifica as condições para a cidade
  if (cidade === "Barra do Bugres-MT" || cidade === "Nova Olimpia-MT" || cidade === "Porto Estrela-MT" || cidade === "Denise-MT") {
                 //resultado.innerHTML = "Ação para Barra do Bugres, Nova Olímpia, Porto Estrela ou Denise";
                 cOmarca = "Barra do Bugres";
+                eNdereçocomarca = "Av. Dep. Hitler Sansão, 1129";
+                tElefonecomarca ="Whatsapp (65) 99688-0622";
             } else if (cidade === "Tangara da serra-MT") {
                 //resultado.innerHTML = "Ação para Tangará";
                 cOmarca = "Tangara da serra-MT";
+                eNdereçocomarca = "Av. Presidente Tancredo de Almeida Neves, Nº 1220-N - Centro";
+                tElefonecomarca ="telefone (65) 99203-2265";
             } else if (cidade === "Campo Novo dos Parecis-MT" || cidade === "Brasnorte-MT" || cidade === "Sapezal-MT") {
                 //resultado.innerHTML = "Ação para Camp Novo, Branortes ou Sapezal";
                 cOmarca = "Campo Novo dos Parecis-MT";
+                eNdereçocomarca = "Av. Rio Grande do Sul, nº 563 - Centro";
+                tElefonecomarca ="Whatsapp (65) 99688-0622";
             } else {
               //  resultado.innerHTML = "Cidade não reconhecida!";
             }
@@ -3844,7 +3859,7 @@ let cOmarca
 
 y += 40;
 
-let textTermodecompromissoContinuacao = `Notifico Vossa Senhoria para comparecer no Fórum da Comarca de ${cOmarca}, situado Av. Dep. Hitler Sansão, 1129, na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo Whatsapp (65) 99688-0622 ou pelo QR Code:`;
+let textTermodecompromissoContinuacao = `Notifico Vossa Senhoria para comparecer no Fórum da Comarca de ${cOmarca}, sito a ${eNdereçocomarca}, na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo ${tElefonecomarca} ou pelo QR Code:`;
 
 doc.setFont("helvetica", "bold");
 doc.text(textTermodecompromissoContinuacao, 20, y, { maxWidth: 170, align: 'justify'});
@@ -3862,7 +3877,7 @@ let qr = new QRious({
             //doc.text("Acesse o link pelo QR Code abaixo:", 20, 20);
 
             // Adicionar QR Code ao PDF
-            doc.addImage(qr.toDataURL(), 'PNG', 155, y+5, 40, 40);
+            doc.addImage(qr.toDataURL(), 'PNG', 155, y+10, 40, 40);
 
           
             doc.setFontSize(10);
@@ -3943,8 +3958,39 @@ doc.line(180, y-33, 180, y+27);
 y += 30
 doc.line(20, y-3, 180, y-3);
 y += 10
+
+//--- dados para vitima sobre comarca
+
+
+let cOmarcaV
+let eNdereçocomarcaV
+let tElefonecomarcaV
+ // Verifica as condições para a cidade
+ if (cidade === "Barra do Bugres-MT" || cidade === "Nova Olimpia-MT" || cidade === "Porto Estrela-MT" || cidade === "Denise-MT") {
+                //resultado.innerHTML = "Ação para Barra do Bugres, Nova Olímpia, Porto Estrela ou Denise";
+                cOmarcaV = "Barra do Bugres";
+                eNdereçocomarcaV = "Av. Dep. Hitler Sansão, 1129";
+                tElefonecomarcaV ="Whatsapp (65) 99688-0622";
+            } else if (cidade === "Tangara da serra-MT") {
+                //resultado.innerHTML = "Ação para Tangará";
+                cOmarcaV = "Tangara da serra-MT";
+                eNdereçocomarcaV = "Av. Presidente Tancredo de Almeida Neves, Nº 1220-N - Centro";
+                tElefonecomarcaV ="telefone (65) 99203-2265";
+            } else if (cidade === "Campo Novo dos Parecis-MT" || cidade === "Brasnorte-MT" || cidade === "Sapezal-MT") {
+                //resultado.innerHTML = "Ação para Camp Novo, Branortes ou Sapezal";
+                cOmarcaV = "Campo Novo dos Parecis-MT";
+                eNdereçocomarcaV = "Av. Rio Grande do Sul, nº 563 - Centro";
+                tElefonecomarcaV ="Whatsapp (65) 99688-0622";
+            } else {
+              //  resultado.innerHTML = "Cidade não reconhecida!";
+            }
+
+
+
+//// fim do dados sobre a vitma da comar
+
 doc.setFont("helvetica", "bold");
-doc.text("Notifico Vossa Senhoria para comparecer no Fórum da Comarca de Barra do Bugres, sito a avenida deputado Hitler Sansão nº1129 centro na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo Whatsapp (65) 99688-0622 ou pelo QR Code:", 20, y, { maxWidth: 160, align: 'justify'});
+doc.text(`Notifico Vossa Senhoria para comparecer no Fórum da Comarca de ${cOmarcaV}, sito a ${eNdereçocomarcaV} na Secretaria ou entrar em contato no Balcão Virtual do Núcleo de Justiça Digital dos Juizados Especiais pelo ${tElefonecomarcaV} ou pelo QR Code:`, 20, y, { maxWidth: 160, align: 'justify'});
 
 y += 25
 
