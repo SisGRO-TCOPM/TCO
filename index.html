@@ -2903,6 +2903,12 @@ doc.setFont("helvetica", "normal");
             doc.setFont("helvetica", "normal");
 
 
+     ///----------------------------
+   
+
+
+
+
             document.getElementsByName("nome_autor[]").forEach((input, index) => {
     const nomeAutor = input.value;
     const nomeSocial = document.getElementsByName("nome_social_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -2913,7 +2919,7 @@ doc.setFont("helvetica", "normal");
     const dataexpedicaoufAutor = document.getElementsByName("data_expedicao_uf_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoAutor = document.getElementsByName("filiacao_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoAutor = document.getElementsByName("endereco_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-    const bairroAutor = document.getElementsByName("bairro_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroAutor = document.getElementsByName("bairro_autor[]")[index]?.value || "***CAMPO OBRIGATÓRIO! ERRO!***"; // Se não houver nome social, exibe "N/A"
     const municipioAutor = document.getElementsByName("municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioAutor = document.getElementsByName("uf_municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioAutor = document.getElementsByName("cep_municipio_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -3081,7 +3087,7 @@ doc.setFontSize(10);
     const dataexpedicaoufVitima = document.getElementsByName("data_expedicao_uf_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoVitima = document.getElementsByName("filiacao_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoVitima = document.getElementsByName("endereco_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-    const bairroVitima = document.getElementsByName("bairro_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroVitima = document.getElementsByName("bairro_vitima[]")[index]?.value || "***CAMPO OBRIGATÓRIO! ERRO!***"; // Se não houver nome social, exibe "N/A"
     const municipioVitima = document.getElementsByName("municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioVitima = document.getElementsByName("uf_municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioVitima = document.getElementsByName("cep_municipio_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -3231,7 +3237,7 @@ doc.setFontSize(10);
     const dataexpedicaoufTestemunha = document.getElementsByName("data_expedicao_uf_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const filiacaoTestemunha = document.getElementsByName("filiacao_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const enderecoTestemunha = document.getElementsByName("endereco_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-    const bairroTestemunha = document.getElementsByName("bairro_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
+    const bairroTestemunha = document.getElementsByName("bairro_testemunha[]")[index]?.value || "***CAMPO OBRIGATÓRIO! ERRO!***"; // Se não houver nome social, exibe "N/A"
     const municipioTestemunha = document.getElementsByName("municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const ufmunicipioTestemunha = document.getElementsByName("uf_municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
     const cepmunicipioTestemunha = document.getElementsByName("cep_municipio_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
@@ -3345,6 +3351,9 @@ doc.text(textoLimitado, 10, y);
    //doc.text(`   RELATO DO AUTOR DO FATO: ${relatoTestemunha}`, 10, y);
     y += 15;
 
+//-------------------------------verifica campos
+
+//-------------------------------verifica campos fim
     
 
             });
@@ -4554,7 +4563,10 @@ y += 10;
 
 //gerarPDF24(doc);
 
-doc.save("tco.pdf");
+let nro = numero_tco
+
+
+doc.save(`TCO.${nro}-7ºCR-${ano}.pdf`);
 
 
  
