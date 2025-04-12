@@ -1329,40 +1329,9 @@ let Vitima04Global = [];
 
         <hr>
        
-        <label for="relato_policial_correto" id="relato_policial_correto" >RELATO DO POLICIAL:</label>
+        <label for="relato_policial_correto">RELATO DO POLICIAL:</label>
         <!--<textarea  class="form-control" id="relato_policial_correto" value="tets" rows="10">Às h do dia , deparamos com (), e em decorrência do fato dei ciência a autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar de Denise-MT, para adoção das providências legais.                                    </textarea>-->
 
-<!------------oculto-------------------------------------------------------------------------------------------------->
-
-
-<script>
-    let contadorCliques = 0;
-    let tempoUltimoClique = 0;
-    const intervalo = 800; // Tempo entre os cliques (em ms)
-
-    document.getElementById("relato_policial_correto").addEventListener("click", function () {
-        const agora = new Date().getTime();
-
-        if (agora - tempoUltimoClique < intervalo) {
-            contadorCliques++;
-        } else {
-            contadorCliques = 1; // Reinicia se demorou demais
-        }
-
-        tempoUltimoClique = agora;
-
-        if (contadorCliques === 4) {
-            alert("Perigo de dano! relato do CONDUTOR DA OCORRENCIA  -    a guarnição policial deparou-se com o autor do fato, condutor de veículo automotor transitando em via pública de forma irregular, infringindo normas básicas de circulação e conduta previstas no Código de Trânsito Brasileiro (CTB). Foi observado que o condutor deixou de sinalizar com a devida antecedência sua intenção de realizar manobras de conversão, contrariando o disposto no art. 35 do CTB, comprometendo a previsibilidade dos demais usuários da via. Além disso, em determinado momento, o condutor realizou uma conversão à esquerda, adentrando propositalmente a contramão de direção, em desrespeito ao art. 186 do mesmo código. Tal conduta não apenas violou a legislação vigente, mas também expôs a risco iminente os demais condutores, pedestres e transeuntes, uma vez que o comportamento do condutor era imprevisível e imprudente. Diante da gravidade da infração e do potencial lesivo da manobra, a situação se caracteriza como crime de trânsito previsto no art. 311 do Código Penal Brasileiro (gerar perigo de dano). Diante do exposto, o condutor foi devidamente abordado, identificado e orientado quanto às consequências legais de suas ações, sendo adotadas as medidas administrativas e legais cabíveis ao caso."); 
-
-            alert("Perigo de dano! relato do AUTOR DO FATO  -    O autor do fato relatou que, na presente data, conduzia o veículo abordado pela guarnição policial mesmo não sendo habilitado. Informou estar ciente de que não possui Carteira Nacional de Habilitação (CNH) e que, por esse motivo, não tem pleno conhecimento das normas de trânsito. Acrescentou que deixou de sinalizar corretamente algumas manobras durante a condução e que, em determinado momento, ingressou na contramão de direção. Reconheceu que tal conduta foi imprudente e poderia ter colocado em risco a integridade de outros condutores e pedestres. O condutor declarou estar arrependido pela infração cometida, afirmando compreender a gravidade dos fatos e assumindo total responsabilidade pelos seus atos. Comprometeu-se ainda a não repetir tal conduta, reconhecendo a importância de estar devidamente habilitado para conduzir veículos automotores."); 
-            contadorCliques = 0; // Reinicia após acionar
-
-        }
-    });
-</script>
-
-
-<!-------------------------------------------------------------------------------------------------------------->
         <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100">Às h do dia , deparamos com (), e em decorrência do fato dei ciência ao autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar, para adoção das providências legais.                                    </textarea>
 
 
@@ -2846,16 +2815,16 @@ doc.setFont("helvetica", "normal");
 doc.text(natuureza, 20 , 75, { maxWidth: 170, align: 'justify'});
 
 doc.setFont("helvetica", "bold");
-doc.text("TIPIFICAÇÃO LEGAL: ", 20, posi + xxx +7, { maxWidth: 170, align: 'justify' });
+doc.text("TIPIFICAÇÃO LEGAL: ", 20, posi + xxx +1, { maxWidth: 170, align: 'justify' });
 doc.setFont("helvetica", "normal");
-doc.text(" " + artigo + " " + lei, 20, posi + 5 + xxx +6, { maxWidth: 170, align: 'justify' });
+doc.text(" " + artigo + " " + lei, 20, posi + 5 + xxx, { maxWidth: 170, align: 'justify' });
 
 
 let linnhass2;
 let numerocaracteress2 = lei.length;
 if (numerocaracteress2 < 90){linnhass2 =2}else{
 linnhass2 = Math.ceil(numerocaracteress2 / 90)}
-posi = posi + 2 + linnhass2 * 9
+posi = posi + 2 + linnhass2 * 6
 
 
 
@@ -3460,7 +3429,7 @@ const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
             y += 15;
              verificapagina7()
 doc.setFont("helvetica", "normal");
-doc.text(textoRelatoCondutor, 20, y, { maxWidth: 175, align: 'justify'});
+//doc.text(textoRelatoCondutor, 20, y, { maxWidth: 175, align: 'justify'});
 
 
 
