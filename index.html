@@ -2365,7 +2365,7 @@ AutorDeposito.value) {
 
    <script>
    function confirmarGeracaoPDF() {
-       if (confirm("Tem certeza que deseja gerar o PDF completo?\nCertifique-se de ter preenchido todos os campos corretos! \n\nSe ao menos for preenchidos os campos da guarnição e a qualificação do Autor do fato o arquivo sera gerado na pasta download")) {
+       if (confirm("Tem certeza que deseja gerar o PDF completo?\nCertifique-se de ter preenchido todos os campos corretos! \n\nCaso o Autor do Fato não tenha sido cadastrado, o código não será executado e, consequentemente, o arquivo não será gerado na pasta de download.")) {
            gerarPDF(); // Chama a função apenas se o usuário confirmar
            
        }
@@ -4605,16 +4605,90 @@ y += 5;
 doc.text(`  RGPM: ${rgPM}`, 100, y, { align: "center" });
 y += 10;
 
+/// --- critica geral 
+let numerodeerros = 0
+let msgCritica =""
 
+if (document.getElementById("natureza_concatenada").value.trim() === "") {
+    // O campo está vazio
+     numerodeerros ++;
+     msgCritica = msgCritica + "* A Natureza do TCO não foi selecionada!\n";
+} 
+if (cidade.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* A Cidade do TCO não foi selecionada!\n";
+}
+if (quartel.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Quartel do TCO não foi selecionado!\n";
+}
+if (nomeCondutor.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Condutor do TCO não foi selecionado!\n";
+}
+
+if (document.getElementById("posto_grad").value.trim() === ""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Posto/Graduação do Condutor do TCO não foi selecionado!\n";
+}
+
+if (rgPM.trim() === ""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O RGPM do Condutor do TCO não foi cadastrado!\n";
+}
+
+
+if (nome_completo_componente2.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Segundo Componente da GUPM do TCO não foi selecionado! Obrigatório que seja no minimo dois policiais.\n";
+}
+
+if (document.getElementById("posto_grad_componente2").value.trim() === ""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Posto/Graduação do segundo policial do TCO não foi selecionado!\n";
+}
+if (rg_componente2.trim() === ""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O RGPM do segundo policial do TCO não foi cadastrado!\n";
+}
+
+if (cep.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Cep em Dados Gerais do TCO não foi preenchido!\n";
+}
+
+if (endereco.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Endereço em Dados Gerais do TCO não foi preenchido!\n";
+}
+if (bairro.trim()===""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Bairro em Dados Gerais do TCO não foi preenchido!\n";
+}
+
+if (document.getElementById("local_fato").value.trim() === ""){
+    numerodeerros ++;
+     msgCritica = msgCritica + "* O Local do Fato em Dados Gerais do TCO não foi preenchido!\n";
+}
+
+if (numerodeerros > 0) {
+    
+    msgCritica += "\nPor favor, corrija os erros antes de tentar gerar o arquivo.";
+}
+
+///// --- fim da critica geral 
 
 //gerarPDF24(doc);
 
+if (numerodeerros > 0) {
+    alert(msgCritica);
+}else{
 let nro = numero_tco
 
 
 doc.save(`TCO.${nro}-7ºCR-${ano}.pdf`);
 
-
+}
  
         
 }
