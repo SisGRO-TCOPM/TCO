@@ -186,7 +186,7 @@
 <option value="Difusão culposa de doença ou praga">Difusão culposa de doença ou praga</option>
 <option value="Direção não habilitada de veículo automotor, gerando perigo">Direção não habilitada de veículo automotor, gerando perigo</option>
 <option value="Direção não licenciada de aeronave">Direção não licenciada de aeronave</option>
-<option value="Direção perigosa de veículo na via pública (de veículo não automotor)">Direção perigosa de veículo na via pública (de veículo não automotor)</option>
+<option value="Direção perigosa de veículo na via pública">Direção perigosa de veículo na via pública</option>
 <option value="Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade">Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade</option>
 <option value="Divulgação de segredo">Divulgação de segredo</option>
 <option value="durante a noite">durante a noite</option>
@@ -1527,7 +1527,12 @@ salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("arti
     </form>
     <hr>
 
-
+<script>function selecionaUnico(clickedCheckbox) {
+    const checkboxes = document.getElementsByName(clickedCheckbox.name);
+    checkboxes.forEach(cb => {
+      if (cb !== clickedCheckbox) cb.checked = false;
+    });
+  }</script>
 
 
 
@@ -1539,8 +1544,25 @@ salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("arti
     </form>
     <hr>
 
+
+
+    
     <!-- Cadastro de Vítima -->
-    <h2>3º Cadastro de Vítima</h2>
+    <h2>3º Cadastro de Vítima</h2> 
+ <div>
+
+    
+          <label>
+            <input type="checkbox" id="interesse_representacao" name="opcao_${contador}" onclick="selecionaUnico(this)" checked> Manifesta interesse em exercer o direito de representação
+          </label>
+          
+        </div>
+          <label>
+            <input type="checkbox" id="interesse_decisao" name="opcao_${contador}" onclick="selecionaUnico(this)"> Manifesta interesse em decidir posteriormente
+          </label>
+     
+
+          
     <form id="formVitima">
         <div id="pessoasVitima"></div>
         <button type="button" class="btn btn-primary mt-3" onclick="adicionarPessoa('Vitima')">Adicionar Vítima</button>
@@ -2398,13 +2420,24 @@ function adicionarPessoa(tipo) {
         contador = contadorTestemunha;
         contadorTestemunha++;
     }
+
+
+    
 // Cria a chave base para armazenar no localStorage
 const chaveBase = `${tipo.toLowerCase()}_${contador}`;
     // Cria o elemento div para a pessoa
     const divPessoa = document.createElement('div');
     divPessoa.classList.add('pessoa', 'border', 'p-3', 'mb-3');
+
+    let opcoesCheckbox = '';
+
+
+
+
     divPessoa.innerHTML = `
         <h4>${tipo} ${contador}</h4>
+
+
         <label>Nome</label>
         
         <input type="text" class="form-control input-save" name="nome_${tipo.toLowerCase()}[]" data-key="nome_${chaveBase}" value="Digite o nome">
@@ -3949,6 +3982,26 @@ doc.line(20, y-3, 180, y-3);
 
 doc.setFontSize(10)
 doc.line(48, y-3, 48, y+57);
+//---------------
+// Captura o checkbox pelo ID
+const checkbox = document.getElementById("interesse_representacao");
+
+// Verifica se o checkbox está marcado
+if (checkbox.checked) {
+    // O checkbox foi selecionado
+    //console.log("O checkbox foi selecionado.");
+    doc.line(30, y, 40, y+25);
+    doc.line(40, y, 30, y+25);
+} else {
+    // O checkbox não foi selecionado
+    //console.log("O checkbox não foi selecionado.");
+    doc.line(30, y+30, 40, y+55);
+    doc.line(40, y+30, 30, y+55);
+
+}
+
+
+//-----------
 doc.text("Em exercer o direito de representação ou queixa contra o autor do fato. (fica cientificada que em caso de queixa-crime, a vítima deverá constituir advogado)", 50, y+6, { maxWidth: 120, align: 'justify'});
 doc.line(20, y-3, 20, y+57);
 y += 30
