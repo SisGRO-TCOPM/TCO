@@ -384,6 +384,10 @@
              
              document.getElementById("lei_concatenada").value = document.getElementById("lei_concatenada").value + (document.getElementById("lei_concatenada").value ? "; |<>| " : "") + document.getElementById("lei").value;
              
+
+              // Salvar manualmente os readonly
+      localStorage.setItem('artigo_concatenado', artigo.value);
+      localStorage.setItem('lei_concatenada', lei.value);
              // Mensagem de confirmação
         alert("Natureza "+document.getElementById("natureza_concatenada").value+" selecionada com sucesso!");
         }
@@ -423,7 +427,7 @@
 <hr>
 
 <label for="natureza_concatenada">Naturezas Selecionadas:</label>
-<textarea id="natureza_concatenada" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
+<textarea id="natureza_concatenada" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
 
 
 <label for="artigo_cancatenado">Artigo selecionados:</label>
@@ -432,7 +436,39 @@
 <label for="lei_concatenada">Lei selecionadas:</label>
 <textarea type="text" id="lei_concatenada" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
 
+
 <script>
+
+
+const campos2 = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+
+// Restaurar valores ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  campos2.forEach(id => {
+    const textarea = document.getElementById(id);
+    const salvo = localStorage.getItem(id);
+    if (salvo !== null) {
+      textarea.value = salvo;
+    }
+
+    // Auto-save ao digitar (se não for readonly)
+    if (!textarea.hasAttribute('readonly')) {
+      textarea.addEventListener('input', () => {
+        localStorage.setItem(id, textarea.value);
+      });
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
     const searchInput = document.getElementById("search");
     const selectElement = document.getElementById("naturezaa");
 
@@ -1444,7 +1480,7 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
     // Lista de IDs dos campos e seus valores originais
     const campos = {
         "numero_tco": "0000",
-        "natureza_concatenada": "",
+        
         "cidade": "",
         "cep": "",
         "endereco": "",
@@ -1455,6 +1491,7 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
 "bairro": "",
 "natureza_concatenada": "",
 "artigo_concatenado": "",
+
 "lei_concatenada": "",
 
 
@@ -1462,9 +1499,13 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
         "local_fato": "",
         "ponto_referencia": "",
         "comunicante": "",
-        "nome_completo": "",
+        
+        
         "rg": "",
         "posto_grad": "",
+        "posto_grad_componente2": "",
+        "posto_grad_componente3": "",
+        "posto_grad_componente4": "",
         "nome_completo_componente2": "",
         "relato_policial_correto": `Às ${horaOcorrido} do dia ${diaRegistro} de ${mesExtenso2} de ${AnO} , deparamos com autor do fato, () e em decorrência do fato dei voz de ciência a autor do fato, conduzindo o mesmo para o unidade de policia militar, para adoção das providências legais.`
     };
@@ -2782,6 +2823,41 @@ if (nomeVitimaautuacao && nomeVitimaautuacao.value) {
 
 
 
+//------salvar texto area
+function storeAll() {
+  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+  
+  campos.forEach(id => {
+    const valor = document.getElementById(id).value;
+    localStorage.setItem(id, valor);
+  });
+
+ // alert('Todos os campos foram salvos!');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+
+  campos.forEach(id => {
+    const valorSalvo = localStorage.getItem(id);
+    if (valorSalvo !== null) {
+      document.getElementById(id).value = valorSalvo;
+    }
+  });
+});
+
+
+
+///----- fim do salvar
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3678,7 +3754,7 @@ const cpfAutor = document.getElementsByName("cpf_passaporte_autor[]")[index]?.va
 const numeroDeLinhas3 = linhas3.length;
 const numeroDeLinhasmultiplcado3 = linhas3.length * 6;
 
-          verificapagina6()
+          ///verificapagina6()
           
 
           if (y + numeroDeLinhasmultiplcado3 + 15 +15 > 270) {
@@ -3712,7 +3788,7 @@ doc.text(`   ${nomeAAutor}`, 100, y, { align: "center" });
 y += 5;
 doc.text(`  CPF: ${cpfAutor}`, 100, y, { align: "center" });
 y += 10;
-verificapagina6()
+//verificapagina6()
                
 
 
@@ -4749,6 +4825,7 @@ doc.save(`TCO.${nro}-7ºCR-${ano}.pdf`);
  
         
 }
+
 
 
 
