@@ -1332,7 +1332,7 @@ let Vitima04Global = [];
         <label for="relato_policial_correto">RELATO DO POLICIAL:</label>
         <!--<textarea  class="form-control" id="relato_policial_correto" value="tets" rows="10">Às h do dia , deparamos com (), e em decorrência do fato dei ciência a autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar de Denise-MT, para adoção das providências legais.                                    </textarea>-->
 
-        <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100"></textarea>
+        <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100">Às h do dia , deparamos com (), e em decorrência do fato dei ciência ao autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar, para adoção das providências legais.                                    </textarea>
 
 
         <!--inicio do reconhecimento de voz-->
@@ -1440,15 +1440,18 @@ const AnO = document.getElementById("ano").value;
 const mEs = document.getElementById("mes").value;
 // Convertendo o número para o nome do mês extenso
 const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt 
-const municiPio2 = document.getElementById("municipio").value
 
     // Lista de IDs dos campos e seus valores originais
     const campos = {
         "numero_tco": "0000",
+        "natureza_concatenada": "",
         "cidade": "",
-        
+        "cep": "",
         "endereco": "",
-
+        "rgPM": "",
+        "rg_componente2": "",
+        "rg_componente3": "",
+        "rg_componente4": "",
 "bairro": "",
 "natureza_concatenada": "",
 "artigo_concatenado": "",
@@ -1463,7 +1466,7 @@ const municiPio2 = document.getElementById("municipio").value
         "rg": "",
         "posto_grad": "",
         "nome_completo_componente2": "",
-        "relato_policial_correto": `Às ${horaOcorrido} do dia ${diaRegistro} de ${mesExtenso2} de ${AnO} , deparamos com autor do fato, () e em decorrência do fato dei voz de ciência a autor do fato, conduzindo o mesmo para o quartel da policia militar, para adoção das providências legais.`
+        "relato_policial_correto": `Às ${horaOcorrido} do dia ${diaRegistro} de ${mesExtenso2} de ${AnO} , deparamos com autor do fato, () e em decorrência do fato dei voz de ciência a autor do fato, conduzindo o mesmo para o unidade de policia militar, para adoção das providências legais.`
     };
 
    // 🔹 Carregar os valores salvos ao abrir a página
