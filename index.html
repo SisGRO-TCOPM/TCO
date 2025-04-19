@@ -3518,7 +3518,7 @@ const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
           verificapagina7()
           
 
-          if (y + numeroDeLinhasmultiplcado4 + 15 > 270) {
+          if (y + numeroDeLinhasmultiplcado4 + 15 > 260) {
             doc.addPage(); // Cria uma nova página
             adicionarCabecalho()
             adicionarRodape()
@@ -3558,8 +3558,8 @@ doc.text(textoFormatado, 20, y, { maxWidth: 170, align: 'justify'});
 
 
 
-y += numeroDeLinhas4 * 5;
-y += 5;
+y += numeroDeLinhasmultiplcado4 /2;
+y += 15;
 doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
 doc.text(`   ${nomeCondutor}- ${posto_grad}`, 100, y, { align: "center" });
 y += 5;
