@@ -29,15 +29,6 @@
     
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-
-
-        <script>
-            // Variável global
-            var quartelnumerotco = "";
-        
-         
-          </script>
-
         
 </head>
 <body class="container mt-4">
@@ -1598,10 +1589,7 @@ salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("arti
     </form>
     <hr>
 
-
-
-
-
+   
     
     <!-- Cadastro de Vítima -->
     <h2>3º Cadastro de Vítima</h2> 
@@ -2088,9 +2076,7 @@ document.getElementById("Termo_Apreensão_de_Materias").checked = true;
 
             doc.setFontSize(12);
 doc.setFont("helvetica", "bold");
-//doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
-
-doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/"+ parseInt(document.getElementById('numero_tco').value)+"/"+quartelnumerotco+"/7ºCR" +"/"+document.getElementById('ano').value, 103, 47, { align: "center" });
+doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
 
 
 //doc.text("ANEXOS"), 100, 90, { align: "center"});
@@ -2699,7 +2685,18 @@ inputs.forEach(input => {
 
 
      
-          
+            function adicionarCabecalho() {
+                const img = new Image();
+            img.src = 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Bras%C3%A3o_PMMT.PNG';
+            doc.addImage(img, 'PNG', 93, 5, 20, 20);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.text("ESTADO DE MATO GROSSO", 103, 30, { align: "center" });
+            doc.text("POLÍCIA MILITAR", 103, 35, { align: "center" });
+            //doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
+            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/"+ parseInt(document.getElementById('numero_tco').value)+"/"+quartelnumerotco+"/7ºCR" +"/"+document.getElementById('ano').value, 103, 47, { align: "center" });
+                doc.line(10, 38, 200, 38);
+            }
 
             function adicionarRodape() {
                 
@@ -2769,29 +2766,9 @@ inputs.forEach(input => {
 
         }
 
-
-
-        function adicionarCabecalho() {
-                const img = new Image();
-            img.src = 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Bras%C3%A3o_PMMT.PNG';
-            doc.addImage(img, 'PNG', 93, 5, 20, 20);
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(10);
-            doc.text("ESTADO DE MATO GROSSO", 103, 30, { align: "center" });
-            doc.text("POLÍCIA MILITAR", 103, 35, { align: "center" });
-           // doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
             
-            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/"+ parseInt(document.getElementById('numero_tco').value)+"/"+quartelnumerotco+"/7ºCR" +"/"+document.getElementById('ano').value, 103, 47, { align: "center" });
-            
-                doc.line(10, 38, 200, 38);
-            }
-
-
-
             adicionarRodape()
-
             adicionarCabecalho();
-            
             doc.setFontSize(12);
             let pageCount = 1; // Contador de páginas
             
