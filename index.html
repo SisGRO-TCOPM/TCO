@@ -29,6 +29,15 @@
     
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+
+        <script>
+            // Variável global
+            var quartelnumerotco = "";
+        
+         
+          </script>
+
         
 </head>
 <body class="container mt-4">
@@ -2077,7 +2086,9 @@ document.getElementById("Termo_Apreensão_de_Materias").checked = true;
 
             doc.setFontSize(12);
 doc.setFont("helvetica", "bold");
-doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
+//doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
+
+doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/"+ parseInt(document.getElementById('numero_tco').value)+"/"+quartelnumerotco+"/7ºCR" +"/"+document.getElementById('ano').value, 103, 47, { align: "center" });
 
 
 //doc.text("ANEXOS"), 100, 90, { align: "center"});
@@ -2686,18 +2697,7 @@ inputs.forEach(input => {
 
 
      
-            function adicionarCabecalho() {
-                const img = new Image();
-            img.src = 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Bras%C3%A3o_PMMT.PNG';
-            doc.addImage(img, 'PNG', 93, 5, 20, 20);
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(10);
-            doc.text("ESTADO DE MATO GROSSO", 103, 30, { align: "center" });
-            doc.text("POLÍCIA MILITAR", 103, 35, { align: "center" });
-            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
-            
-                doc.line(10, 38, 200, 38);
-            }
+          
 
             function adicionarRodape() {
                 
@@ -2710,45 +2710,86 @@ inputs.forEach(input => {
             doc.text("NUCLEO DE POLICIA MILITAR DE DENISE", 105, 285, { align: "center" });
             doc.text("Rua Piaui - Bairro centro - Denise-MT - CEP 78.380-000", 105, 288, { align: "center" });
             doc.text("Fone: (65) 98170 0447 | E-mail: npmdenise@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "NPMDENISE"
             }
             if (quartel === "1ª CIPM NOVA OLIMPIA") {
             doc.text("QUARTEL DA 1ª COMPANHIA DE POLICIA MILITAR (1ª CIAPM)", 105, 285, { align: "center" });
             doc.text("CEP 78.370-000, RUA PARÁ, Nº1062 - W, CENTRO, NOVA OLIMPIA - MT", 105, 288, { align: "center" });
             doc.text("CONTATO/FONE: (65) 3331-1190 OU (65) 9 98170-0443 | E-mail: 1CIANOVAOLIMPIA@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "1ªCIAPM"
             }
             if (quartel === "12ª CIPM BARRA DO BUGRES") {
             doc.text("12ª COMPANHIA INDEPENDENTE DE POLICIA MILITAR", 105, 285, { align: "center" });
             doc.text("END.: RUA FREDERICO JOSETE 502 - BAIRRO BEIRA RIO - BARRA DO BUGRES-MT", 105, 288, { align: "center" });
             doc.text("TELEFONE:(65) 3361 1190 | (65) 98170-0439", 105, 291, { align: "center" });
+            quartelnumerotco = "12ªCIAPM"
             }
             if (quartel === "NPM PORTO ESTRELA") {
             doc.text("NUCLEO DE POLICIA MILITAR DE PORTO ESTRELA", 105, 285, { align: "center" });
             doc.text("END.: AV. JOSE ANTONIO DE FARIA, S/N, BAIROO CENTRO - CEP 78.398-000", 105, 288, { align: "center" });
             //doc.text("Fone: (65) 98170 0447 | E-mail: @pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "NPMPORTOESTRELA"
             }
             if (quartel === "19º BPM - TANGARA") {
             doc.text("19º BATALHÃO DE POLICIA MILITAR", 105, 285, { align: "center" });
             doc.text("End.: Rua José Corsino nº862-W - Bairro Parque das Mansões - Tangara da Serra-MT", 105, 288, { align: "center" });
             doc.text("Fone: (65) 3326-2990 | E-mail: 19bpm@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "19ºBPM"
             }
 
             if (quartel === "CR07 SEDE") {
             doc.text("7º COMANDO REGIONAL - SEDE", 105, 285, { align: "center" });
             doc.text("Rua Antonio Alves Aeroporto, CEP 78.301-512 - Tangara da Serra-MT", 105, 288, { align: "center" });
             doc.text("Fone: (65) 3326-5885 | E-mail: cr07@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "SEDE"
             }
 
             if (quartel === "6ª Cia PM Sapezal") {
             doc.text("6ª COMPANHIA DE POLICIA MILITAR - SAPEZAL", 105, 285, { align: "center" });
             doc.text("Avenida Antonio Andre Maggi, Nº500 - Centro - Sapezal-MT, CEP 78.365-054", 105, 288, { align: "center" });
             doc.text("Fone: (65) 3383-1190 WhatsApp (65) 99617-3110 | E-mail: 5ciasapezal@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "6ªCIAPM"
             }
 
+            if (quartel === "1º Pel PM Brasnorte") {
+        doc.text("1º PELOTÃO - BRASNORTE", 105, 285, { align: "center" });
+            doc.text("????, Nº??? - Centro - Brasnorte-MT, CEP ????", 105, 288, { align: "center" });
+            doc.text("Fone: (65) ???? WhatsApp (65) ?????? | E-mail: ?????@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "1ºPELPM"
+            }
+
+            if (quartel === "16ª CIPM Campo Novo do Parecis") {
+        doc.text("16ª COMPANHIA DE POLICIA MILITAR - CAMPO NOVO", 105, 285, { align: "center" });
+            doc.text("????, Nº??? - Centro - Campo Novo-MT, CEP ????", 105, 288, { align: "center" });
+            doc.text("Fone: (65) ???? WhatsApp (65) ?????? | E-mail: ?????@pm.mt.gov.br", 105, 291, { align: "center" });
+            quartelnumerotco = "16ªCIAPM"
+            }
 
         }
 
-            adicionarCabecalho();
+
+
+        function adicionarCabecalho() {
+                const img = new Image();
+            img.src = 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Bras%C3%A3o_PMMT.PNG';
+            doc.addImage(img, 'PNG', 93, 5, 20, 20);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.text("ESTADO DE MATO GROSSO", 103, 30, { align: "center" });
+            doc.text("POLÍCIA MILITAR", 103, 35, { align: "center" });
+           // doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 103, 47, { align: "center" });
+            
+            doc.text("TERMO CIRCUNSTANCIADO DE OCORRÊNCIA Nº TCO/"+ parseInt(document.getElementById('numero_tco').value)+"/"+quartelnumerotco+"/7ºCR" +"/"+document.getElementById('ano').value, 103, 47, { align: "center" });
+            
+                doc.line(10, 38, 200, 38);
+            }
+
+
+
             adicionarRodape()
+
+            adicionarCabecalho();
+            
             doc.setFontSize(12);
             let pageCount = 1; // Contador de páginas
             
@@ -4819,7 +4860,7 @@ if (numerodeerros > 0) {
 let nro = numero_tco
 
 
-doc.save(`TCO.${nro}-7ºCR-${ano}.pdf`);
+doc.save(`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`);
 
 }
  
