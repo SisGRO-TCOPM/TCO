@@ -431,10 +431,10 @@
 
 
 <label for="artigo_cancatenado">Artigo selecionados:</label>
-<textarea type="text" id="artigo_concatenado" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
+<textarea type="text" id="artigo_concatenado" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
 
 <label for="lei_concatenada">Lei selecionadas:</label>
-<textarea type="text" id="lei_concatenada" required style="width: 100%; height: auto; min-height: 50px;" readonly></textarea>
+<textarea type="text" id="lei_concatenada" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
 
 
 <script>
@@ -890,6 +890,7 @@ let Vitima04Global = [];
     <!-----------------------------------------------------------ESCOLHA DE QUARTEL-->
 
     <script>
+        
         function alterarNomeCondutor() {
             var quartelSelecionado = document.getElementById("quartel").value;
              // Campos de nome completo
@@ -4761,6 +4762,13 @@ y += 10;
 /// --- critica geral 
 let numerodeerros = 0
 let msgCritica =""
+
+if (document.getElementById("numero_tco").value.trim() === "" || document.getElementById("numero_tco").value.trim() === "0000") {
+    // O campo está vazio ou é "0000"
+    numerodeerros++;
+    msgCritica += "* Informe o número do TCO!\nO número do TCO deve ser escolhido na planilha compartilhada do CR!\nPreencha as informações da planilha de forma correta e com atenção!\n\n";
+}
+
 
 if (document.getElementById("natureza_concatenada").value.trim() === "") {
     // O campo está vazio
