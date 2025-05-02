@@ -388,6 +388,9 @@
               // Salvar manualmente os readonly
       localStorage.setItem('artigo_concatenado', artigo.value);
       localStorage.setItem('lei_concatenada', lei.value);
+      localStorage.setItem('natureza_concatenada', naturezaa.value);
+    
+     
              // Mensagem de confirmação
         alert("Natureza "+document.getElementById("natureza_concatenada").value+" selecionada com sucesso!");
         }
@@ -1542,8 +1545,8 @@ function salvarCampoProgramaticamente(id, valor) {
 }
 
 // Exemplo de como salvar valores automaticamente preenchidos:
-salvarCampoProgramaticamente("natureza_concatenada", document.getElementById("natureza_concatenada").value);
-salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("artigo_concatenado").value);
+//salvarCampoProgramaticamente("natureza_concatenada", document.getElementById("natureza_concatenada").value);
+//salvarCampoProgramaticamente("artigo_concatenado", document.getElementById("artigo_concatenado").value);
 
 
 
