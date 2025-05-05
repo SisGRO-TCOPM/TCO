@@ -1328,10 +1328,292 @@ let Vitima04Global = [];
 
 </div>
  
+<!--programação para automação dos campos postograd e rgpm INCIO-->
+<script>
+    const tabelaPM = {
+      //"GUSTAVO ROBERT DE OLIVEIRA": { posto: "CB PM", rg: "885.812" },
+      //"DOUGLAS BEZERRA DE OLIVEIRA": { posto: "SD PM", rg: "887.192" }
+
+"ABMAEL BEZERRA DO NASCIMENTO ":{posto: "SD PM", rg: "888.326" },
+"ADAUTO FRANCISCO DE OLIVEIRA":{posto: "CB PM", rg: " 885.311" },
+"ADEMIR TORRES ROSA JÚNIOR":{posto: "SD PM", rg: " 887.025" },
+"ADENIR FRANCISCO PONSONI":{posto: "CB PM", rg: " 886.241" },
+"ADMILSON DUARTE DE OLIVEIRA":{posto: "1º SGT PM", rg: " 880.893" },
+"AGNALDO LEAL DOS SANTOS":{posto: "SUB TEN PM", rg: " 879.893" },
+"AGNALDO MARCIANO DA SILVA ALMEIDA ":{posto: "3º SGT PM", rg: " 883.939" },
+"ALAN CARVALHO DA SILVA":{posto: "CB PM", rg: " 885,903" },
+"ALESSANDRO HERREIRO MACEDO":{posto: "SD PM", rg: " 887.038" },
+"ALEX FERNANDES NOGUEIRA COSTA ":{posto: "3º SGT PM", rg: " 883.940" },
+"ALEX FRANCISCO DE OLIVEIRA":{posto: "SD PM", rg: " 886.633" },
+"ALEX GARDES":{posto: "CB PM", rg: " 884.337" },
+"ALEXANDRE AMORIM DA SILVA":{posto: "3º SGT PM", rg: " 883.941" },
+"ALEXANDRE APARECIDO DE ASSIS ":{posto: "CAP PM", rg: " 885.751" },
+"ALLAN CARLOS CAMPOS":{posto: "3º SGT PM", rg: "886.601" },
+"ANDERSON DE AMARAL RODRIGUES":{posto: "CB PM", rg: " 886.062" },
+"ANDERSON DE SOUZA SCHWARTZ ":{posto: "SD PM", rg: " 886.602" },
+"ANDERSON MORAES DA SILVA":{posto: "3º SGT PM", rg: " 885.316" },
+"ANDERSON SALES PRADO":{posto: "2º SGT PM", rg: " 882.539" },
+"ANDRÉ LUIS ASSUNÇÃO PESTANA ROSA":{posto: "SD PM", rg: " 887.075" },
+"ANDREIA SOARES DA SILVA ANDRADE":{posto: "3º SGT PM", rg: " 885.318" },
+"ANGELO MÁRCIO PRADO BRUNO":{posto: "1º SGT PM", rg: " 880.298" },
+"ANTONIO HEROITO DERNER JUNIOR":{posto: "3º SGT PM", rg: " 885.320" },
+"ARILDO MARQUES":{posto: "SUB TEN PM", rg: " 880.443" },
+"ARLAN SOARES RONDON":{posto: "2º SGT PM", rg: " 883.029" },
+"ARNALDO PEREIRA DOS SANTOS ":{posto: "2º SGT PM", rg: " 883.194" },
+"ARTHUR GABRIEL DA SILVA SIQUEIRA":{posto: "SD PM", rg: "888.297" },
+"ARTHUR VALDIR VINHAS DE QUEIROZ":{posto: "SD PM", rg: " 887.097" },
+"ATHAULFO ALVES DA LUZ":{posto: "1º SGT PM", rg: " 881.502" },
+"BRINNER GARAY PINHO PEDROSO":{posto: "3º SGT PM", rg: " 884.760" },
+"BRUNA ASSIS CORREIA":{posto: "SD PM", rg: " 886.605" },
+"BRUNO RAFAEL PINTO DA SILVA":{posto: "SD PM", rg: " 886.712" },
+"BRUNO ROBERTO BATISTAO":{posto: "SD PM", rg: " 886.606" },
+"BRUNO VINICIUS ALVES FURQUIM":{posto: "SD PM", rg: "887.922" },
+"CARLOS ALBERTO FRANCISCO DE SOUZA":{posto: "SUB TEN PM", rg: "881.048" },
+"CARLOS ALEXANDRE SANTOS RIBEIRO":{posto: "3º SGT PM", rg: " 885.323" },
+"CARLOS ANTONIO DA SILVA":{posto: "3º SGT PM", rg: " 884.456" },
+"CIRANO RIBAS DE PAULA RODRIGUES":{posto: "CAP PM", rg: "885.689" },
+"CLAUDENILSON FERREIRA DOS SANTOS ":{posto: "SD PM", rg: " 886.445" },
+"CLAUDERIZE KARLA DE OLIVEIRA MAGALHÃES CARVALHO":{posto: "SD PM", rg: "888.190" },
+"CLAUDIO FERREIRA BARBOSA":{posto: "SUB TEN PM", rg: " 879.960" },
+"CLEOMAR DA SILVA OLIVEIRA":{posto: "1º SGT PM", rg: " 880.645" },
+"CLEUNICE LOURENÇO DE CRISTO":{posto: "SD PM", rg: " 886.608" },
+"CLEYTON GOBBI CORDEIRO":{posto: "SD PM", rg: " 887.142" },
+"CLEYTON RIBEIRO GRUPP ":{posto: "3º SGT PM", rg: " 883.948" },
+"DANIEL ALMEIDA BRITO":{posto: "SD PM", rg: "886.609" },
+"DAVI PEREIRA LUZ":{posto: "1º SGT PM", rg: " 881.511" },
+"DENER MARCELO CORREA DE SOUZA":{posto: "SD PM", rg: " 887.170" },
+"DENIS CELESTINO DA SILVA":{posto: "SD PM", rg: "886.548" },
+"DENIS HENRIQUE DOS SANTOS RAMOS":{posto: "SD PM", rg: " 887.859" },
+"DIEGO ALVES FURQUIM":{posto: "MAJ PM", rg: " 885.493" },
+"DIEGO FERNANDES DE OLIVEIRA LAGE DOS SANTOS":{posto: "SD PM", rg: " 887.177" },
+"DIEGO PEIXOTO DA SILVA":{posto: "3º SGT PM", rg: " 887.182" },
+"DIEGO SOARES DA SILVA":{posto: "SD PM", rg: " 886.610" },
+"DILLAN RAMOS DA LUZ":{posto: "SD PM", rg: "887185" },
+"DIORGENES URBANO BORGES DA SILVA":{posto: "SD PM", rg: " 886.611" },
+"DOUGLAS BEZERRA DE OLIVEIRA":{posto: "SD PM", rg: " 887.192" },
+"DUILIO ANDRÉ MORAES SOARES":{posto: "SD PM", rg: " 887.199" },
+"DUYLLIO JOSÉ DE FREITAS ALENCAR MAXIMO SILVA":{posto: "SD PM", rg: " 886.640" },
+"EDE CARLOS DE OLIVEIRA SANTOS":{posto: "3º SGT PM", rg: " 885.332" },
+"EDIMAR RODRIGUES DA CRUZ JÚNIOR":{posto: "CAP PM", rg: "885.741" },
+"EDINEI RODRIGUES CHAVES":{posto: "2º SGT PM", rg: " 881.503" },
+"EDJOICE ALVES DE SOUZA":{posto: "2º SGT PM", rg: " 882.174" },
+"EDNIL BOSCO SOARES DE PAULA":{posto: "SUB TEN PM", rg: " 880.251" },
+"EDNILSON ALVES MIRANDA":{posto: "SUB TEN PM", rg: " 879.676" },
+"EDSON BRUNO MARTINS LOBO":{posto: "SD PM", rg: " 886.612" },
+"EDUARDO HENRIQUE SOUZA LANA":{posto: "TEN CEL PM", rg: " 883.158" },
+"ELEILTON THIAGO SOARES DE OLIVEIRA":{posto: "SD PM", rg: " 886.613" },
+"ELIAS GERSON ELER ":{posto: "CB PM", rg: " 883.950" },
+"ELINILSON LEITE DE MIRANDA":{posto: "2º SGT PM", rg: " 882.445" },
+"ELINTON LUIS FRANCIOLI DE AQUINO":{posto: "2º SGT PM", rg: " 882.432" },
+"ÉLLBIS RODRIGUES DA COSTA":{posto: "CB PM", rg: " 885.942" },
+"ERANILSON PEREIRA DE JESUS":{posto: "1º SGT PM", rg: " 880.273" },
+"ETIENE RODRIGUES DE ALMEIDA DA SILVA":{posto: "2º SGT PM", rg: " 882.453" },
+"EVANDRO ONOFRE DA SILVA":{posto: "SD PM", rg: " 886.614" },
+"EVERLI RENATO OLIVEIRA MARTINS":{posto: "SD PM", rg: " 886.615" },
+"EVERSON BRITO FORTES":{posto: "MAJ PM", rg: " 882.804" },
+"FABIANA RODRIGUES NOTARANGELI":{posto: "3º SGT PM", rg: " 885.337" },
+"FABIANO MARCIO DE MATOS":{posto: "3º SGT PM", rg: " 885.338" },
+"FABIANO ARRUDA OLIVEIRA":{posto: "SD PM", rg: " 886.686" },
+"FABIO AUGUSTO MUCHAM":{posto: "2º SGT PM", rg: " 883.445" },
+"FABIO DE SOUZA DIAS ":{posto: "3º SGT PM", rg: " 883.951" },
+"FABIO DOS SANTOS NEGRÃO":{posto: "CB PM", rg: " 885.833" },
+"FABIO GLEYCIO FONSECA":{posto: "3º SGT PM", rg: " 885.339" },
+"FÁBIO OLIVEIRA DA SILVA ":{posto: "3º SGT PM", rg: " 883.952" },
+"FABRICIO PEREIRA COELHO":{posto: "3º SGT PM", rg: " 885.340" },
+"FERNANDO DA CRUZ COSTA":{posto: "CB PM", rg: " 886.285" },
+"FERNANDO SOUZA ANDRADE":{posto: "1º SGT PM", rg: " 881.717" },
+"FLAVIO VIEIRA DA CUNHA":{posto: "CB PM", rg: " 886.338" },
+"FRANCISCO MAGNO PEREIRA DA SILVA":{posto: "SD PM", rg: " 887.274" },
+"FRANKLIM COSTA DE URZEDO":{posto: "SD PM", rg: " 886.617" },
+"GABRIEL DIJAN SCHMEING":{posto: "CAP PM", rg: " 885.694" },
+"GABRIEL HENRIQUE LUNKES DE MELO":{posto: "1º TEN PM", rg: "886.371" },
+"GABRIEL MURILO FERRAZZA ARAUJO":{posto: "SD PM", rg: " 887.280" },
+"GERSON EVANGELISTA MACHADO":{posto: "1º SGT PM", rg: " 880.566" },
+"GEYSON DE JESUS ALVES BATISTA":{posto: "3º SGT PM", rg: "  885.879" },
+"GIL BRITO DE BARROS FIGUEIREDO":{posto: "2º SGT PM", rg: " 882.698" },
+"GILMAR DIAS SANTOS":{posto: "3º SGT PM", rg: " 885.341" },
+"GILMAR NEVES DA SILVA":{posto: "SUB TEN PM", rg: " 879.977" },
+"GLEISON RODRIGUES GODOY":{posto: "SD PM", rg: " 887.289" },
+"GUILHERME HENRIQUE GAMA SOUZA":{posto: "MAJ PM", rg: " 885.497" },
+"GUILHERME SOUZA SILVA":{posto: "CB PM", rg: "885.916" },
+"GUSTAVO HENRIQUE BECKER":{posto: "SD PM", rg: " 887.296" },
+"GUSTAVO ROBERT DE OLIVEIRA":{posto: "CB PM", rg: " 885.812" },
+"HAGAÚ DOS SANTOS FRANCO":{posto: "CB PM", rg: " 886.081" },
+"HIGSON BRAGA DE SOUZA":{posto: "SD PM", rg: " 886.618" },
+"HILTON INÁCIO DA SILVA":{posto: "SUB TEN PM", rg: " 879.268" },
+"IVAN DO CARMO GOMES":{posto: "2º SGT PM", rg: " 883.630" },
+"JAIR DOS SANTOS SILVA":{posto: "1º SGT PM", rg: " 880.304" },
+"JAMYS DA SILVA MOTA":{posto: "3º SGT PM", rg: " 885.343" },
+"JANDERSON REBECA ROCHA":{posto: "SUB TEN PM", rg: " 881.517" },
+"JANILSON ALVES CARDOSO":{posto: "SD PM", rg: " 887.324" },
+"JEAN CARLOS QUEIROZ PIROVANO":{posto: "2º SGT PM", rg: " 883.329" },
+"JEDERSON MIRANDA ARRUDA":{posto: "SD PM", rg: "888.314" },
+"JEORGE ANDRÉ DA CUNHA":{posto: "3º SGT PM", rg: " 885.344" },
+"JOAREIS BARBOSA LIMA":{posto: "1º SGT PM", rg: "880.855" },
+"JOHNNY EVANGELISTA DE ARRUDA CAMPOS":{posto: "CB PM", rg: "886.009" },
+"JOILTON CHIQUESI":{posto: "SD PM", rg: " 886.620" },
+"JONIVALDO ATANÁSIO DA SILVA MIRANDA":{posto: "CB PM", rg: " 885.941" },
+"JORGE RECHMANN":{posto: "2º SGT PM", rg: " 882.434" },
+"JOSÉ APARECIDO VIEIRA DOS SANTOS":{posto: "1º SGT PM", rg: " 881.489" },
+"JOSE AUGUSTO OJEDA":{posto: "SUB TEN PM", rg: "882.120" },
+"JOSÉ WANDENBERG GOMES PEREIRA":{posto: "2º SGT PM", rg: " 882.423" },
+"JOSILDO RODRIGUES LEITE":{posto: "2º SGT PM", rg: " 883.629" },
+"JOSIMAR PEREIRA DA COSTA":{posto: "CB PM", rg: " 886.222" },
+"JOSUÉ BARBOSA DOS SANTOS":{posto: "2º SGT PM", rg: " 882.451" },
+"JULIANO MÁRCIO ANDRADE BATISTA":{posto: "2º SGT PM", rg: " 882.397" },
+"JULIO CESAR ETIENE PEREIRA":{posto: "CB PM", rg: " 886.236" },
+"KEVELLEY ARRUDA OLIVEIRA":{posto: "CB PM", rg: "884.486" },
+"KLEBERSON RIZATTI DE MORAES GONÇALVES":{posto: "3º SGT PM", rg: " 885.348" },
+"LEANDRO ARAUJO VIEIRA":{posto: "3º SGT PM", rg: " 885.349" },
+"LEANDRO JOÃO DA ROSA":{posto: "3º SGT PM", rg: " 883.243" },
+"LEANDRO RIBEIRO DOS SANTOS":{posto: "SUB TEN PM", rg: "881.512" },
+"LEOCIR ANTONIO PUHL":{posto: "SUB TEN PM", rg: " 881.497" },
+"LETICIA SANTOS ROCHA":{posto: "SD PM", rg: "888.070" },
+"LUCIANO DUARTE DE OLIVEIRA":{posto: "2º SGT PM", rg: " 881.462" },
+"LUIS CARLOS DE ALMEIDA PADILHA":{posto: "SUB TEN PM", rg: " 880.262" },
+"LUIS CESAR SIQUEIRA ALVES":{posto: "CB PM", rg: " 885.351" },
+"LUIS FERNANDO DE OLIVEIRA":{posto: "CB PM", rg: " 884.375" },
+"LUIZ FERNANDO DE SOUZA ":{posto: "CB PM", rg: "885.619" },
+"MAGNO SILVA PEREIRA":{posto: "SD PM", rg: " 887.464" },
+"MALTON SOARES":{posto: "2º SGT PM", rg: "883.145" },
+"MANOEL FRANCISCO DE OLIVEIRA":{posto: "3º SGT PM", rg: " 885.353" },
+"MANOEL SANTOS DA SILVA":{posto: "2º SGT PM", rg: " 882.356" },
+"MARCELO ALEXANDRE AMARAL DA SILVA":{posto: "2º SGT PM", rg: " 883.461" },
+"MARCELO FRANCISCO DE OLIVEIRA":{posto: "3º SGT PM", rg: " 885.355" },
+"MARCIO PEREIRA DA SILVA":{posto: "MAJ PM", rg: " 882.688" },
+"MARCOS ANTÔNIO MINARI":{posto: "2º SGT PM", rg: " 882.431" },
+"MARCOS ANTONIO PEREIRA CATULÉ":{posto: "1º SGT PM", rg: " 879.790" },
+"MARCOS ANTONIO RODRIGUES DE AMORIM":{posto: "TEN CEL PM", rg: "880.781" },
+"MARCOS DA GAMA SILVA":{posto: "2º SGT PM", rg: " 883.675" },
+"MARCOS DIONES NASCIMENTO LIMA":{posto: "CB PM", rg: " 885.964" },
+"MARCOS VINICIUS CERILO DA SILVA":{posto: "SD PM", rg: "888.012" },
+"MARIVAN CARNEIRO DE CARVALHO":{posto: "SUB TEN PM", rg: " 880.455" },
+"MARLLON BOABAID DE MATOS PASSARELLO":{posto: "CB PM", rg: " 886.200" },
+"MARLON TOMAZ COSTA":{posto: "3º SGT PM", rg: " 886.023" },
+"MAURICIO  DE SOUZA TOLEDO":{posto: "SD PM", rg: " 886.621" },
+"MAURICIO RODRIGUES DIAS":{posto: "3º SGT PM", rg: " 885.359" },
+"MAX CARLOS DE ALBUQUERQUE ALMEIDA":{posto: "1º SGT PM", rg: " 881.464" },
+"MAYKO APARECIDO DE SOUZA ALMEIDA":{posto: "SD PM", rg: " 886.622" },
+"MICHELLE CAPPARELLI ":{posto: "SD PM", rg: "888.007" },
+"MOACYR MENDES DOS SANTOS JUNIOR":{posto: "2º SGT PM", rg: " 882.626" },
+"MURILO FRANCO DE MIRANDA":{posto: "TEN CEL PM", rg: " 880.724" },
+"NATAN VIEIRA ALVES":{posto: "CAP PM", rg: "885707" },
+"NATHALIA APARECIDA SILVA ANTUNES ":{posto: "3º SGT PM", rg: " 883.967" },
+"OSMÁRIO CÍCERO DE OLIVEIRA JÚNIOR ":{posto: "TEN CEL PM", rg: " 883.055" },
+"OSVALDINA DA SILVA SANTOS":{posto: "2º SGT PM", rg: " 883.427" },
+"PATRICIO DA SILVA SANTOS":{posto: "3º SGT PM", rg: " 885.365" },
+"PAULO CEZAR BISPO VIEIRA":{posto: "CB PM", rg: "886.296" },
+"PAULO EDUADO DO ESPIRITO SANTO":{posto: "3º SGT PM", rg: "883.968" },
+"PHELIPE MOREIRA BRITTS":{posto: "3º SGT PM", rg: " 885.366" },
+"RAFAEL NUNES SOARES DA COSTA":{posto: "SD PM", rg: " 886.624" },
+"RAIMUNDO CAPISTRANO AMORIM":{posto: "1º SGT PM", rg: " 881.545" },
+"REGINALDO OLIVEIRA DA SILVA":{posto: "SD PM", rg: " 887.583" },
+"RENAN ALVES PEREIRA":{posto: "SD PM", rg: " 887.585" },
+"RENAN CARLOS NUNES DE OLIVEIRA ":{posto: "SD PM", rg: "887.587" },
+"RENATO HONORATO CARNEIRO":{posto: "CB PM", rg: " 885.367" },
+"RHAEL JAIME GONÇALVES":{posto: "SD PM", rg: " 887.597" },
+"RICARDO DA SILVA SOUZA":{posto: "CB PM", rg: " 885.860" },
+"RICHARD VIEIRA DE FREITAS":{posto: "SD PM", rg: " 887.604" },
+"ROBERTO CARIELO TOMAZ":{posto: "3º SGT PM", rg: " 885.370" },
+"ROBERTO HAMANN SEIDLER":{posto: "SUB TEN PM", rg: "881.522" },
+"RODRIGO FRANÇA DE ASSIS":{posto: "SD PM", rg: " 886.626" },
+"RODRIGO GONÇALVES LISBOA":{posto: "2º SGT PM", rg: " 882.454" },
+"RODRIGO PEREIRA DE SOUZA":{posto: "SD PM", rg: " 887.627" },
+"ROFERSON PINHEIRO DE LIMA ":{posto: "3º SGT PM", rg: " 885.586" },
+"ROGERIO BORGES DE OLIVEIRA":{posto: "3º SGT PM", rg: " 885.371" },
+"ROGÉRIO DA SILVA":{posto: "SUB TEN PM", rg: " 880.360" },
+"ROGÉRIO MOREIRA DA SILVA":{posto: "1º SGT PM", rg: " 881.520" },
+"ROGÉRIO SÁVIO DA SILVA":{posto: "TEN CEL PM", rg: " 883.161" },
+"ROGÉRIO TIAGO GONÇALVES VASQUES":{posto: "2º SGT PM", rg: " 882.116" },
+"ROMULO NINJINSK VASLAV PINHEIRO BICHO":{posto: "3º SGT PM", rg: "885.372" },
+"RONEY GONÇALVES FERREIRA":{posto: "2º SGT PM", rg: " 883.467" },
+"RONIL PERON JUNIOR":{posto: "CB PM", rg: " 886.221" },
+"RONILDO PEREIRA RODRIGUES":{posto: "1º SGT PM", rg: " 882.070" },
+"SANDER BRUNO SENABIO DE CAMPOS":{posto: "SD PM", rg: "887.646" },
+"SERGIO MANHONI JUNIOR":{posto: "CB PM", rg: " 886.037" },
+"SÉRGIO ROBERTO":{posto: "1º SGT PM", rg: " 875.988" },
+"SIDNEI MARIO KRAUS":{posto: "3º SGT PM", rg: " 885.374" },
+"SIDNEY BROLEZI DO NASCIMENTO":{posto: "2º SGT PM", rg: " 882.309" },
+"SINESIO FRANCISCO MORAES":{posto: "SUB TEN PM", rg: "880.058" },
+"THIAGO HENRIQUE AMARANTE ":{posto: "3º SGT PM", rg: " 883.975" },
+"THIAGO SILVA COELHO":{posto: "SD PM", rg: " 887.672" },
+"THIAGO SILVA JARDIM RODRIGUES":{posto: "SD PM", rg: " 886.628" },
+"TIAGO SILVA HARTMANN":{posto: "SD PM", rg: " 886.971" },
+"UILTON DA SILVA SOARES":{posto: "3º SGT PM", rg: " 885.378" },
+"VAGNER ANTUNES GONÇALVES RODRIGUES ":{posto: "3º SGT PM", rg: " 883.977" },
+"VALDEMAR JUNIOR DE ALMEIDA BORGES":{posto: "3º SGT PM", rg: " 885.379" },
+"VALÉRIA CUNHA DE MELLO":{posto: "2º SGT PM", rg: "882.425" },
+"VAMIL DE LUQUI NUNES":{posto: "SUB TEN PM", rg: " 880.219" },
+"VANDERLEY LUIS DA SILVA ESPIRITO SANTO ":{posto: "3º SGT PM", rg: " 883.978" },
+"VICTOR HUGO FERREIRA SILVA":{posto: "SD PM", rg: " 887.690" },
+"WAGNER COSTA ALVES":{posto: "CB PM", rg: " 886.306" },
+"WAGNER DE ALMEIDA LEITE":{posto: "2º SGT PM", rg: " 883.407" },
+"WAGNER DE SOUZA SILVA":{posto: "3º SGT PM", rg: "885.598" },
+"WANDERLEY DE ALMEIDA LEITE ":{posto: "3º SGT PM", rg: " 883.980" },
+"WARNI ANDRADE DE PINHO":{posto: "SD PM", rg: "886.706" },
+"WEBER DE AQUINO DA SILVA":{posto: "2º SGT PM", rg: " 883.426" },
+"WELINTON FABIANO DA SILVA":{posto: "2º SGT PM", rg: " 883.482" },
+"WELLIGTON LOURENÇO BARBOSA ":{posto: "3º SGT PM", rg: " 883.982" },
+"WENDEL DONIZETE DERMONDES DE AGUIAR":{posto: "2º SGT PM", rg: " 885.383" },
+"WENDER SILVA FLORES":{posto: "SD PM", rg: " 887.720" },
+"WESLEY FERREIRA DA SILVA":{posto: "SD PM", rg: " 887.726" },
+"WILHAN GUIMARAES SENA":{posto: "SD PM", rg: "888.335" },
+"WILLIAN VICTOR DOS SANTOS MORAES":{posto: "CB PM", rg: "885.670" },
+"WINSTON SALAZAR MIRANDA":{posto: "3º SGT PM", rg: " 885.386" },
+"ANTONIO CASSIO FABIANO DA COSTA FARIA ":{posto: "CB PM", rg: " 885.319" },
+"CLEOMAR COSTA FAXINA":{posto: "SD PM", rg: "887.141" },
+"ENÉIAS DE OLIVEIRA":{posto: "SUB TEN PM", rg: "880.134" },
+"EDNÉIA ALVES DE SOUZA":{posto: "2º SGT PM", rg: "882.173" },
+"SALIN ALE DE CAMPOS UNTAR":{posto: "2º SGT PM", rg: "882.550" }
+
+
+
+    };
+  
+    // Guarda os conteúdos originais dos selects de posto
+    const selectsOriginais = {
+      "posto_grad": document.getElementById("posto_grad").innerHTML,
+      "posto_grad_componente2": document.getElementById("posto_grad_componente2").innerHTML,
+      "posto_grad_componente3": document.getElementById("posto_grad_componente3").innerHTML,
+      "posto_grad_componente4": document.getElementById("posto_grad_componente4").innerHTML
+    };
+  
+    function preencherCampos(baseIdNome, baseIdPosto, baseIdRg) {
+      const selectNome = document.getElementById(baseIdNome);
+      const selectPosto = document.getElementById(baseIdPosto);
+      const inputRg = document.getElementById(baseIdRg);
+  
+      selectNome.addEventListener("change", function () {
+        const nomeSelecionado = this.value;
+        const dados = tabelaPM[nomeSelecionado];
+  
+        if (dados) {
+          // Preenche automaticamente com valor da tabela
+          selectPosto.innerHTML = `<option value="${dados.posto}">${dados.posto}</option>`;
+          selectPosto.value = dados.posto;
+          inputRg.value = dados.rg;
+        } else {
+          // Restaura as opções originais e limpa RG
+          selectPosto.innerHTML = selectsOriginais[baseIdPosto];
+          inputRg.value = '';
+        }
+      });
+    }
+  
+    preencherCampos("nome_completo", "posto_grad", "rg");
+    preencherCampos("nome_completo_componente2", "posto_grad_componente2", "rg_componente2");
+    preencherCampos("nome_completo_componente3", "posto_grad_componente3", "rg_componente3");
+    preencherCampos("nome_completo_componente4", "posto_grad_componente4", "rg_componente4");
+  </script>
+        
 
 
 
 
+
+
+
+<!--programação para automação dos campos postograd e rgpm FIM-->
 
     <div class="date-group">
         <label for="cep">CEP:</label>
