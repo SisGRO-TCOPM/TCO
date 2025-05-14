@@ -2586,6 +2586,11 @@ document.getElementById("Termo_Apreensão_de_Materias").checked = true;
 
             doc.setFontSize(12);
 doc.setFont("helvetica", "bold");
+//`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}`
+
+//doc.text(`Referência: Termo Circunstanciado de Ocorrência de Nº/TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}`, 100, 50, { align: "center" });
+
+
 doc.text("Referência: Termo Circunstanciado de Ocorrência de Nº TCO/7ºCR" +"/"+document.getElementById('ano').value+"."+ parseInt(document.getElementById('numero_tco').value), 100, 50, { align: "center" });
 
 
@@ -3231,7 +3236,7 @@ inputs.forEach(input => {
             doc.text("12ª COMPANHIA INDEPENDENTE DE POLICIA MILITAR", 105, 285, { align: "center" });
             doc.text("END.: RUA FREDERICO JOSETE 502 - BAIRRO BEIRA RIO - BARRA DO BUGRES-MT", 105, 288, { align: "center" });
             doc.text("TELEFONE:(65) 3361 1190 | (65) 98170-0439", 105, 291, { align: "center" });
-            quartelnumerotco = "12ªCIAPM"
+            quartelnumerotco = "12ªCIPM"
             }
             if (quartel === "NPM PORTO ESTRELA") {
             doc.text("NUCLEO DE POLICIA MILITAR DE PORTO ESTRELA", 105, 285, { align: "center" });
@@ -5486,6 +5491,7 @@ const numeroTCOcompleto = document.getElementById("numero_tco").value
     const link = document.createElement('a');
     link.href = URL.createObjectURL(new Blob([newPdfBytes], { type: 'application/pdf' }));
     link.download = "TCO-7ºCR.pdf";
+    //link.download = `TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`
     link.click();
 
     alert(`Documento combinado com sucesso! Total de páginas: ${totalPages}`);
