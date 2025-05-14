@@ -71,6 +71,7 @@
 </div>
 
 
+  
 
 
 
@@ -932,7 +933,7 @@ let Vitima04Global = [];
         var todosOsNomes = [
             // Coloque todos os nomes de todos os quartéis aqui, concatenados.
             // Exemplo:
-            
+            "*****EFETIVO NPM DENISE*****",
              "ANGELO MÁRCIO PRADO BRUNO",
                     "SIDNEY BROLEZI DO NASCIMENTO",
                     "WEBER DE AQUINO DA SILVA",
@@ -946,7 +947,7 @@ let Vitima04Global = [];
                     "EDSON BRUNO MARTINS LOBO",
                     "ARTHUR VALDIR VINHAS DE QUEIROZ",
                     "DOUGLAS BEZERRA DE OLIVEIRA",
-
+"*****EFETIVO 12ªCIPM*****",
 "ROGÉRIO SÁVIO DA SILVA",
 "ALEXANDRE APARECIDO DE ASSIS ",
 "JOSE AUGUSTO OJEDA",
@@ -967,7 +968,7 @@ let Vitima04Global = [];
 "JANILSON ALVES CARDOSO",
 "UEWERTON MARCELO LIMA DE OLIVEIRA",
 "ARTHUR GABRIEL DA SILVA SIQUEIRA",
-
+"*****EFETIVO 1ªCIAPM*****",
   "JAIR DOS SANTOS SILVA",
 "ROGÉRIO TIAGO GONÇALVES VASQUES",
 "JOSUÉ BARBOSA DOS SANTOS",
@@ -983,7 +984,7 @@ let Vitima04Global = [];
 "DENER MARCELO CORREA DE SOUZA",
 "RICHARD VIEIRA DE FREITAS",
 "CLAUDERIZE KARLA DE OLIVEIRA MAGALHÃES CARVALHO",
-
+"*****EFETIVO NPM PORTO ESTRELA*****",
  "SINESIO FRANCISCO MORAES",
 "EDNILSON ALVES MIRANDA",
 "RONILDO PEREIRA RODRIGUES",
@@ -1000,7 +1001,7 @@ let Vitima04Global = [];
 "DILLAN RAMOS DA LUZ",
 "RENAN CARLOS NUNES DE OLIVEIRA ",
 "JEDERSON MIRANDA ARRUDA",
-
+"*****EFETIVO 19ºBPM*****",
                     "EDUARDO HENRIQUE SOUZA LANA",
 "EVERSON BRITO FORTES",
 "MARCIO PEREIRA DA SILVA",
@@ -1059,7 +1060,7 @@ let Vitima04Global = [];
 "CLEUNICE LOURENÇO DE CRISTO",
 "MARCOS VINICIUS CERILO DA SILVA",
 
-
+"*****EFETIVO SEDE*****",
   "MURILO FRANCO DE MIRANDA",
 "OSMÁRIO CÍCERO DE OLIVEIRA JÚNIOR ",
 "GUILHERME HENRIQUE GAMA SOUZA",
@@ -1081,7 +1082,7 @@ let Vitima04Global = [];
 "VICTOR HUGO FERREIRA SILVA",
 "ADEMIR TORRES ROSA JÚNIOR",
 
-
+"*****EFETIVO SAPEZAL*****",
                     "GABRIEL DIJAN SCHMEING",
 "EDNIL BOSCO SOARES DE PAULA",
 "LEOCIR ANTONIO PUHL",
@@ -1100,7 +1101,7 @@ let Vitima04Global = [];
 "MAGNO SILVA PEREIRA",
 "DENIS HENRIQUE DOS SANTOS RAMOS",
 
-
+"*****EFETIVO BRASNORTE*****",
 "CIRANO RIBAS DE PAULA RODRIGUES",
 "SÉRGIO ROBERTO",
 "GEYSON DE JESUS ALVES BATISTA",
@@ -1112,13 +1113,41 @@ let Vitima04Global = [];
 "DUYLLIO JOSÉ DE FREITAS ALENCAR MAXIMO SILVA",
 "EVANDRO ONOFRE DA SILVA",
 "LETICIA SANTOS ROCHA",
+"*****EFETIVO CAMPO NOVO DOS PARECIS*****",
+ "MARCOS ANTONIO RODRIGUES DE AMORIM",
+"GABRIEL HENRIQUE LUNKES DE MELO",
+"VAMIL DE LUQUI NUNES",
+"GILMAR NEVES DA SILVA",
+"ROGÉRIO DA SILVA",
+"CARLOS ALBERTO FRANCISCO DE SOUZA",
+"GERSON EVANGELISTA MACHADO",
+"ARLAN SOARES RONDON",
+"JOSILDO RODRIGUES LEITE",
+"IVAN DO CARMO GOMES",
+"LEANDRO JOÃO DA ROSA",
+"EDE CARLOS DE OLIVEIRA SANTOS",
+"ROBERTO CARIELO TOMAZ",
+"MARLLON BOABAID DE MATOS PASSARELLO",
+"FRANKLIM COSTA DE URZEDO",
+"ANDRÉ LUIS ASSUNÇÃO PESTANA ROSA",
+"GLEISON RODRIGUES GODOY",
+"DIEGO SOARES DA SILVA",
+"WESLEY FERREIRA DA SILVA",
+"THIAGO SILVA JARDIM RODRIGUES",
+"BRUNO RAFAEL PINTO DA SILVA",
+"CLEOMAR COSTA FAXINA",
+"WILHAN GUIMARAES SENA",
+"ABMAEL BEZERRA DO NASCIMENTO ",
+"MICHELLE CAPPARELLI ",
+"DENIS CELESTINO DA SILVA"
+
 
 
             
             
             
             // ... (adicione todos os outros nomes de todos os quartéis)
-            "LETICIA SANTOS ROCHA"
+            
         ];
 
         // Verifica se o número TCO é 9034
@@ -1135,6 +1164,23 @@ let Vitima04Global = [];
         }
 
             
+
+ 
+      if (document.getElementById('emDiaria').checked) {
+        // Aqui você pode executar ações específicas
+        nomeSelects.forEach(function(nomeSelect) {
+                todosOsNomes.forEach(function(nome) {
+                    var option = document.createElement("option");
+                    option.value = nome;
+                    option.textContent = nome;
+                    nomeSelect.appendChild(option);
+                });
+            });
+            return; // Sai da função pois já preencheu os campos // Ex: carregarEfetivoCR();
+      } else {
+       // alert("Guarnição na cidade de lotação. Nenhuma alteração necessária.");
+      }
+ 
             
             
             
@@ -1406,6 +1452,16 @@ let Vitima04Global = [];
     </script>
 </head>
 <body>
+
+<div>
+    <label>
+      <input type="checkbox" id="emDiaria"> EM DIÁRIA.   >> Selecione esta opção caso a guarnição responsável pela lavratura do TCO esteja atuando em município diverso de sua lotação. Somente com esta seleção será possível vincular corretamente a guarnição ao quartel da localidade onde o fato ocorreu, permitindo o carregamento dos nomes dos policiais do efetivo completo do Comando Regional.
+    </label>
+    <br><br>
+</div>
+
+
+
 
     <!-- Campo Quartel -->
     <label for="quartel">Quartel:</label>
