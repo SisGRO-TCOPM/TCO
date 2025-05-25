@@ -1943,6 +1943,91 @@ let Vitima04Global = [];
 
         <textarea class="form-control" id="relato_policial_correto" rows="10" cols="100">Às h do dia , deparamos com (), e em decorrência do fato dei ciência ao autor do fato sobre o crime cometido, conduzindo o mesmo para unidade de policia militar, para adoção das providências legais.                                    </textarea>
 
+<!--EXEMPLO DE TEXTO INICIO-->
+
+
+
+
+<!-- Área para exibir o resultado -->
+<div id="resultado" style="display: none; margin-top: 20px;">
+  <p id="textoEscolhido" style="white-space: pre-wrap;"></p>
+  <button onclick="copiarTexto()">Copiar Texto</button>
+</div>
+
+<script>
+    
+const localendereço = document.getElementById('endereco')
+
+  const label = document.getElementById('relato_policial_correto');
+  let clickCount = 0;
+  let clickTimer;
+
+  label.addEventListener('click', () => {
+    clickCount++;
+
+    // Limpa o contador após 1 segundo de inatividade
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+    }, 1000);
+
+    if (clickCount === 4) {
+      clickCount = 0; // Resetar após a ação
+
+      // Exibe opções ao usuário
+      const escolha = prompt(
+        "Escolha qual modelo de relato você quer:\n1 - Modelo art 310 CTB\n2 - Modelo ART 309 PERIGO DE DADO\n3 - Modelo ART 42 PERTUBAÇÃO\n4 - Modelo D"
+      );
+
+      let texto = "";
+      switch (escolha) {
+        case '1':
+          texto = `Durante patrulhamento de rotina pela via (informar nome da rua/avenida), a guarnição da Polícia Militar visualizou um veículo cujo condutor deixou de sinalizar com antecedência a mudança de direção, transitava pela contramão de direção e chegou a subir na calçada. Diante das infrações flagrantes, foi realizada a abordagem com sinais sonoros e luminosos. Ao ser questionado, o condutor informou que não possuía Carteira Nacional de Habilitação (CNH) e alegou acreditar que estava conduzindo de forma correta, conforme imaginava estar previsto na legislação de trânsito. Relatou ainda que o veículo pertencia a (informar nome do proprietário), o qual teria autorizado o uso do automóvel para se deslocar até (informar destino, ex: mercado, igreja, etc.). O proprietário do veículo compareceu ao local da abordagem e confirmou à guarnição que havia autorizado o condutor a utilizar o veículo, mesmo tendo conhecimento de que este não possuía habilitação. Diante disso, foi cientificado de que tal conduta se enquadra no crime previsto no artigo 310 do Código de Trânsito Brasileiro – “permitir, confiar ou entregar a direção de veículo automotor a pessoa não habilitada”. Em seguida, o mesmo foi conduzido à (informar unidade policial/militar) para a lavratura do Termo Circunstanciado de Ocorrência (TCO).`;
+          break;
+        case '2':
+          texto = "Durante patrulhamento de rotina pela via (informar nome da rua/avenida), a guarnição da Polícia Militar visualizou um veículo em atitudes suspeitas, cujo condutor transitava em zigue-zague pela via, em alta velocidade e sem respeitar as sinalizações de trânsito. Em determinado momento, o condutor perdeu parcialmente o controle da direção, vindo a invadir a calçada, quase atingindo pedestres que circulavam pelo local. Diante do evidente risco à segurança pública, foi realizada a abordagem com sinais sonoros e luminosos. Durante a fiscalização, foi constatado que o condutor não possuía Carteira Nacional de Habilitação (CNH), tratando-se, portanto, de pessoa não habilitada para condução de veículo automotor. Ao ser questionado, o condutor alegou que conduzia o veículo apenas para deslocar-se até (informar destino, ex: mercado, casa de familiar, etc.), e que não imaginava que sua conduta representasse perigo. O proprietário do veículo compareceu ao local da abordagem e informou que o veículo havia sido utilizado sem sua autorização. Diante dos fatos, considerando que o condutor não possuía habilitação e gerou situação de perigo real, restou caracterizada a conduta tipificada no artigo 309 do Código de Trânsito Brasileiro – “dirigir veículo automotor, em via pública, sem a devida permissão para dirigir ou habilitação, gerando perigo de dano”. O condutor foi cientificado de seus direitos e conduzido à (informar unidade policial/militar) para os procedimentos legais, com lavratura do respectivo Termo Circunstanciado de Ocorrência (TCO).";
+          break;
+        case '3':
+          texto = "Durante patrulhamento de rotina pela via (informar nome da rua/avenida), a guarnição da Polícia Militar foi acionada por moradores via telefone de emergência para atender uma ocorrência de perturbação do sossego causada por volume excessivo de som. Ao chegar ao local, foi constatada a presença de aparelho de som em volume muito alto, ultrapassando os limites permitidos pela legislação vigente, causando incômodo aos moradores da região. Foi solicitado ao responsável pelo aparelho que diminuísse o volume, porém, mesmo após advertência, o som continuou em níveis elevados, configurando perturbação do sossego público. Diante da resistência em cessar o comportamento e da continuidade da perturbação, a guarnição procedeu à apreensão do equipamento de som, que foi devidamente recolhido para a delegacia. O responsável foi dado voz de ciência e encaminhado para a unidade militar para lavratura do Termo Circunstanciado de Ocorrência (TCO) por perturbação do sossego público, conforme previsto na legislação municipal e artigo 42 do Decreto nº 5.938/2006. A ocorrência foi registrada, e o responsável foi informado sobre os procedimentos legais cabíveis.";
+          break;
+        case '4':
+          texto = "Você escolheu o Modelo D.\n[Texto do modelo D aqui]";
+          break;
+        default:
+          texto = "Opção inválida ou cancelada.";
+      }
+
+      // Mostra alerta com o texto
+      alert(texto);
+
+      // Copia automaticamente o conteúdo para a área de transferência
+      navigator.clipboard.writeText(texto).then(() => {
+        console.log("Texto copiado automaticamente.");
+      }).catch(err => {
+        alert("Erro ao copiar texto automaticamente: " + err);
+      });
+
+      // Também exibe na tela com botão de cópia manual
+      document.getElementById('textoEscolhido').textContent = texto;
+      document.getElementById('resultado').style.display = 'block';
+    }
+  });
+
+  function copiarTexto() {
+    const texto = document.getElementById('textoEscolhido').textContent;
+
+    navigator.clipboard.writeText(texto).then(() => {
+      alert("Texto copiado para a área de transferência!");
+    }).catch(err => {
+      alert("Erro ao copiar texto: " + err);
+    });
+  }
+</script>
+
+
+
+
+<!--EXEMPLO DE TEXTO FINAL-->
 
         <!--inicio do reconhecimento de voz-->
         <button type="button" onclick="startVoiceRecognition()">🎤 Falar</button>
