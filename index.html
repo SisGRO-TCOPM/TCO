@@ -1976,7 +1976,7 @@ const localendereço = document.getElementById('endereco')
 
       // Exibe opções ao usuário
       const escolha = prompt(
-        "Escolha qual modelo de relato você quer:\n1 - Modelo art 310 CTB\n2 - Modelo ART 309 PERIGO DE DADO\n3 - Modelo ART 42 PERTUBAÇÃO\n4 - Modelo art 147 AMEAÇA"
+        "Escolha qual modelo de relato você quer:\n1 - Modelo art 310 CTB\n2 - Modelo ART 309 PERIGO DE DADO\n3 - Modelo ART 42 PERTUBAÇÃO\n4 - Modelo art 147 AMEAÇA\n5 - Modelo art 129, § 1º LESÃO CORPORAL LEVE"
       );
 
       let texto = "";
@@ -1992,6 +1992,9 @@ const localendereço = document.getElementById('endereco')
           break;
         case '4':
           texto = "A guarnição da Polícia Militar foi acionada via telefone de emergência para atendimento de uma ocorrência de desentendimento envolvendo as partes (informar nomes das partes) no endereço (informar endereço completo). No local, foi feito contato com a parte vítima, a qual relatou que após uma discussão por motivos (informar motivo da discussão – ex: pessoais, familiares, financeiros), passou a ser ameaçada por (informar nome do autor), que proferiu as seguintes palavras: “(exemplo: você vai ver o que vai te acontecer / vou acabar com você / se eu te pegar na rua, te mato)”, causando-lhe temor quanto à sua integridade física. A vítima ainda informou que, durante a discussão, o autor também proferiu ofensas verbais, como: “(exemplo: vagabunda / safado / desgraçado)”. Tais palavras foram presenciadas por testemunhas (informar, se houver). Diante da situação, ambas as partes foram conduzidas até a unidade policial/militar para os procedimentos cabíveis, sendo lavrado o Termo Circunstanciado de Ocorrência (TCO), com base no artigo 147 do Código Penal – Ameaça. Ambas as partes foram cientificadas de seus direitos e dos trâmites legais a serem seguidos.";
+          break;
+           case '5':
+          texto = "A guarnição da Polícia Militar foi acionada via telefone de emergência para atendimento de uma ocorrência de agressão envolvendo as partes [Nome da vítima] e [Nome do autor], no endereço [informar endereço completo]. No local, foi feito contato com a parte vítima, a qual relatou que, após uma discussão por motivos [pessoais / familiares / financeiros / relacionamento / vizinhança – especificar o motivo], foi agredida fisicamente por [nome do autor], que lhe desferiu [ex: um tapa no rosto / socos no braço / empurrões / puxões de cabelo / chutes na perna]. A vítima apresentava sinais visíveis de lesão, tais como [vermelhidão na face, escoriações no antebraço esquerdo, hematoma no olho direito, arranhões no pescoço, inchaço no lábio inferior, etc.], sendo estas classificadas, a princípio, como lesões corporais de natureza leve. Testemunhas no local, [nome da testemunha, se houver], confirmaram o ocorrido, relatando que visualizaram o momento da agressão e intervieram para cessar as agressões. Diante da situação, as partes foram conduzidas até a unidade policial para os procedimentos legais cabíveis. Foi lavrado o Termo Circunstanciado de Ocorrência (TCO) com base no Art. 129, § 1º, do Código Penal – Lesão Corporal Leve. Ambas as partes foram cientificadas de seus direitos, bem como dos trâmites legais subsequentes.";
           break;
         default:
           texto = "Opção inválida ou cancelada.";
