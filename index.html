@@ -4488,11 +4488,11 @@ doc.setFont("helvetica", "normal");
            assinaturaefolhas()
            
 y = 60    
-
+const comarca2 = document.getElementById("cidade").value
             doc.text(`  CONCLUSÃO POLICIAL`, 100, y, { align: "center" });
             doc.setFontSize(10);
 y += 20
-            let textoconclusaopolicial = `Diante das circunstâncias e de tudo o que foi relatado, resta acrescentar que o autor infringiu o artigo n.º ${artigoo} da ${lei}, Nada mais havendo a tratar, deu-se por findo o presente termo circunstanciado de ocorrência que vai devidamente assinado por uma testemunha (se houver), pelo autor e por mim, condutor da ocorrência, que o digitei.  E pelo fato do autor ter se comprometido a comparecer ao Juizado Especial Criminal da Comarca de Barra do Bugres - MT, este foi liberado sem lesões corporais, após a assinatura do termo de compromisso.`;
+            let textoconclusaopolicial = `Diante das circunstâncias e de tudo o que foi relatado, resta acrescentar que o autor infringiu o artigo n.º ${artigoo} da ${lei}, Nada mais havendo a tratar, deu-se por findo o presente termo circunstanciado de ocorrência que vai devidamente assinado por uma testemunha (se houver), pelo autor e por mim, condutor da ocorrência, que o digitei.  E pelo fato do autor ter se comprometido a comparecer ao Juizado Especial Criminal da Comarca de ${comarca2}, este foi liberado sem lesões corporais, após a assinatura do termo de compromisso.`;
 
             
 
@@ -5395,9 +5395,9 @@ function verificarCheckbox() {
         // Coloque a ação caso não esteja selecionado
     }
 }
+const comarca3 = document.getElementById("cidade").value
 
-
-let textTermodeencerramento = `Aos ${diaExtenso} dias do mês de ${mesExtenso} do ano de dois mil e vinte e cinco, por determinação da Autoridade Policial Militar, dou por encerrado a lavratura do presente Termo Circunstanciado de Ocorrência n° - ${numero_tco}/7ºCR/2025, contendo ${pageCount} laudas paginadas e rubricadas, em desfavor do senhor(a) ${nomesConcatenados}, para as providências de remessa dos autos para apreciação do Núcleo de Resoluções de Conflitos e Justiça Restaurativa, da Vara do Juizado Especial da Comarca de Barra do Bugres-MT, a quem compete deliberar sobre o suposto delito.`;
+let textTermodeencerramento = `Aos ${diaExtenso} dias do mês de ${mesExtenso} do ano de dois mil e vinte e cinco, por determinação da Autoridade Policial Militar, dou por encerrado a lavratura do presente Termo Circunstanciado de Ocorrência n° - ${numero_tco}/7ºCR/2025, contendo ${pageCount} laudas paginadas e rubricadas, em desfavor do senhor(a) ${nomesConcatenados}, para as providências de remessa dos autos para apreciação do Núcleo de Resoluções de Conflitos e Justiça Restaurativa, da Vara do Juizado Especial da Comarca de ${comarca3}, a quem compete deliberar sobre o suposto delito.`;
 
 
 y += 30
