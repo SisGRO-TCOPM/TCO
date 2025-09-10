@@ -5075,6 +5075,8 @@ doc.setFontSize(10);
 y += 20
 
 doc.line(20, y, 185, y);
+
+
 doc.text("DATA: " + data_registro, 21, y+4, { maxWidth: 170, align: 'justify'});
 doc.text("HORA: " + hora_fato, 55, y+4, { maxWidth: 170, align: 'justify'});
 doc.text("LOCAL: ", 90, y+4, { maxWidth: 170, align: 'justify'});
@@ -5113,6 +5115,13 @@ doc.line(20, y+3, 185, y+3);
 doc.text("O presente termo de Apreensão foi lavrado com base no art. 6º, II, do CPP, e Art. 92 da lei 9.099/1995 ", 21, y+7, { maxWidth: 170, align: 'justify'});
 y += 6
 doc.line(20, y+3, 185, y+3);
+
+
+//linha na vertical fechando os dois lados 
+doc.line(20, 80, 20, y+3);
+doc.line(185, 80, 185, y+3);
+// fim da linha vertical 
+
 
 y += 30
 
