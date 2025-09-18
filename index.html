@@ -46,15 +46,57 @@
     
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
         
+
+
+
+
 </head>
 <body class="container mt-4">
   
     <h1>SisGRO-TCOPM</h1>
-    <h1>7º COMANDO REGIONAL</h1>
+
+    <!--<h1>7º COMANDO REGIONAL</h1>-->
+     <h1 id="comando-titulo"></h1>
     <hr>
 
 
+
+<title>Comando Regional</title>
+  <style>
+    h1 {
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+
+
+
+ <script>
+    // Variável global
+    var CR = "7º COMANDO REGIONAL";
+
+    let clickCount2 = 0;
+    let clickTimer2;
+
+    const titulo = document.getElementById('comando-titulo');
+
+    titulo.addEventListener('click', () => {
+      clickCount++;
+
+      // Espera 500ms para contar múltiplos cliques seguidos
+      clearTimeout(clickTimer2);
+      clickTimer2 = setTimeout(() => {
+        if (clickCount2 === 3) {
+          CR = "15º COMANDO REGIONAL";
+          titulo.textContent = CR;
+          console.log("CR atualizado para:", CR);
+        }
+        clickCount2 = 0;
+      }, 500);
+    });
+  </script>
 
 
 
@@ -1463,20 +1505,20 @@ let Vitima04Global = [];
 
 
 
-    <!-- Campo Quartel -->
-    <label for="quartel">Quartel:</label>
-    <select id="quartel" required onchange="alterarNomeCondutor()">
-        <option value="" disabled selected>Selecione uma opção</option>
-        <option value="CR07 SEDE">COMANDO REGIONAL 07</option>
-        <option value="19º BPM - TANGARA">19º BPM - TANGARA</option>        
-        <option value="12ª CIPM BARRA DO BUGRES">12ª CIPM de Barra do Bugres - MT</option>        
-        <option value="1ª CIPM NOVA OLIMPIA">1ª CIPM Nova Olimpia</option>
-        <option value="NPM DENISE">Nucleo de policia Militar de Denise - MT</option>
-        <option value="NPM PORTO ESTRELA">Nucleo de Policia Militar de Porto Estrela-MT</option>
-        <option value="6ª Cia PM Sapezal">6ª Cia PM Sapezal</option>
-        <option value="16ª CIPM Campo Novo do Parecis">16ª CIPM Campo Novo do Parecis</option>
-        <option value="1º Pel PM Brasnorte">1º Pel PM Brasnorte</option>
-       
+        <!-- Campo Quartel -->
+        <label for="quartel">Quartel:</label>
+        <select id="quartel" required onchange="alterarNomeCondutor()">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="CR07 SEDE">COMANDO REGIONAL 07</option>
+            <option value="19º BPM - TANGARA">19º BPM - TANGARA</option>        
+            <option value="12ª CIPM BARRA DO BUGRES">12ª CIPM de Barra do Bugres - MT</option>        
+            <option value="1ª CIPM NOVA OLIMPIA">1ª CIPM Nova Olimpia</option>
+            <option value="NPM DENISE">Nucleo de policia Militar de Denise - MT</option>
+            <option value="NPM PORTO ESTRELA">Nucleo de Policia Militar de Porto Estrela-MT</option>
+            <option value="6ª Cia PM Sapezal">6ª Cia PM Sapezal</option>
+            <option value="16ª CIPM Campo Novo do Parecis">16ª CIPM Campo Novo do Parecis</option>
+            <option value="1º Pel PM Brasnorte">1º Pel PM Brasnorte</option>
+        
 
         
         
@@ -1851,7 +1893,33 @@ let Vitima04Global = [];
 "CLEOMAR COSTA FAXINA":{posto: "SD PM", rg: "887.141" },
 "ENÉIAS DE OLIVEIRA":{posto: "SUB TEN PM", rg: "880.134" },
 "EDNÉIA ALVES DE SOUZA":{posto: "2º SGT PM", rg: "882.173" },
-"SALIN ALE DE CAMPOS UNTAR":{posto: "2º SGT PM", rg: "882.550" }
+"SALIN ALE DE CAMPOS UNTAR":{posto: "2º SGT PM", rg: "882.550" },
+
+// EFETIVO DE PEIXOTO
+
+"EFRAIM AUGUSTO GONÇALVES": { posto: "TEN CEL PM", rg: "883162" },
+"EMERSON AQUINO DE SANTANA": { posto: "MAJ PM", rg: "883914" },
+"JOELSON LEONEL DA SILVA": { posto: "SUB TEN", rg: "880775" },
+"CLAYTON DE OLIVEIRA PERUARE": { posto: "1° SGT PM", rg: "880840" },
+"JEANDIORLING FERREIRA PADILHA": { posto: "2° SGT PM", rg: "882011" },
+"FÁBIO GOMES DA CRUZ": { posto: "2° SGT PM", rg: "882373" },
+"SÉRGIO CARVALHO DE OLIVEIRA": { posto: "2° SGT PM", rg: "883747" },
+"WEBER DE AQUINO DA SILVA": { posto: "2° SGT PM", rg: "883426" },
+"DIEGO CURVO DE MORAES": { posto: "2° SGT PM", rg: "886277" },
+"DANIEL FRANCIS DIONEZIO": { posto: "2° SGT PM", rg: "887151" },
+"JEFFERSON MOREIRA RODRIGUES": { posto: "2° SGT PM", rg: "887336" },
+"RAILAN DE SOUSA SANTOS": { posto: "CB PM", rg: "885850" },
+"VINÍCIUS DA SILVA SVERSUTH": { posto: "SD PM", rg: "887696" },
+"RONGÉRIO MARTINS DE SOUSA": { posto: "SD PM", rg: "887636" },
+"FRANCISCO DAS CHAGAS LOPES DA CONCEIÇÃO": { posto: "SD PM", rg: "887273" },
+"GABRIEL PEREIRA REIS": { posto: "SD PM", rg: "887281" },
+"LEANDRO DOS SANTOS RODRIGUES": { posto: "SD PM", rg: "887833" },
+"DIONATHAN ANTÔNIO DA SILVA PEREIRA": { posto: "SD PM", rg: "888318" },
+"HALYSON FLÁVIO DA SILVA OLIVEIRA": { posto: "SD PM", rg: "888061" },
+"JÉSSICA BARBOSA PINHEIRO ALMERCÊ": { posto: "SD PM", rg: "888395" },
+"RODINEY ELLISON DOS SANTOS VEIGA": { posto: "SD PM", rg: "888310" },
+"SÍLVIO DE OLIVEIRA CAMPOS": { posto: "SD PM", rg: "888283" }
+
 
 
 
