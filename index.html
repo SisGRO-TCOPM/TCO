@@ -4556,18 +4556,15 @@ if (vitimas.length > 0) {
    
         
 //if (naturezaa === "Lesão corporal culposa"){textoDocAnexo += "; TERMO DE SOLICITAÇÃO DE EXAME PERICIAL"};
-  
-
-if (
+  if (
     naturezaa
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
-        .includes("lesao corporal")
+        .includes("lesao")
 ) {
     textoDocAnexo += "; TERMO DE SOLICITAÇÃO DE EXAME PERICIAL";
 }
-
 
 
 if (document.getElementById("paginaAnexos").checked) {
