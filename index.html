@@ -2313,18 +2313,34 @@ function salvarCampoProgramaticamente(id, valor) {
 
 
     // 🔹 Resetar os campos para os valores originais e limpar o localStorage
-    function resetarCampos() {
-        Object.keys(campos).forEach(id => {
-            const campo = document.getElementById(id);
-            if (campo) { // Verifica se o campo existe
-                campo.value = campos[id];  // Restaurar valor original
-                localStorage.removeItem(id); // Remover do localStorage
-                location.reload();
+function resetarCampos() {
 
-            }
-        });
-        localStorage.clear();
-    }
+    const confirmar = confirm(
+        "⚠️ CONFIRMAÇÃO DE RESTAURAÇÃO DO SISTEMA\n\n" +
+        "Deseja realmente redefinir todos os campos para os valores originais?\n\n" +
+        "Esta operação eliminará integralmente os dados preenchidos no formulário " +
+        "e reiniciará o sistema.\n\n" +
+        "Procedimento recomendado exclusivamente no início da lavratura de um novo TCO, " +
+        "a fim de evitar inconsistências ou reaproveitamento indevido de informações.\n\n" +
+        "Pressione OK para confirmar ou Cancelar para abortar a operação."
+    );
+
+    if (!confirmar) return; // 🚩 interrompe tudo se cancelar
+
+
+    Object.keys(campos).forEach(id => {
+        const campo = document.getElementById(id);
+
+        if (campo) {
+            campo.value = campos[id];
+            localStorage.removeItem(id);
+        }
+    });
+
+    localStorage.clear();
+    location.reload();
+}
+
 </script>
 
 
