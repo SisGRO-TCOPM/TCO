@@ -2319,6 +2319,8 @@ function salvarCampoProgramaticamente(id, valor) {
             if (campo) { // Verifica se o campo existe
                 campo.value = campos[id];  // Restaurar valor original
                 localStorage.removeItem(id); // Remover do localStorage
+                location.reload();
+
             }
         });
         localStorage.clear();
