@@ -88,8 +88,18 @@
     
     <!-- Formulário Dados Gerais -->
     <h2>1º Dados Gerais</h2>
-    <form id="formDadosGerais">
 
+    
+<span style="
+    margin-left: 12px;
+    font-size: 15px;
+    color: #b00000;
+    font-weight: 600;">
+    Atenção: Antes de iniciar um novo TCO, restaure os campos no botão “RESTAURAR VALORES ORIGINAIS” para evitar inconsistências ou erros no registro.
+</span>
+
+    <form id="formDadosGerais">
+<br>
 
         <div class="date-group">
         <label for="numero_tco">Nº TCO:</label>
@@ -416,29 +426,78 @@
 
 
 </select>
-        </div>
-<script>
-        function concatenarN() {
-           // document.getElementById("natureza_concatenada").value = document.getElementById("natureza_concatenada").value; document.getElementById("natureza").value;
-             // Campos de nome completo}
+        </div><script>
+function concatenarN() {
 
-             document.getElementById("natureza_concatenada").value = document.getElementById("natureza_concatenada").value + (document.getElementById("natureza_concatenada").value ? "; |<>| " : "") + document.getElementById("naturezaa").value;
-             
-             document.getElementById("artigo_concatenado").value = document.getElementById("artigo_concatenado").value + (document.getElementById("artigo_concatenado").value ? "; |<>| " : "") + document.getElementById("artigo").value;
-             
-             document.getElementById("lei_concatenada").value = document.getElementById("lei_concatenada").value + (document.getElementById("lei_concatenada").value ? "; |<>| " : "") + document.getElementById("lei").value;
-             
+    // === LÓGICA DA PENA (VALIDA ANTES DE CONCATENAR) ===
+    let campo = document.getElementById("pena_concatenada");
 
-              // Salvar manualmente os readonly
-      localStorage.setItem('artigo_concatenado', artigo.value);
-      localStorage.setItem('lei_concatenada', lei.value);
-      localStorage.setItem('natureza_concatenada', naturezaa.value);
-    
-     
-             // Mensagem de confirmação
-        alert("Natureza "+document.getElementById("natureza_concatenada").value+" selecionada com sucesso!");
-        }
-            </script>
+    let nova = Number(document.getElementById("pena").value.replace(",", "."));
+
+    let textoBase = campo.value.split("| Somatória")[0];
+
+    let valores = textoBase
+        .split("; |<>|")
+        .map(v => v.trim())
+        .filter(v => v !== "")
+        .map(v => Number(v.replace(",", ".")))
+        .filter(v => !isNaN(v));
+
+    // soma atual
+    let somaAtual = valores.reduce((a, b) => a + b, 0);
+
+    // simula nova soma
+    let somaNova = somaAtual + nova;
+
+
+    // 🚨 BLOQUEIO TOTAL
+    if (somaNova > 2) {
+        alert(
+            "ATENÇÃO – LIMITE LEGAL PARA LAVRATURA DE TCO\n\n" +
+            "A inclusão desta natureza resultaria em somatória de pena máxima superior a 2 (dois) anos.\n\n" +
+            "Somatória projetada: " + somaNova.toString().replace(".", ",") + " anos.\n\n" +
+            "O fato não se enquadra como infração de menor potencial ofensivo, não sendo cabível a lavratura de Termo Circunstanciado de Ocorrência (TCO).\n" +
+            "Operação cancelada pelo sistema."
+        );
+
+        return; // 🚩 PARA A FUNÇÃO AQUI (nada mais executa)
+    }
+
+
+    // ✅ somente se permitido
+    valores.push(nova);
+
+    campo.value =
+        valores.join("; |<>| ") +
+        " | Somatória total de pena = " +
+        somaNova.toString().replace(".", ",");
+
+
+
+    // === CONCATENAÇÕES NORMAIS ===
+    document.getElementById("natureza_concatenada").value +=
+        (document.getElementById("natureza_concatenada").value ? "; |<>| " : "") +
+        document.getElementById("naturezaa").value;
+
+    document.getElementById("artigo_concatenado").value +=
+        (document.getElementById("artigo_concatenado").value ? "; |<>| " : "") +
+        document.getElementById("artigo").value;
+
+    document.getElementById("lei_concatenada").value +=
+        (document.getElementById("lei_concatenada").value ? "; |<>| " : "") +
+        document.getElementById("lei").value;
+
+
+    // salvar
+    localStorage.setItem('artigo_concatenado', artigo.value);
+    localStorage.setItem('lei_concatenada', lei.value);
+    localStorage.setItem('natureza_concatenada', naturezaa.value);
+    localStorage.setItem('pena_concatenada', campo.value);
+
+
+    alert("Natureza " + document.getElementById("natureza_concatenada").value + " selecionada com sucesso!");
+}
+</script>
 
  <!-- Botão verde para chamar a função concatenarN -->
 
@@ -467,6 +526,9 @@
 
 <label for="lei">Lei:</label>
 <input type="text" id="lei" required style="width: 550px;" readonly>
+
+<label for="pena">Somatoria de Pena:</label>
+<input type="text" id="pena" required style="width: 120px;" readonly>
 <br>
 <!--<label for="natureza_concatenada">Naturezas Selecionadas:</label>
 <input type="text" id="natureza_concatenada" required style="width: 100%; height: 100%;" readonly>-->
@@ -484,10 +546,14 @@
 <textarea type="text" id="lei_concatenada" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
 
 
+<label for="pena_concatenada">Somatoria de Penas:</label>
+<textarea type="text" id="pena_concatenada" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
+
+
 <script>
 
 
-const campos2 = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+const campos2 = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada', 'pena_concatenada'];
 
 // Restaurar valores ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
@@ -575,275 +641,276 @@ let Vitima04Global = [];
 
   // Crimes de menor potencial ofensivo (pena máxima até 2 anos) incluindo crimes de trânsito
   const naturezas = {
-    "Abandono de função": { artigo: "323,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Abandono intelectual de filho": { artigo: "246", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Abandono moral de menor": { artigo: "247", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Abuso na prática de aviação": { artigo: "35", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Abuso ou maus tratos em animais": { artigo: "32, caput", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Advocacia administrativa (aumento de pena)": { artigo: "321, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Advocacia administrativa": { artigo: "321", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Afirmação falsa, enganosa ou omissão de informação relevante sobre produtos e serviços ofertados": { artigo: "66, caput", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Alteração de limites": { artigo: "161,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Alteração de local especialmente protegido": { artigo: "166", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Ameaça": { artigo: "147", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Anúncio de meio abortivo": { artigo: "20", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Apologia de crime ou criminoso": { artigo: "287", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Apropriação de coisa achada": { artigo: "169, §único, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Apropriação de coisa havida por erro, caso fortuito ou força da natureza": { artigo: "169,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Apropriação de tesouro": { artigo: "169, §único, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Aquisição ou recebimento de produtos vegetais sem verificação de sua extração mediante licença e desacompanhados de documento": { artigo: "46, caput", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Arremesso de projétil quando resulta lesão corporal": { artigo: "264, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Arremesso de projétil": { artigo: "264,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Arremesso ou colocação perigosa": { artigo: "37", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Às mesmas medidas submete-se quem, para seu consumo pessoal, semeia, cultiva ou colhe plantas destinadas à preparação de pequena quantidade de substância ou produto capaz de causar dependência física ou psíquica.": { artigo: "28, § 1º", lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)" },
-"Assédio sexual": { artigo: "216 – A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Associação secreta": { artigo: "39,caput", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Atentado contra a liberdade de associação": { artigo: "199", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Atentado contra a liberdade de contrato de trabalho e boicotagem violenta": { artigo: "198", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Atentado contra a liberdade de trabalho": { artigo: "197, I e II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Atentado culposo contra a segurança de outro meio de transporte": { artigo: "262, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Atentado culposo contra a segurança de transporte marítimo, fluvial e aéreo": { artigo: "261, § 3º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Atentado doloso contra a segurança de outro meio de transporte": { artigo: "262,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Ato obsceno": { artigo: "233", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Autoacusação falsa": { artigo: "341", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Bebidas alcoólicas": { artigo: "63", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Caça, perseguição ou apanha de espécime da fauna silvestre sem licença ou em desacordo com a obtida": { artigo: "29, caput", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Calúnia": { artigo: "138 §1°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Calúnia": { artigo: "138 §2°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Calúnia": { artigo: "138", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Causação culposa de poluição danosa à saúde humana ou provocadora de mortandade de animais ou de destruição da flora": { artigo: "54, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Ceder prédio para reunião de associação secreta": { artigo: "39, § 1º", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Certidão e atestado ideologicamente falso": { artigo: "301", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Certidão e atestado materialmente falso": { artigo: "301, § 1º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Charlatanismo": { artigo: "283", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"com abuso de licença": { artigo: "29, § 4º, IV", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"com emprego de métodos ou instrumentos capazes de provocar destruição em massa.": { artigo: "29, § 4º, VI", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Comercialização ou uso de motosserra sem licença ou registro": { artigo: "51", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Comunicação falsa de crime ou contravenção": { artigo: "340", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Condescendência criminosa": { artigo: "320", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Condicionamento de atendimento médico-hospitalar emergencial": { artigo: "135-A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Conhecimento prévio de impedimento matrimonial": { artigo: "237", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Conspurcação de edificação ou monumento urbano": { artigo: "65, caput", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Conspurcação de monumento ou coisa tombada": { artigo: "65, § único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Constrangimento físico ou moral na cobrança de dívida do consumidor": { artigo: "71", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Constrangimento ilegal": { artigo: "146,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Construção em solo não edificável ou seu entorno, sem autorização ou em desacordo com a autorização concedida": { artigo: "64", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"contra espécie rara ou considerada ameaçada de extinção, ainda que somente no local da infração": { artigo: "29, § 4º, I", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Contratação de operação de crédito": { artigo: "359-A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Contratação de operação de crédito": { artigo: "359-A, §único, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Contratação de operação de crédito": { artigo: "359-A,§único, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Corrupção ou poluição culposa de água potável": { artigo: "271, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Corrupção passiva": { artigo: "317, §2°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Cortar ou transformar em carvão, madeira de lei, assim classificada por ato do poder público, para fins industriais, energéticos ou para outra exploração, econômica ou não, em desacordo com as determinações legais": { artigo: "45", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Curandeirismo (mediante remuneração - aumento de pena)": { artigo: "284, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Curandeirismo": { artigo: "284", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Curandeirismo": { artigo: "284, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Curandeirismo": { artigo: "284, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Curandeirismo": { artigo: "284, III", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Dano em coisa de valor artístico, arqueológico ou histórico": { artigo: "165", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Dano simples": { artigo: "163,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Deflagração perigosa": { artigo: "28, §único", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Deixar de cumprir, retardar ou frustrar, sem justo motivo, a execução de ordem judicial expedida nas ações em que for parte ou interveniente o idoso": { artigo: "101", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Deixar de observar as cautelas necessárias para impedir que menor de 18 (dezoito) anos ou pessoa portadora de deficiência mental se apodere de arma de fogo que esteja sob sua posse ou que seja de sua propriedade.": { artigo: "13, caput", lei: "Estatuto do Desarmamento (Lei 10.826, de 22 de dezembro de 2003)" },
-"Deixar de prestar assistência ao idoso, quando possível fazê-lo sem risco pessoal, em situação de iminente perigo, ou recusar, retardar ou dificultar sua assistência à saúde, sem justa causa, ou não pedir, nesses casos, o socorro de autoridade pública": { artigo: "97, caput", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Desabamento de construção": { artigo: "29", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Desabamento ou desmoronamento culposos": { artigo: "256, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Desacato": { artigo: "331", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Desdenhar, humilhar, menosprezar ou discriminar pessoa idosa, por qualquer motivo": { artigo: "96, § 1º", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Desobediência a decisão judicial sobre perda ou suspensão de direito": { artigo: "359", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Desobediência.": { artigo: "330", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Destruição ou dano em floresta ou vegetação de especial preservação": { artigo: "50", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Destruição ou dano em plantas ornamentais de logradouros ou propriedade privada": { artigo: "49", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Destruição ou remoção de sinal de perigo": { artigo: "36, §único, “a”", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Destruição, dano ou modificação de ninho, abrigo ou criadouro natural": { artigo: "29. § 1º, II", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Destruição, inutilização ou deterioração culposa de bem especialmente protegido": { artigo: "62, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Destruir ou danificar floresta considerada de preservação permanente, mesmo que em formação, ou utilizá-la com infringência das normas de proteção (culposo)": { artigo: "38, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Difamação": { artigo: "139", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Difusão culposa de doença ou praga": { artigo: "259, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Direção não habilitada de veículo automotor, gerando perigo": { artigo: "309", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Direção não licenciada de aeronave": { artigo: "33", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Direção perigosa de veículo na via pública (de veículo não automotor)": { artigo: "34", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade": { artigo: "96, caput", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Divulgação de segredo": { artigo: "153", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"durante a noite": { artigo: "29, § 4º, III", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"em unidade de conservação": { artigo: "29, § 4º, V", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Embriaguez": { artigo: "62", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Emissão de fumaça, vapor ou gás": { artigo: "38", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Emissão de título ao portador sem permissão legal": { artigo: "292,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Emprego irregular de verbas ou rendas públicas": { artigo: "315", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Entrega de direção de veículo automotor a pessoa não habilitada ou sem condições de conduzir o veículo com segurança": { artigo: "310", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Entrega de filho menor à pessoa inidônea": { artigo: "245", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Envenenamento culposo de água potável ou de substância alimentícia ou medicinal": { artigo: "270, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Epidemia culposa": { artigo: "267, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Esbulho possessório": { artigo: "161, §1º, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Escrito ou objeto obsceno": { artigo: "234 I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Escrito ou objeto obsceno": { artigo: "234 II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Escrito ou objeto obsceno": { artigo: "234 III", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Escrito ou objeto obsceno": { artigo: "234", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Estabelecimentos, obras ou serviços potencialmente poluidores, sem licença ou contrariando normas legais e regulamentares": { artigo: "60", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Evasão mediante violência contra a pessoa": { artigo: "352", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Executar serviço de alta periculosidade, contrariando determinação de autoridade competente": { artigo: "65", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Exercício arbitrário das próprias razões": { artigo: "345", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício arbitrário ou abuso de poder": { artigo: "350", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício de atividade com infração de decisão administrativa": { artigo: "205", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício funcional ilegalmente antecipado ou prolongado": { artigo: "324", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício ilegal da medicina, arte dentária ou farmacêutica (fins de lucro – aumento de pena)": { artigo: "282, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício ilegal da medicina, arte dentária ou farmacêutica": { artigo: "282", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Exercício ilegal de profissão ou atividade": { artigo: "47", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Exercício ilegal do comércio de coisas antigas e obras de arte": { artigo: "48", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Experiência dolorosa ou cruel com animal vivo": { artigo: "32, § 1º", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Explosão culposa, nos demais casos": { artigo: "251, § 3º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Explosão culposa, se é de dinamite ou similar": { artigo: "251, § 3º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Expor a perigo a integridade e a saúde, física ou psíquica, do idoso, submetendo- o a condições desumanas ou degradantes ou privando-o de alimentos e cuidados indispensáveis, quando obrigado a fazê- lo, ou sujeitando-o a trabalho excessivo ou inadequado": { artigo: "99, caput", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Exposição ou abandono de recém-nascido": { artigo: "134", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Extração mineral não autorizada em florestas públicas ou de preservação": { artigo: "44", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Fabrico ou fornecimento culposo, para consumo, de substância nociva à saúde": { artigo: "278, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fabrico, fornecimento, aquisição, posse ou transporte de explosivos ou gás tóxico, ou asfixiante": { artigo: "253", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsa identidade – criar": { artigo: "307", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsa identidade – usar de terceiro": { artigo: "308", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsidade de atestado médico (fins de lucro – aumento de pena)": { artigo: "302, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsidade de atestado médico": { artigo: "302", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsificação de papéis públicos": { artigo: "293, § 4º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falsificação, corrupção, adulteração ou alteração de substância ou produtos alimentícios - culposo": { artigo: "272, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Falso alarme": { artigo: "41", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Falta de habilitação para dirigir veículos": { artigo: "32", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Favorecimento pessoal privilegiado": { artigo: "348, § 1º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Favorecimento pessoal": { artigo: "348,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Favorecimento real": { artigo: "349", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Favorecimento real": { artigo: "349-A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fazer ou promover publicidade que sabe ou deveria saber ser capaz de induzir o consumidor a se comportar de forma prejudicial ou perigosa a sua saúde": { artigo: "68", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Fornecimento culposo de medicamento em desacordo com receita médica": { artigo: "280, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraude à execução": { artigo: "179", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraude em refeição, alojamento e transporte": { artigo: "176,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraude no comércio": { artigo: "175, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraude no comércio": { artigo: "175, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraude processual": { artigo: "347", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fraudes e abusos na fundação ou administração de sociedade por ações": { artigo: "177, §2°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Frustração de direito assegurado por lei trabalhista": { artigo: "203", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Frustração de lei sobre a nacionalidade do trabalho": { artigo: "204", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fuga de pessoa presa ou submetida à medida de segurança (culposa)": { artigo: "351, § 4º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fuga de pessoa presa ou submetida a medida de segurança (dolosa)": { artigo: "351,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Fuga do condutor do veículo do local do acidente": { artigo: "305", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Furto de coisa comum": { artigo: "156", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Imitação de moeda para propaganda": { artigo: "44", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Impedimento da regeneração de florestas ou vegetação": { artigo: "48", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Impedimento de comunicação através dos meios acima referidos": { artigo: "151, §1º, III", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Impedimento de procriação da fauna silvestre sem licença ou em desacordo com a obtida": { artigo: "29, § 1º, I", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Impedimento ou dificuldade no acesso às informações cadastrais do consumidor": { artigo: "72", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Impedimento ou perturbação de cerimônia funerária (emprego de violência)": { artigo: "209 §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Impedimento ou perturbação de cerimônia funerária": { artigo: "209,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Impedimento, perturbação ou fraude de concorrência": { artigo: "335", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Impedir ou embaraçar ato do representante do Ministério Público ou de qualquer outro agente fiscalizador": { artigo: "109", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Incêndio culposo em mata ou floresta": { artigo: "41, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Incêndio culposo": { artigo: "250, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Incide nas penas previstas neste artigo o condutor do veículo, ainda que a sua omissão seja suprida por terceiros ou que se trate de vítima com morte instantânea ou com ferimentos leves.": { artigo: "304, § 1º", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Incitação ao crime": { artigo: "286", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Incorrerá nas mesmas penas quem deixar de alertar, mediante recomendações escritas ostensivas, sobre a periculosidade do serviço a ser prestado": { artigo: "63, § 1º", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Indevida custódia de doente mental": { artigo: "23", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Induzimento a erro essencial e ocultação de impedimento": { artigo: "236", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Induzimento à fuga, entrega arbitrária ou sonegação de incapazes": { artigo: "248", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Infração de medida sanitária preventiva (aumento de pena)": { artigo: "268 §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Infração de medida sanitária preventiva": { artigo: "268,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Injúria qualificada (real)": { artigo: "140, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Injúria": { artigo: "140", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Inscrição de despesas não empenhadas em restos a pagar": { artigo: "359-B", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Instalação ou uso ilegal de estação ou aparelho radioelétrico": { artigo: "151, §1º, IV", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Instrumento de emprego usual na prática de furto": { artigo: "24", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Internação irregular em estabelecimento psiquiátrico": { artigo: "22", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Introdução de espécime animal no país sem licença": { artigo: "31", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Introdução/abandono de animais propriedade alheia": { artigo: "164", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Inumação ou exumação de cadáver": { artigo: "67", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Inundação culposa": { artigo: "254", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Inutilização de edital ou de sinal": { artigo: "336", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Invasão de dispositivo informático": { artigo: "154-A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Jogo de azar": { artigo: "50", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Lesão corporal culposa": { artigo: "129, § 6º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Lesão corporal": { artigo: "129,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Matrícula ou escrituração de indústria ou profissão": { artigo: "49", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Maus tratos": { artigo: "136,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Modificação ou alteração não autorizada de sistema de informações": { artigo: "313-B", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Moeda falsa": { artigo: "289, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Motim de presos": { artigo: "354", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Não cancelamento de restos a pagar": { artigo: "359-F", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Não colocação de sinais de perigo": { artigo: "36,caput", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Não correção de informação inexata em cadastro de consumidor": { artigo: "73", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Não cumprimento culposo de obrigação de relevante interesse ambiental": { artigo: "68, § único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Não entrega de termo de garantia ao consumidor": { artigo: "74", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Não organização de dados que dão base à publicidade": { artigo: "69", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Não recuperação de área de pesquisa ou exploração mineral": { artigo: "55, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Negar o acolhimento ou a permanência de idoso, como abrigado, por recusa deste em outorgar procuração à entidade de atendimento": { artigo: "103", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Obstar o acesso de alguém a qualquer cargo público por motivo de idade. Negar a alguém, por motivo de idade, emprego ou trabalho. Recusar, retardar ou dificultar atendimento ou deixar de prestar assistência à saúde, sem justa causa, a pessoa idosa. Deixar de cumprir, retardar ou frustrar, sem justo motivo, a execução de ordem judicial expedida na ação civil que alude esta Lei. Recusar, retardar ou omitir dados técnicos indispensáveis à propositura da ação civil objeto desta Lei, quando requisitados pelo Ministério Público": { artigo: "100", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa de seu relacionamento, para juntos a consumirem": { artigo: "Art. 33. § 3°", lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)" },
-"Oferta de produtos e serviços com afirmação falsa, enganosa ou c/omissão de informação relevante": { artigo: "66, § 1º", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Omissão culposa sobre nocividade ou periculosidade do produto (caput) e do serviço (§ 1º) em embalagens ou publicidade": { artigo: "63, § 2º", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Omissão de cautela na colocação ou suspensão perigosa de coisa": { artigo: "37, §único", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Omissão de comunicação de crime": { artigo: "66", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Omissão de notificação de doença": { artigo: "269", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Omissão de socorro majorada p/ resultado": { artigo: "135, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Omissão de socorro por condutor de veículo em acidente": { artigo: "304", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Omissão de socorro": { artigo: "135,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Omissão dolosa sobre conhecimento posterior ao lançamento no mercado sobre nocividade ou periculosidade do produto, e deixar de retirá-lo do mercados (§ único)": { artigo: "64", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Omissão dolosa sobre nocividade ou periculosidade do produto (caput) e do serviço (§ 1º), em embalagens ou publicidade": { artigo: "63", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Omitir cautela na guarda ou condução de animais": { artigo: "31", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Paralisação de trabalho de interesse coletivo": { artigo: "201", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Paralisação de trabalho, seguida de violência ou perturbação da ordem": { artigo: "200,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Participar, na direção de veículo automotor, em via pública, de corrida, disputa ou competição automobilística não autorizada pela autoridade competente, desde que resulte dano potencial à incolumidade pública ou privada": { artigo: "308", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Parto suposto. Supressão ou alteração de direito inerente ao estado civil de recém-nascido": { artigo: "242, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Peculato culposo": { artigo: "312, §2°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Penetração em Unidade de Conservação portando instrumentos para caça ou exploração florestal, sem licença": { artigo: "52", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Perigo de contágio venéreo": { artigo: "130,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Perigo de desabamento": { artigo: "30", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Perigo de desastre ferroviário – culposo": { artigo: "260, § 2º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Perigo para a vida ou saúde de outrem": { artigo: "132", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"período proibido à caça": { artigo: "29, § 4º, II", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Perturbação do trabalho ou sossego alheios": { artigo: "42", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Pesquisa ou extração mineral sem autorização ou em desacordo com a licença": { artigo: "55, caput", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Porte ilegal de arma (branca)": { artigo: "19", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Posse não justificada de instrumento de emprego usual na prática de furto": { artigo: "25", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Prescrever ou ministrar, culposamente, drogas, sem que delas necessite o paciente, ou fazê-lo em doses excessivas ou em desacordo com determinação legal ou regulamentar": { artigo: "Art. 38", lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)" },
-"Prestação de garantia graciosa": { artigo: "359-E", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Prevaricação": { artigo: "319", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Prevaricação": { artigo: "319-A", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Provocação de tumulto. Conduta inconveniente": { artigo: "40", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Publicidade enganosa ou abusiva": { artigo: "67", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Quem adquirir, guardar, tiver em depósito, transportar ou trouxer consigo, para consumo pessoal, drogas sem autorização ou em desacordo com determinação legal ou regulamentar": { artigo: "28, caput", lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)" },
-"Recebimento ou utilização, como dinheiro, de título ao portador emitido ilegalmente": { artigo: "292, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Receptação culposa": { artigo: "180, § 3º", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Recusa de dados sobre a própria identidade": { artigo: "68", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Recusa de moeda de curso legal": { artigo: "43", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Remoção de sinal de serviço público": { artigo: "36,§único “b”", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Reparação não autorizada de produtos com peças ou componentes usados": { artigo: "70", lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)" },
-"Resistência": { artigo: "329", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Reter o cartão magnético de conta bancária relativa a benefícios, proventos ou pensão do idoso, bem como qualquer outro documento com objetivo de assegurar recebimento ou ressarcimento de dívida": { artigo: "104", lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)" },
-"Rixa qualificada (participantes)": { artigo: "137, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Rixa": { artigo: "137,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Simulação da qualidade de funcionário": { artigo: "45", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Sonegação ou destruição de correspondência": { artigo: "151, §1º, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Substância tóxica, perigosa ou nociva à saúde humana ou ao meio ambiente": { artigo: "56, § 3º", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Subtração de incapazes": { artigo: "249", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Subtração, supressão ou dano à coisa própria na posse legal de terceiro": { artigo: "346", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Tráfego em velocidade incompatível com a segurança no trânsito": { artigo: "311", lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)" },
-"Ultraje a culto e impedimento ou perturbação de ato a ele relativo (emprego de violência)": { artigo: "208 §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Ultraje a culto e impedimento ou perturbação de ato a ele relativo": { artigo: "208,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Uso culposo de gás tóxico ou asfixiante": { artigo: "252, §único", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Uso ilegítimo de uniforme ou distintivo": { artigo: "46", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Usurpação de águas": { artigo: "161, §1º, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Usurpação de função pública": { artigo: "328", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Vadiagem": { artigo: "59", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Venda, depósito, transporte ou guarda de produtos de origem vegetal sem licença": { artigo: "46, §único", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Venda, exportação, aquisição ou guarda de espécimes da fauna silvestre e produtos derivados, sem licença ou provenientes de criadouros não autorizados": { artigo: "29, § 1º, III", lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)" },
-"Vias de fato": { artigo: "21", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Violação de comunicação telegráfica, radioelétrica ou telefônica": { artigo: "151, §1º, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de correspondência comercial": { artigo: "152", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de correspondência": { artigo: "151,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de domicílio qualificada": { artigo: "150, §1°", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de domicílio": { artigo: "150,caput", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de lugar ou objeto": { artigo: "26", lei: "Lei das Contravenções Penais(Decreto-Lei 3.688, de 3 de outubro de 1941)" },
-"Violação de segredo profissional": { artigo: "154", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de sigilo funcional": { artigo: "325 §1°, I", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de sigilo funcional": { artigo: "325 §1°, II", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violação de sigilo funcional": { artigo: "325", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
-"Violência ou fraude em arrecadação judicial": { artigo: "358", lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)." },
+   "Lesão corporal": { artigo: "129,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Lesão corporal culposa": { artigo: "129, § 6º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Perigo de contágio venéreo": { artigo: "130, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Perigo para a vida ou saúde de outrem": { artigo: "132" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Exposição ou abandono de recém-nascido": { artigo: "134" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Omissão de socorro": { artigo: "135, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Omissão de socorro majorada p/ resultado": { artigo: "135, § único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,75" },
+"Condicionamento de atendimento médico-hospitalar emergencial": { artigo: "135-A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Maus tratos": { artigo: "136, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Rixa": { artigo: "137, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,16" },
+"Rixa qualificada (participantes)": { artigo: "137, § único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138 §1°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138 §2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Difamação": { artigo: "139" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Injúria": { artigo: "140" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Injúria qualificada (real)": { artigo: "140, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Constrangimento ilegal": { artigo: "146, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Ameaça": { artigo: "147" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Violação de domicílio": { artigo: "150, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Violação de domicílio qualificada": { artigo: "150, § 1°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Violação de correspondência": { artigo: "151, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Sonegação ou destruição de correspondência": { artigo: "151, § 1º, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Violação de comunicação telegráfica, radioelétrica ou telefônica": { artigo: "151, §  1º, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Impedimento de comunicação através dos meios acima referidos": { artigo: "151, §  1º, III" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Instalação ou uso ilegal de estação ou aparelho radioelétrico": { artigo: "151, §  1º, IV" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Violação de correspondência comercial": { artigo: "152" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Divulgação de segredo": { artigo: "153" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Violação de segredo profissional": { artigo: "154" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Invasão de dispositivo informático": { artigo: "154-A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Furto de coisa comum": { artigo: "156" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Alteração de limites": { artigo: "161,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Usurpação de águas": { artigo: "161, §  1º, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Esbulho possessório": { artigo: "161, §  1º, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Dano simples": { artigo: "163,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Introdução/abandono de animais propriedade alheia": { artigo: "164" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Dano em coisa de valor artístico, arqueológico ou histórico": { artigo: "165" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Alteração de local especialmente protegido": { artigo: "166" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Apropriação de coisa havida por erro, caso fortuito ou força da natureza": { artigo: "169,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Apropriação de tesouro": { artigo: "169, §  único, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Apropriação de coisa achada": { artigo: "169, §  único, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Fraude no comércio": { artigo: "175, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fraude no comércio": { artigo: "175, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fraude em refeição, alojamento e transporte": { artigo: "176,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,16" },
+"Fraudes e abusos na fundação ou administração de sociedade por ações": { artigo: "177, §  2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fraude à execução": { artigo: "179" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Receptação culposa": { artigo: "180, § 3º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Atentado contra a liberdade de trabalho": { artigo: "197, I e II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Atentado contra a liberdade de contrato de trabalho e boicotagem violenta": { artigo: "198" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Atentado contra a liberdade de associação": { artigo: "199" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Paralisação de trabalho, seguida de violência ou perturbação da ordem": { artigo: "200,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Paralisação de trabalho de interesse coletivo": { artigo: "201" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Frustração de direito assegurado por lei trabalhista": { artigo: "203" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Frustração de lei sobre a nacionalidade do trabalho": { artigo: "204" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Exercício de atividade com infração de decisão administrativa": { artigo: "205" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Ultraje a culto e impedimento ou perturbação de ato a ele relativo": { artigo: "208,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Ultraje a culto e impedimento ou perturbação de ato a ele relativo (emprego de violência)": { artigo: "208 §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1,33" },
+"Impedimento ou perturbação de cerimônia funerária": { artigo: "209,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Impedimento ou perturbação de cerimônia funerária (emprego de violência)": { artigo: "209 §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1,33" },
+"Assédio sexual": { artigo: "216 – A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Ato obsceno": { artigo: "233" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Escrito ou objeto obsceno": { artigo: "234" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Escrito ou objeto obsceno": { artigo: "234 I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Escrito ou objeto obsceno": { artigo: "234 II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Escrito ou objeto obsceno": { artigo: "234 III" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Induzimento a erro essencial e ocultação de impedimento": { artigo: "236" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Conhecimento prévio de impedimento matrimonial": { artigo: "237" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Parto suposto. Supressão ou alteração de direito inerente ao estado civil de recém-nascido": { artigo: "242, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Entrega de filho menor à pessoa inidônea": { artigo: "245" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Abandono intelectual de filho": { artigo: "246" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,083" },
+"Abandono moral de menor": { artigo: "247" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Induzimento à fuga, entrega arbitrária ou sonegação de incapazes": { artigo: "248" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Subtração de incapazes": { artigo: "249" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Incêndio culposo": { artigo: "250, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Explosão culposa, se é de dinamite ou similar": { artigo: "251, § 3º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Explosão culposa, nos demais casos": { artigo: "251, § 3º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Uso culposo de gás tóxico ou asfixiante": { artigo: "252, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Fabrico, fornecimento, aquisição, posse ou transporte de explosivos ou gás tóxico, ou asfixiante": { artigo: "253" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Inundação culposa": { artigo: "254" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Desabamento ou desmoronamento culposos": { artigo: "256, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Difusão culposa de doença ou praga": { artigo: "259, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Perigo de desastre ferroviário – culposo": { artigo: "260, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Atentado culposo contra a segurança de transporte marítimo, fluvial e aéreo": { artigo: "261, § 3º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Atentado doloso contra a segurança de outro meio de transporte": { artigo: "262,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Atentado culposo contra a segurança de outro meio de transporte": { artigo: "262, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Arremesso de projétil": { artigo: "264,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Arremesso de projétil quando resulta lesão corporal": { artigo: "264, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Epidemia culposa": { artigo: "267, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Infração de medida sanitária preventiva": { artigo: "268,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Infração de medida sanitária preventiva (aumento de pena)": { artigo: "268 §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1,33" },
+"Omissão de notificação de doença": { artigo: "269" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Envenenamento culposo de água potável ou de substância alimentícia ou medicinal": { artigo: "270, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Corrupção ou poluição culposa de água potável": { artigo: "271, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Falsificação, corrupção, adulteração ou alteração de substância ou produtos alimentícios - culposo": { artigo: "272, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fabrico ou fornecimento culposo, para consumo, de substância nociva à saúde": { artigo: "278, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Fornecimento culposo de medicamento em desacordo com receita médica": { artigo: "280, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Exercício ilegal da medicina, arte dentária ou farmacêutica": { artigo: "282" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Exercício ilegal da medicina, arte dentária ou farmacêutica (fins de lucro – aumento de pena)": { artigo: "282, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Charlatanismo": { artigo: "283" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Curandeirismo": { artigo: "284" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Curandeirismo": { artigo: "284, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Curandeirismo": { artigo: "284, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Curandeirismo": { artigo: "284, III" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Curandeirismo (mediante remuneração - aumento de pena)": { artigo: "284, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Moeda falsa": { artigo: "289, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Incitação ao crime": { artigo: "286" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Apologia de crime ou criminoso": { artigo: "287" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Emissão de título ao portador sem permissão legal": { artigo: "292,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Recebimento ou utilização, como dinheiro, de título ao portador emitido ilegalmente": { artigo: "292, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Falsificação de papéis públicos": { artigo: "293, § 4º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Certidão e atestado ideologicamente falso": { artigo: "301" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Certidão e atestado materialmente falso": { artigo: "301, § 1º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Falsidade de atestado médico": { artigo: "302" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Falsidade de atestado médico (fins de lucro – aumento de pena)": { artigo: "302, §  único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Falsa identidade – criar": { artigo: "307" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Falsa identidade – usar de terceiro": { artigo: "308" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Peculato culposo": { artigo: "312, §2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Modificação ou alteração não autorizada de sistema de informações": { artigo: "313-B" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Emprego irregular de verbas ou rendas públicas": { artigo: "315" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Corrupção passiva": { artigo: "317, §2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Prevaricação": { artigo: "319" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Prevaricação": { artigo: "319-A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Condescendência criminosa": { artigo: "320" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,083" },
+"Advocacia administrativa": { artigo: "321" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Advocacia administrativa (aumento de pena)": { artigo: "321, § único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Abandono de função": { artigo: "323, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,083" },
+"Exercício funcional ilegalmente antecipado ou prolongado": { artigo: "324" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,083" },
+"Violação de sigilo funcional": { artigo: "325" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Violação de sigilo funcional": { artigo: "325 §1°, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Violação de sigilo funcional": { artigo: "325 §1°, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Usurpação de função pública": { artigo: "328" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Resistência": { artigo: "329" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Desobediência.": { artigo: "330" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Desacato": { artigo: "331" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Impedimento, perturbação ou fraude de concorrência": { artigo: "335" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Inutilização de edital ou de sinal": { artigo: "336" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Comunicação falsa de crime ou contravenção": { artigo: "340" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Autoacusação falsa": { artigo: "341" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Exercício arbitrário das próprias razões": { artigo: "345" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,083" },
+"Subtração, supressão ou dano à coisa própria na posse legal de terceiro": { artigo: "346" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fraude processual": { artigo: "347" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Favorecimento pessoal": { artigo: "348,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Favorecimento pessoal privilegiado": { artigo: "348, § 1º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,25" },
+"Favorecimento real": { artigo: "349" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
+"Favorecimento real": { artigo: "349-A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Exercício arbitrário ou abuso de poder": { artigo: "350" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Fuga de pessoa presa ou submetida a medida de segurança (dolosa)": { artigo: "351,  caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Fuga de pessoa presa ou submetida à medida de segurança (culposa)": { artigo: "351, § 4º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Evasão mediante violência contra a pessoa": { artigo: "352" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Motim de presos": { artigo: "354" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Violência ou fraude em arrecadação judicial": { artigo: "358" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Desobediência a decisão judicial sobre perda ou suspensão de direito": { artigo: "359" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Contratação de operação de crédito": { artigo: "359-A" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Contratação de operação de crédito": { artigo: "359-A, §  único, I" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Contratação de operação de crédito": { artigo: "359-A,  §único, II" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Inscrição de despesas não empenhadas em restos a pagar": { artigo: "359-B" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Não cancelamento de restos a pagar": { artigo: "359-F" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Prestação de garantia graciosa": { artigo: "359-E" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
+"Porte ilegal de arma (branca)": { artigo: "19" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Anúncio de meio abortivo": { artigo: "20" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Vias de fato": { artigo: "21" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Internação irregular em estabelecimento psiquiátrico": { artigo: "22" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Indevida custódia de doente mental": { artigo: "23" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Instrumento de emprego usual na prática de furto": { artigo: "24" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "2" },
+"Posse não justificada de instrumento de emprego usual na prática de furto": { artigo: "25" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "1" },
+"Violação de lugar ou objeto": { artigo: "26" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Deflagração perigosa": { artigo: "28, §  único" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,16" },
+"Desabamento de construção": { artigo: "29" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Perigo de desabamento": { artigo: "30" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Omitir cautela na guarda ou condução de animais": { artigo: "31" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Falta de habilitação para dirigir veículos": { artigo: "32" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Direção não licenciada de aeronave": { artigo: "33" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Direção perigosa de veículo na via pública (de veículo não automotor)": { artigo: "34" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Abuso na prática de aviação": { artigo: "35" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Não colocação de sinais de perigo": { artigo: "36,  caput" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Destruição ou remoção de sinal de perigo": { artigo: "36, §  único, “a”" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Remoção de sinal de serviço público": { artigo: "36,  §único “b”" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Arremesso ou colocação perigosa": { artigo: "37" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Omissão de cautela na colocação ou suspensão perigosa de coisa": { artigo: "37, §  único" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Emissão de fumaça, vapor ou gás": { artigo: "38" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Associação secreta": { artigo: "39,  caput" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Ceder prédio para reunião de associação secreta": { artigo: "39, § 1º" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Provocação de tumulto. Conduta inconveniente": { artigo: "40" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Falso alarme": { artigo: "41" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Perturbação do trabalho ou sossego alheios": { artigo: "42" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Recusa de moeda de curso legal": { artigo: "43" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Imitação de moeda para propaganda": { artigo: "44" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Simulação da qualidade de funcionário": { artigo: "45" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Uso ilegítimo de uniforme ou distintivo": { artigo: "46" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Exercício ilegal de profissão ou atividade": { artigo: "47" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Exercício ilegal do comércio de coisas antigas e obras de arte": { artigo: "48" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,5" },
+"Matrícula ou escrituração de indústria ou profissão": { artigo: "49" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Jogo de azar": { artigo: "50" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "1" },
+"Vadiagem": { artigo: "59" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Embriaguez": { artigo: "62" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0,25" },
+"Bebidas alcoólicas": { artigo: "63" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "1" },
+"Omissão de comunicação de crime": { artigo: "66" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Inumação ou exumação de cadáver": { artigo: "67" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "1" },
+"Recusa de dados sobre a própria identidade": { artigo: "68" , lei: "Lei das Contravenções Penais (Decreto-Lei 3.688, de 3 de outubro de 1941)"  , pena: "0" },
+"Omissão de socorro por condutor de veículo em acidente": { artigo: "304" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Incide nas penas previstas neste artigo o condutor do veículo, ainda que a sua omissão seja suprida por terceiros ou que se trate de vítima com morte instantânea ou com ferimentos leves.": { artigo: "304, § 1º" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Fuga do condutor do veículo do local do acidente": { artigo: "305" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Participar, na direção de veículo automotor, em via pública, de corrida, disputa ou competição automobilística não autorizada pela autoridade competente, desde que resulte dano potencial à incolumidade pública ou privada": { artigo: "308" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "3" },
+"Direção não habilitada de veículo automotor, gerando perigo": { artigo: "309" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Entrega de direção de veículo automotor a pessoa não habilitada ou sem condições de conduzir o veículo com segurança": { artigo: "310" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Tráfego em velocidade incompatível com a segurança no trânsito": { artigo: "311" , lei: "Código de Trânsito Brasileiro (Lei 9.503, de 23 de setembro de 1997)"  , pena: "1" },
+"Caça, perseguição ou apanha de espécime da fauna silvestre sem licença ou em desacordo com a obtida": { artigo: "29, caput" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Impedimento de procriação da fauna silvestre sem licença ou em desacordo com a obtida": { artigo: "29, § 1º, I" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Destruição, dano ou modificação de ninho, abrigo ou criadouro natural": { artigo: "29. § 1º, II" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Venda, exportação, aquisição ou guarda de espécimes da fauna silvestre e produtos derivados, sem licença ou provenientes de criadouros não autorizados": { artigo: "29, § 1º, III" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"contra espécie rara ou considerada ameaçada de extinção, ainda que somente no local da infração": { artigo: "29, § 4º, I" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"período proibido à caça": { artigo: "29, § 4º, II" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"durante a noite": { artigo: "29, § 4º, III" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"com abuso de licença": { artigo: "29, § 4º, IV" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"em unidade de conservação": { artigo: "29, § 4º, V" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"com emprego de métodos ou instrumentos capazes de provocar destruição em massa.": { artigo: "29, § 4º, VI" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"Introdução de espécime animal no país sem licença": { artigo: "31" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Abuso ou maus tratos em animais": { artigo: "32, caput" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Experiência dolorosa ou cruel com animal vivo": { artigo: "32, § 1º" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Destruir ou danificar floresta considerada de preservação permanente, mesmo que em formação, ou utilizá-la com infringência das normas de proteção (culposo)": { artigo: "38, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1,5" },
+"Incêndio culposo em mata ou floresta": { artigo: "41, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Extração mineral não autorizada em florestas públicas ou de preservação": { artigo: "44" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Cortar ou transformar em carvão, madeira de lei, assim classificada por ato do poder público, para fins industriais, energéticos ou para outra exploração, econômica ou não, em desacordo com as determinações legais": { artigo: "45" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "2" },
+"Aquisição ou recebimento de produtos vegetais sem verificação de sua extração mediante licença e desacompanhados de documento": { artigo: "46, caput" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Venda, depósito, transporte ou guarda de produtos de origem vegetal sem licença": { artigo: "46, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Impedimento da regeneração de florestas ou vegetação": { artigo: "48" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Destruição ou dano em plantas ornamentais de logradouros ou propriedade privada": { artigo: "49" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Destruição ou dano em floresta ou vegetação de especial preservação": { artigo: "50" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Comercialização ou uso de motosserra sem licença ou registro": { artigo: "51" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Penetração em Unidade de Conservação portando instrumentos para caça ou exploração florestal, sem licença": { artigo: "52" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Causação culposa de poluição danosa à saúde humana ou provocadora de mortandade de animais ou de destruição da flora": { artigo: "54, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Pesquisa ou extração mineral sem autorização ou em desacordo com a licença": { artigo: "55, caput" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Não recuperação de área de pesquisa ou exploração mineral": { artigo: "55, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Substância tóxica, perigosa ou nociva à saúde humana ou ao meio ambiente": { artigo: "56, § 3º" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Estabelecimentos, obras ou serviços potencialmente poluidores, sem licença ou contrariando normas legais e regulamentares": { artigo: "60" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "0,5" },
+"Destruição, inutilização ou deterioração culposa de bem especialmente protegido": { artigo: "62, §  único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Construção em solo não edificável ou seu entorno, sem autorização ou em desacordo com a autorização concedida": { artigo: "64" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Conspurcação de edificação ou monumento urbano": { artigo: "65, caput" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Conspurcação de monumento ou coisa tombada": { artigo: "65, § único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Não cumprimento culposo de obrigação de relevante interesse ambiental": { artigo: "68, § único" , lei: "Meio Ambiente (Lei 9.605, de 12 de fevereiro de 1998)"  , pena: "1" },
+"Quem adquirir, guardar, tiver em depósito, transportar ou trouxer consigo, para consumo pessoal, drogas sem autorização ou em desacordo com determinação legal ou regulamentar": { artigo: "28, caput" , lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)"  , pena: "*" },
+"Às mesmas medidas submete-se quem, para seu consumo pessoal, semeia, cultiva ou colhe plantas destinadas à preparação de pequena quantidade de substância ou produto capaz de causar dependência física ou psíquica.": { artigo: "28, § 1º" , lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)"  , pena: "*" },
+"Oferecer droga, eventualmente e sem objetivo de lucro, a pessoa de seu relacionamento, para juntos a consumirem": { artigo: "Art. 33. § 3°" , lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)"  , pena: "1" },
+"Prescrever ou ministrar, culposamente, drogas, sem que delas necessite o paciente, ou fazê-lo em doses excessivas ou em desacordo com determinação legal ou regulamentar": { artigo: "Art. 38" , lei: "Lei de Drogas (Lei nº 11.343, de 23 de agosto de 2006)"  , pena: "2" },
+"Omissão dolosa sobre nocividade ou periculosidade do produto (caput) e do serviço (§ 1º), em embalagens ou publicidade": { artigo: "63" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "2" },
+"Incorrerá nas mesmas penas quem deixar de alertar, mediante recomendações escritas ostensivas, sobre a periculosidade do serviço a ser prestado": { artigo: "63, § 1º" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "2" },
+"Omissão culposa sobre nocividade ou periculosidade do produto (caput) e do serviço (§ 1º) em embalagens ou publicidade": { artigo: "63, § 2º" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "0,5" },
+"Omissão dolosa sobre conhecimento posterior ao lançamento no mercado sobre nocividade ou periculosidade do produto, e deixar de retirá-lo do mercados (§ único)": { artigo: "64" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "2" },
+"Executar serviço de alta periculosidade, contrariando determinação de autoridade competente": { artigo: "65" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "2" },
+"Afirmação falsa, enganosa ou omissão de informação relevante sobre produtos e serviços ofertados": { artigo: "66, caput" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Oferta de produtos e serviços com afirmação falsa, enganosa ou c/omissão de informação relevante": { artigo: "66, § 1º" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Publicidade enganosa ou abusiva": { artigo: "67" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Fazer ou promover publicidade que sabe ou deveria saber ser capaz de induzir o consumidor a se comportar de forma prejudicial ou perigosa a sua saúde": { artigo: "68" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "2" },
+"Não organização de dados que dão base à publicidade": { artigo: "69" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "0,5" },
+"Reparação não autorizada de produtos com peças ou componentes usados": { artigo: "70" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Constrangimento físico ou moral na cobrança de dívida do consumidor": { artigo: "71" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Impedimento ou dificuldade no acesso às informações cadastrais do consumidor": { artigo: "72" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "1" },
+"Não correção de informação inexata em cadastro de consumidor": { artigo: "73" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "0,5" },
+"Não entrega de termo de garantia ao consumidor": { artigo: "74" , lei: "Código de Defesa do Consumidor (Lei 8.078, de 11 de setembro de 1990)"  , pena: "0,5" },
+"Deixar de observar as cautelas necessárias para impedir que menor de 18 (dezoito) anos ou pessoa portadora de deficiência mental se apodere de arma de fogo que esteja sob sua posse ou que seja de sua propriedade.": { artigo: "13, caput" , lei: "Estatuto do Desarmamento (Lei 10.826, de 22 de dezembro de 2003)"  , pena: "2" },
+"Nas mesmas penas incorrem o proprietário ou diretor responsável de empresa de segurança e transporte de valores que deixarem de registrar ocorrência policial e de comunicar à Polícia Federal perda, furto, roubo ou outras formas de extravio de arma de fogo, acessório ou munição que estejam sob sua guarda, nas primeiras 24 (vinte e quatro) horas depois de ocorrido o fato": { artigo: "13, par. Ú" , lei: "Estatuto do Desarmamento (Lei 10.826, de 22 de dezembro de 2003)"  , pena: "2" },
+"Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade": { artigo: "96, caput" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Desdenhar, humilhar, menosprezar ou discriminar pessoa idosa, por qualquer motivo": { artigo: "96, § 1º" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Deixar de prestar assistência ao idoso, quando possível fazê-lo sem risco pessoal, em situação de iminente perigo, ou recusar, retardar ou dificultar sua assistência à saúde, sem justa causa, ou não pedir, nesses casos, o socorro de autoridade pública": { artigo: "97, caput" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Expor a perigo a integridade e a saúde, física ou psíquica, do idoso, submetendo- o a condições desumanas ou degradantes ou privando-o de alimentos e cuidados indispensáveis, quando obrigado a fazê- lo, ou sujeitando-o a trabalho excessivo ou inadequado": { artigo: "99, caput" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Obstar o acesso de alguém a qualquer cargo público por motivo de idade. Negar a alguém, por motivo de idade, emprego ou trabalho. Recusar, retardar ou dificultar atendimento ou deixar de prestar assistência à saúde, sem justa causa, a pessoa idosa. Deixar de cumprir, retardar ou frustrar, sem justo motivo, a execução de ordem judicial expedida na ação civil que alude esta Lei. Recusar, retardar ou omitir dados técnicos indispensáveis à propositura da ação civil objeto desta Lei, quando requisitados pelo Ministério Público": { artigo: "100" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Deixar de cumprir, retardar ou frustrar, sem justo motivo, a execução de ordem judicial expedida nas ações em que for parte ou interveniente o idoso": { artigo: "101" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Negar o acolhimento ou a permanência de idoso, como abrigado, por recusa deste em outorgar procuração à entidade de atendimento": { artigo: "103" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Reter o cartão magnético de conta bancária relativa a benefícios, proventos ou pensão do idoso, bem como qualquer outro documento com objetivo de assegurar recebimento ou ressarcimento de dívida": { artigo: "104" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
+"Impedir ou embaraçar ato do representante do Ministério Público ou de qualquer outro agente fiscalizador": { artigo: "109" , lei: "Estatuto do Idoso (Lei 10.471, de 1º de outubro de 2003)"  , pena: "1" },
 
     
 
@@ -857,9 +924,12 @@ let Vitima04Global = [];
     if (naturezas[valorSelecionado]) {
       document.getElementById("artigo").value = naturezas[valorSelecionado].artigo;
       document.getElementById("lei").value = naturezas[valorSelecionado].lei;
+      document.getElementById("pena").value = naturezas[valorSelecionado].pena;
+      
     } else {
       document.getElementById("artigo").value = "";
       document.getElementById("lei").value = "";
+      document.getElementById("pena").value = "";
     }
   });
 </script>
@@ -2188,8 +2258,10 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
 "bairro": "",
 "natureza_concatenada": "",
 "artigo_concatenado": "",
+"pena_concatenado": "",
 
 "lei_concatenada": "",
+"pena_concatenada": "",
 
 
 
@@ -3329,7 +3401,7 @@ inputs.forEach(input => {
 
 
 
-
+const pena_concatenada = parseInt(document.getElementById('pena_concatenada').value);
             const numero_tco = parseInt(document.getElementById('numero_tco').value);
             const naturezaa = document.getElementById('natureza_concatenada').value;
             const artigo = document.getElementById("artigo_concatenado").value
@@ -3543,7 +3615,7 @@ if (nomeVitimaautuacao && nomeVitimaautuacao.value) {
 
 //------salvar texto area
 function storeAll() {
-  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada', 'pena_concatenada'];
   
   campos.forEach(id => {
     const valor = document.getElementById(id).value;
@@ -3554,7 +3626,7 @@ function storeAll() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada'];
+  const campos = ['natureza_concatenada', 'artigo_concatenado', 'lei_concatenada', 'pena_concatenada'];
 
   campos.forEach(id => {
     const valorSalvo = localStorage.getItem(id);
