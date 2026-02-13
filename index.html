@@ -516,10 +516,15 @@ function concatenarN() {
         background-color: #369000; /* Cor verde mais escura no hover */
     }
 </style>
- <button class="botao-verde" onclick="concatenarN()">Selecionar Natureza</button>
+<!--<button class="botao-verde" onclick="concatenarN()">Selecionar Natureza</button>-->
+
+<button class="botao-verde" onclick="concatenarN()">Selecionar Natureza</button>
+
+<button class="botao-vermelho" onclick="limparNaturezas()">Limpar Natureza</button>
 
 
 
+<br>
 
 <label for="artigo">Artigo:</label>
 <input type="text" id="artigo" required style="width: 120px;" readonly>
@@ -548,6 +553,11 @@ function concatenarN() {
 
 <label for="pena_concatenada">Somatoria de Penas:</label>
 <textarea type="text" id="pena_concatenada" required style="width: 100%; height: auto; min-height: 50px;" ></textarea>
+
+
+
+
+
 
 
 <script>
@@ -620,6 +630,45 @@ window.addEventListener('DOMContentLoaded', () => {
         selectElement.size = 1; // Quando o campo perde o foco, a lista volta a ser uma linha
     });
 </script>
+
+
+
+<script>
+function limparNaturezas(){
+
+ const confirma = confirm(
+ "Confirma a exclusão de TODAS as naturezas selecionadas?\n\n" +
+ "Esta ação apagará Natureza, Artigo, Lei e Somatória de Penas."
+ );
+
+ if(!confirma) return;
+
+ document.getElementById("natureza_concatenada").value="";
+ document.getElementById("artigo_concatenado").value="";
+ document.getElementById("lei_concatenada").value="";
+ document.getElementById("pena_concatenada").value="";
+
+ alert("Naturezas removidas com sucesso.");
+
+}
+</script>
+
+
+<style>
+.botao-vermelho{
+ background:#dc3545;
+ color:white;
+ border:none;
+ padding:6px 12px;
+ margin-left:8px;
+ border-radius:4px;
+ cursor:pointer;
+}
+
+.botao-vermelho:hover{
+ background:#b02a37;
+}
+</style>
 
 
 
