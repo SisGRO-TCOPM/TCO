@@ -2072,6 +2072,179 @@ let Vitima04Global = [];
 
 
 
+<!--// texto inteligente inicio-->
+<script>
+
+const campos22=[
+"natureza_concatenada",
+"artigo_concatenado",
+"lei_concatenada",
+"dia",
+"mes",
+"ano",
+"hora_fato",
+"endereco",
+"bairro"
+];
+
+const ta=document.getElementById("relato_policial_correto");
+
+let idx=0;
+let aberto=false;
+
+const box=document.createElement("div");
+box.id="autocompleteBox";
+document.body.appendChild(box);
+
+/* abre lista */
+ta.addEventListener("input",()=>{
+
+ const pos=ta.selectionStart;
+
+ if(!ta.value.substring(0,pos).endsWith("@@")){
+  box.style.display="none";
+  aberto=false;
+  return;
+ }
+
+ // coleta nomes digitados
+ const pessoas=[];
+
+ document.querySelectorAll(
+  'input[name^="nome_autor"],input[name^="nome_vitima"],input[name^="nome_testemunha"]'
+ ).forEach(i=>{
+  if(i.value.trim()!=="") pessoas.push(i.value.trim());
+ });
+
+ const listaFinal=[...campos22,...pessoas];
+
+ box.innerHTML="";
+ idx=0;
+ aberto=true;
+
+ listaFinal.forEach((campo,i)=>{
+
+  const d=document.createElement("div");
+  d.className="autocomplete-item";
+  d.textContent=campo;
+
+  if(i===0)d.classList.add("active");
+
+  d.onclick=()=>inserir(campo);
+
+  box.appendChild(d);
+
+ });
+
+ const r=ta.getBoundingClientRect();
+ box.style.left=(r.right+5)+"px";
+ box.style.top=(r.top+window.scrollY)+"px";
+ box.style.display="block";
+
+});
+
+/* navegação */
+ta.addEventListener("keydown",e=>{
+
+ if(!aberto)return;
+
+ const itens=[...box.children];
+
+ if(e.key==="ArrowDown"){
+  e.preventDefault();
+  idx=(idx+1)%itens.length;
+ }
+
+ if(e.key==="ArrowUp"){
+  e.preventDefault();
+  idx=(idx-1+itens.length)%itens.length;
+ }
+
+ if(e.key==="Enter"){
+  e.preventDefault();
+  inserir(itens[idx].textContent);
+  return;
+ }
+
+ itens.forEach((d,i)=>{
+  d.classList.toggle("active",i===idx);
+ });
+
+ itens[idx].scrollIntoView({block:"nearest"});
+
+});
+
+/* inserir */
+function inserir(campo){
+
+ const el=document.getElementById(campo);
+ let valor=el ? el.value : campo;
+
+ const pos=ta.selectionStart;
+
+ ta.value=
+ ta.value.substring(0,pos-2)+
+ valor+
+ ta.value.substring(pos);
+
+ const novaPos=(pos-2)+valor.length;
+
+ box.style.display="none";
+ aberto=false;
+
+ setTimeout(()=>{
+  ta.blur();
+  ta.focus();
+  ta.setSelectionRange(novaPos,novaPos);
+ },40);
+
+}
+
+</script>
+
+
+<style>
+
+#autocompleteBox{
+ position:absolute;
+ border:1px solid #999;
+ background:#fff;
+ z-index:9999;
+ width:260px;
+ max-height:180px;
+ overflow-y:auto;
+ display:none;
+ box-shadow:0 4px 10px rgba(0,0,0,.15);
+ border-radius:6px;
+}
+
+.autocomplete-item{
+ padding:8px;
+ cursor:pointer;
+}
+
+.autocomplete-item:hover{
+ background:#e9ecef;
+}
+
+.autocomplete-item.active{
+ background:#0d6efd;
+ color:white;
+}
+
+#relato_policial_correto:focus{
+ outline:2px solid #0d6efd!important;
+}
+
+</style>
+
+
+<!--// texto inteligente fim-->
+
+
+
+
+
 <!-- Área para exibir o resultado 
 <div id="resultado" style="display: none; margin-top: 20px;">
   <p id="textoEscolhido" style="white-space: pre-wrap;"></p>
@@ -3139,7 +3312,21 @@ AutorDeposito.value) {
 </script>
 
 
+<script>
+document.addEventListener("input", function(e){
 
+ if(e.target.tagName === "INPUT" && e.target.type === "text"){
+   e.target.value = e.target.value.toUpperCase();
+ }
+
+});
+</script>
+
+<style>
+input[type="text"]{
+ text-transform: uppercase;
+}
+</style>
 
 <!------------------------------------------>
 
@@ -5804,6 +5991,10 @@ const numeroTCOcompleto = document.getElementById("numero_tco").value
     alert(`Documento combinado com sucesso! Total de páginas: ${totalPages}`);
   }
 </script>
+
+
+
+
 
 </body>
 </html>
