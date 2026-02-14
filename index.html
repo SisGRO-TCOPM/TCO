@@ -1070,7 +1070,11 @@ let Vitima04Global = [];
             ];
           // Limpar as opções existentes
           nomeSelects.forEach(function(nomeSelect) {
-                nomeSelect.innerHTML = "<option value='' disabled selected>Selecione uma opção</option>";
+               // nomeSelect.innerHTML = "<option value='' disabled selected>Selecione uma opção</option>";
+            
+            nomeSelect.innerHTML = "";
+nomeSelect.appendChild(new Option("Selecione uma opção", ""));
+            
             });
 
             
@@ -2487,7 +2491,7 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
     // Lista de IDs dos campos e seus valores originais
     const campos = {
         "numero_tco": "0000",
-        
+        "quartel": "",
         "cidade": "",
         "cep": "",
         "endereco": "",
@@ -2507,32 +2511,51 @@ const mesExtenso2 = numeroParaExtenso(parseInt(mEs)); // parseInt
         "comunicante": "",
         
         
-       
+       "nome_completo": "",
         "nome_completo_componente2": "",
+        "nome_completo_componente3": "",
+        "nome_completo_componente4": "",
         "relato_policial_correto": `Às ${horaOcorrido} do dia ${diaRegistro} de ${mesExtenso2} de ${AnO} , deparamos com autor do fato, () e em decorrência do fato dei voz de ciência a autor do fato, conduzindo o mesmo para o unidade de policia militar, para adoção das providências legais.`
     };
 
    // 🔹 Carregar os valores salvos ao abrir a página
-   window.onload = function() {
-        Object.keys(campos).forEach(id => {
-            const campo = document.getElementById(id);
-            if (campo) { // Verifica se o campo existe
-                const valorSalvo = localStorage.getItem(id);
-                campo.value = valorSalvo !== null ? valorSalvo : campos[id];
-            }
-        });
-    };
+  window.onload = function() {
 
-    // 🔹 Salvar automaticamente sempre que o usuário digitar algo
+    // 1️⃣ restaura quartel primeiro
+    const quartelSalvo = localStorage.getItem("quartel");
+    if (quartelSalvo) {
+        document.getElementById("quartel").value = quartelSalvo;
+    }
+
+    // 2️⃣ monta os selects dependentes
+    alterarNomeCondutor();
+
+    // 3️⃣ agora restaura todos os campos
     Object.keys(campos).forEach(id => {
         const campo = document.getElementById(id);
-        if (campo) { // Verifica se o campo existe
-            campo.addEventListener("input", function() {
-                localStorage.setItem(id, this.value);
-            });
+        if (campo) {
+            campo.value = localStorage.getItem(id) || campos[id];
         }
     });
 
+};
+
+    // 🔹 Salvar automaticamente sempre que o usuário digitar algo
+Object.keys(campos).forEach(id => {
+    const campo = document.getElementById(id);
+    if (campo) {
+
+        // input → text, textarea etc
+        campo.addEventListener("input", function() {
+            localStorage.setItem(id, this.value);
+        });
+
+        // change → select
+        campo.addEventListener("change", function() {
+            localStorage.setItem(id, this.value);
+        });
+    }
+});
 // 🔹 Funcionalidade adicional para salvar campos que são preenchidos programaticamente
 function salvarCampoProgramaticamente(id, valor) {
     const campo = document.getElementById(id);
