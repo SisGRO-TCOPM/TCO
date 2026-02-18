@@ -186,9 +186,9 @@
 <option value="Autoacusação falsa">Autoacusação falsa</option>
 <option value="Bebidas alcoólicas">Bebidas alcoólicas</option>
 <option value="Caça, perseguição ou apanha de espécime da fauna silvestre sem licença ou em desacordo com a obtida">Caça, perseguição ou apanha de espécime da fauna silvestre sem licença ou em desacordo com a obtida</option>
-<option value="Calúnia 138">Calúnia 138</option>
-<option value="Calúnia 138 §1°">Calúnia 138 §1°</option>
-<option value="Calúnia 138 §2°">Calúnia 138 §2°</option>
+<option value="Calúnia">Calúnia</option>
+<option value="Calúnia">Calúnia</option>
+<option value="Calúnia">Calúnia</option>
 <option value="Causação culposa de poluição danosa à saúde humana ou provocadora de mortandade de animais ou de destruição da flora">Causação culposa de poluição danosa à saúde humana ou provocadora de mortandade de animais ou de destruição da flora</option>
 <option value="Ceder prédio para reunião de associação secreta">Ceder prédio para reunião de associação secreta</option>
 <option value="Certidão e atestado ideologicamente falso">Certidão e atestado ideologicamente falso</option>
@@ -240,7 +240,7 @@
 <option value="Difusão culposa de doença ou praga">Difusão culposa de doença ou praga</option>
 <option value="Direção não habilitada de veículo automotor, gerando perigo">Direção não habilitada de veículo automotor, gerando perigo</option>
 <option value="Direção não licenciada de aeronave">Direção não licenciada de aeronave</option>
-<!--<option value="Direção perigosa de veículo na via pública">Direção perigosa de veículo na via pública</option>-->
+<option value="Direção perigosa de veículo na via pública">Direção perigosa de veículo na via pública</option>
 <option value="Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade">Discriminar pessoa idosa, impedindo ou dificultando seu acesso a operações bancárias, aos meios de transporte, ao direito de contratar ou por qualquer outro meio ou instrumento necessário ao exercício da cidadania, por motivo de idade</option>
 <option value="Divulgação de segredo">Divulgação de segredo</option>
 <option value="durante a noite">durante a noite</option>
@@ -701,9 +701,9 @@ let Vitima04Global = [];
 "Maus tratos": { artigo: "136, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
 "Rixa": { artigo: "137, caput" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,16" },
 "Rixa qualificada (participantes)": { artigo: "137, § único" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
-"Calúnia 138": { artigo: "138" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
-"Calúnia 138 §1°": { artigo: "138 §1°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
-"Calúnia 138 §2°": { artigo: "138 §2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138 §1°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
+"Calúnia": { artigo: "138 §2°" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "2" },
 "Difamação": { artigo: "139" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
 "Injúria": { artigo: "140" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "0,5" },
 "Injúria qualificada (real)": { artigo: "140, § 2º" , lei: "Código Penal (Decreto-Lei 2.848, de 7 de dezembro de 1940)."  , pena: "1" },
@@ -2124,192 +2124,58 @@ nomeSelect.appendChild(new Option("Selecione uma opção", ""));
 
 
 
-<!--inicio de informativo inteligente -->
-
-<script>
-/* =========================
-   MENSAGEM INFORMATIVA DO EDITOR
-   ========================= */
-
-const INFO_KEY="ocultarMensagemRelato";
-
-/* cria modal */
-function criarAviso(){
-
- if(localStorage.getItem(INFO_KEY)) return;
-
- if(document.getElementById("relatoInfoModal")) return;
-
- const modal=document.createElement("div");
- modal.id="relatoInfoModal";
-
- modal.innerHTML=`
-  <div class="relato-modal-box">
-
-   <h3>Editor Inteligente de Relatos</h3>
-
-   <p>
-   Este campo possui <b>preenchimento inteligente</b>.<br><br>
-   Utilize o atalho <b>@@</b> para inserir automaticamente dados já qualificados
-   (nomes, endereço, data, natureza, artigos, entre outros).<br><br>
-   Para maior precisão, agilidade e padronização do registro,
-   recomenda-se <b>qualificar todos os envolvidos e preencher os campos do atendimento #Dados Gerais# antes de redigir os relatos</b>.<br><br>
-   Isso reduz erros, tempo, retrabalho e garante a correta formalização do procedimento.
-   </p>
-
-   <label class="relato-check">
-     <input type="checkbox" id="naoMostrarRelatoInfo">
-     Não exibir novamente
-   </label>
-
-   <button id="fecharRelatoInfo">OK, entendi</button>
-
-  </div>
- `;
-
- document.body.appendChild(modal);
-
- document.getElementById("fecharRelatoInfo").onclick=()=>{
-   if(document.getElementById("naoMostrarRelatoInfo").checked){
-     localStorage.setItem(INFO_KEY,"1");
-   }
-   modal.remove();
- };
-}
-
-
-/* mostra ao focar em textarea */
-document.addEventListener("focusin",(e)=>{
- if(e.target.tagName==="TEXTAREA"){
-   criarAviso();
- }
-});
-</script>
-<style>
-/* fundo escuro */
-#relatoInfoModal{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.45);
- display:flex;
- align-items:center;
- justify-content:center;
- z-index:10000;
- font-family:system-ui,-apple-system,Segoe UI,Roboto;
-}
-
-/* caixa */
-.relato-modal-box{
- background:#fff;
- width:420px;
- max-width:95%;
- padding:22px;
- border-radius:10px;
- box-shadow:0 10px 30px rgba(0,0,0,.25);
- animation:fadeIn .2s ease;
-}
-
-.relato-modal-box h3{
- margin-top:0;
- color:#0d6efd;
- font-size:18px;
-}
-
-.relato-modal-box p{
- font-size:14px;
- line-height:1.5;
- color:#333;
-}
-
-.relato-check{
- display:block;
- margin:12px 0;
- font-size:13px;
-}
-
-/* botão */
-.relato-modal-box button{
- width:100%;
- padding:8px;
- background:#0d6efd;
- color:#fff;
- border:none;
- border-radius:6px;
- cursor:pointer;
- font-weight:600;
-}
-
-.relato-modal-box button:hover{
- opacity:.9;
-}
-
-@keyframes fadeIn{
- from{opacity:0;transform:scale(.96)}
- to{opacity:1;transform:scale(1)}
-}
-</style>
-
-
-<!--fim de informativo inteligente -->
 
 <!--// texto inteligente inicio-->
-
 <script>
-/* =========================
-   AUTOCOMPLETE UNIVERSAL @@
-   100% dinâmico (MutationObserver)
-   ========================= */
 
-const campos22 = [
- "natureza_concatenada",
- "artigo_concatenado",
- "lei_concatenada",
- "data_registro",
- 
- "hora_fato",
- "endereco",
- "bairro"
+const campos22=[
+"natureza_concatenada",
+"artigo_concatenado",
+"lei_concatenada",
+"dia",
+"mes",
+"ano",
+"hora_fato",
+"endereco",
+"bairro"
 ];
 
-let taAtual=null;
+const ta=document.getElementById("relato_policial_correto");
+
 let idx=0;
 let aberto=false;
 
-/* BOX */
 const box=document.createElement("div");
 box.id="autocompleteBox";
 document.body.appendChild(box);
 
-
-/* =========================
-   ABRIR LISTA
-   ========================= */
-function abrirLista(ta){
+/* abre lista */
+ta.addEventListener("input",()=>{
 
  const pos=ta.selectionStart;
 
  if(!ta.value.substring(0,pos).endsWith("@@")){
-  fechar();
+  box.style.display="none";
+  aberto=false;
   return;
  }
 
- taAtual=ta;
-
+ // coleta nomes digitados
  const pessoas=[];
 
  document.querySelectorAll(
   'input[name^="nome_autor"],input[name^="nome_vitima"],input[name^="nome_testemunha"]'
  ).forEach(i=>{
-  if(i.value.trim()) pessoas.push(i.value.trim());
+  if(i.value.trim()!=="") pessoas.push(i.value.trim());
  });
 
- const lista=[...campos22,...pessoas];
+ const listaFinal=[...campos22,...pessoas];
 
  box.innerHTML="";
  idx=0;
  aberto=true;
 
- lista.forEach((campo,i)=>{
+ listaFinal.forEach((campo,i)=>{
 
   const d=document.createElement("div");
   d.className="autocomplete-item";
@@ -2320,144 +2186,78 @@ function abrirLista(ta){
   d.onclick=()=>inserir(campo);
 
   box.appendChild(d);
+
  });
 
  const r=ta.getBoundingClientRect();
-
  box.style.left=(r.right+5)+"px";
  box.style.top=(r.top+window.scrollY)+"px";
  box.style.display="block";
-}
 
+});
 
-/* ========================= */
-function inserir(campo){
+/* navegação */
+ta.addEventListener("keydown",e=>{
 
- if(!taAtual) return;
+ if(!aberto)return;
 
- let valor="";
+ const itens=[...box.children];
 
- const el=document.getElementById(campo);
-
- /* 🔵 tratamento especial para data por extenso */
- if(campo==="data_registro" && el && el.value){
-
-  const meses=[
-   "janeiro","fevereiro","março","abril","maio","junho",
-   "julho","agosto","setembro","outubro","novembro","dezembro"
-  ];
-
-  const [ano,mes,dia]=el.value.split("-");
-
-  valor=`dia ${parseInt(dia)} de ${meses[parseInt(mes)-1]} de ${ano}`;
-
- }else{
-  valor=el ? el.value : campo;
+ if(e.key==="ArrowDown"){
+  e.preventDefault();
+  idx=(idx+1)%itens.length;
  }
 
- const pos=taAtual.selectionStart;
+ if(e.key==="ArrowUp"){
+  e.preventDefault();
+  idx=(idx-1+itens.length)%itens.length;
+ }
 
- taAtual.value=
-  taAtual.value.substring(0,pos-2)+
-  valor+
-  taAtual.value.substring(pos);
+ if(e.key==="Enter"){
+  e.preventDefault();
+  inserir(itens[idx].textContent);
+  return;
+ }
+
+ itens.forEach((d,i)=>{
+  d.classList.toggle("active",i===idx);
+ });
+
+ itens[idx].scrollIntoView({block:"nearest"});
+
+});
+
+/* inserir */
+function inserir(campo){
+
+ const el=document.getElementById(campo);
+ let valor=el ? el.value : campo;
+
+ const pos=ta.selectionStart;
+
+ ta.value=
+ ta.value.substring(0,pos-2)+
+ valor+
+ ta.value.substring(pos);
 
  const novaPos=(pos-2)+valor.length;
 
- fechar();
-
-taAtual.focus();
-taAtual.setSelectionRange(novaPos,novaPos);
-
-/* 🔵 força disparo para autosave/store */
-taAtual.dispatchEvent(new Event("input",{bubbles:true}));
-taAtual.dispatchEvent(new Event("change",{bubbles:true}));
-
-}
-
-function fechar(){
  box.style.display="none";
  aberto=false;
+
+ setTimeout(()=>{
+  ta.blur();
+  ta.focus();
+  ta.setSelectionRange(novaPos,novaPos);
+ },40);
+
 }
 
-
-/* =========================
-   ATIVAR EM UM TEXTAREA
-   ========================= */
-function ativarTextarea(ta){
-
- if(ta.dataset.autocomplete) return; // evita duplicar
- ta.dataset.autocomplete="1";
-
- ta.addEventListener("input",()=>abrirLista(ta));
-
- ta.addEventListener("keydown",(e)=>{
-
-  if(!aberto || taAtual!==ta) return;
-
-  const itens=[...box.children];
-
-  if(e.key==="ArrowDown"){
-   e.preventDefault();
-   idx=(idx+1)%itens.length;
-  }
-
-  if(e.key==="ArrowUp"){
-   e.preventDefault();
-   idx=(idx-1+itens.length)%itens.length;
-  }
-
-  if(e.key==="Enter"){
-   e.preventDefault();
-   inserir(itens[idx].textContent);
-   return;
-  }
-
-  itens.forEach((d,i)=>{
-   d.classList.toggle("active",i===idx);
-  });
-
-  itens[idx].scrollIntoView({block:"nearest"});
- });
-}
-
-
-/* =========================
-   ATIVA OS EXISTENTES
-   ========================= */
-document.querySelectorAll("textarea").forEach(ativarTextarea);
-
-
-/* =========================
-   OBSERVA NOVOS ELEMENTOS
-   ========================= */
-const observer=new MutationObserver(mutations=>{
- mutations.forEach(m=>{
-  m.addedNodes.forEach(n=>{
-   if(n.tagName==="TEXTAREA"){
-    ativarTextarea(n);
-   }
-   if(n.querySelectorAll){
-    n.querySelectorAll("textarea").forEach(ativarTextarea);
-   }
-  });
- });
-});
-
-observer.observe(document.body,{
- childList:true,
- subtree:true
-});
-
-
-/* fecha ao clicar fora */
-document.addEventListener("click",(e)=>{
- if(!box.contains(e.target)) fechar();
-});
 </script>
 
 
 <style>
+
 #autocompleteBox{
  position:absolute;
  border:1px solid #999;
@@ -2469,7 +2269,6 @@ document.addEventListener("click",(e)=>{
  display:none;
  box-shadow:0 4px 10px rgba(0,0,0,.15);
  border-radius:6px;
- font-size:14px;
 }
 
 .autocomplete-item{
@@ -2486,9 +2285,10 @@ document.addEventListener("click",(e)=>{
  color:white;
 }
 
-textarea:focus{
+#relato_policial_correto:focus{
  outline:2px solid #0d6efd!important;
 }
+
 </style>
 
 
@@ -4797,7 +4597,7 @@ doc.setFontSize(14);
 const numeroDeLinhas4 = linhas4.length;
 const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
 
-          //verificapagina7()
+          verificapagina7()
           
 
           if (y + numeroDeLinhasmultiplcado4 + 15 > 260) {
