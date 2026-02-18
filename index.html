@@ -2366,8 +2366,13 @@ function inserir(campo){
 
  fechar();
 
- taAtual.focus();
- taAtual.setSelectionRange(novaPos,novaPos);
+taAtual.focus();
+taAtual.setSelectionRange(novaPos,novaPos);
+
+/* 🔵 força disparo para autosave/store */
+taAtual.dispatchEvent(new Event("input",{bubbles:true}));
+taAtual.dispatchEvent(new Event("change",{bubbles:true}));
+
 }
 
 function fechar(){
