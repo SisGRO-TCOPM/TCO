@@ -4454,7 +4454,7 @@ doc.text(textoLimitadoAutor, 10, y);
     y += 6;
     verificapagina()
    //doc.text(`   RELATO DO AUTOR DO FATO: ${relatoAutor}`, 20, y);
-    y += 25;
+    y += 30;
    // doc.line(10, y, 200, y);
     
     
@@ -4890,253 +4890,312 @@ if (blocoAtual.length > 0) {
 
 ////////
 //y += numeroDeLinhasmultiplcado4 /2;
-y += 15;
+y += 10;
 doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
 doc.text(`   ${nomeCondutor}- ${posto_grad}`, 100, y, { align: "center" });
 y += 5;
 doc.text(`  RGPM: ${rgPM}`, 100, y, { align: "center" });
 y += 30;
-verificapagina7()
+//verificapagina7()
                
 
 
            
 
 ///FIMMMMM HISTORICO
-            
-            function verificapagina4() {
-    if (y > 260) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
-    }
-        }
-verificapagina4()
+// CONFIGURAÇÃO PADRÃO DE QUEBRA
+const margemEsquerda19 = 20;
+const larguraTexto19 = 170;
+const alturaLinha19 = 6;
+const alturaPagina19 = doc.internal.pageSize.getHeight();
+const limitePagina19 = alturaPagina19 - 30;
 
+
+// ========================= VÍTIMAS =========================
 
 document.getElementsByName("nome_vitima[]").forEach((input, index) => {
-                const nomeVVitima = input.value;
-            const relatoVitimacorreto = document.getElementsByName("relato_vitima[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-const cpfVVitima = document.getElementsByName("cpf_passaporte_vitima[]")[index]?.value || "N/A"; // Se não houver nome social,
-          
-          let textoRelatoVitima = relatoVitimacorreto 
-          
-          const linhas = doc.splitTextToSize(textoRelatoVitima, 170);
-          // Número de linhas geradas
-const numeroDeLinhas = linhas.length;
-const numeroDeLinhasmultiplcado = linhas.length * 6;
 
-          verificapagina4()
-          
+    const nomeVVitima19 = input.value;
+    const relatoVitimacorreto19 = document.getElementsByName("relato_vitima[]")[index]?.value || "N/A";
+    const cpfVVitima19 = document.getElementsByName("cpf_passaporte_vitima[]")[index]?.value || "N/A";
 
-          if (y + numeroDeLinhasmultiplcado + 15 + 15> 270) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+
+  //////  if (y + 15 > limitePagina19) {
+        doc.addPage();
+        pageCount++; // Incrementa contador de páginas
+        adicionarCabecalho();
+        adicionarRodape();
+         
+        assinaturaefolhas();
+        
+        y = 60;
+//    }
+
+    doc.text(`Relato da vítima (${index + 1}): ${nomeVVitima19}`, 100, y, { align: "center" });
+    doc.line(10, y + 1, 200, y + 1);
+    y += 15;
+
+    doc.setFont("helvetica", "normal");
+
+    const linhasTexto19 = doc.splitTextToSize(relatoVitimacorreto19, larguraTexto19);
+    let blocoAtual19 = [];
+    let yInicialBloco19 = y;
+
+    for (let i = 0; i < linhasTexto19.length; i++) {
+
+        if (y + alturaLinha19 > limitePagina19) {
+
+            doc.text(blocoAtual19, margemEsquerda19, yInicialBloco19, {
+                maxWidth: larguraTexto19,
+                align: 'justify'
+            });
+
+            doc.addPage();
             pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
+            adicionarCabecalho();
+            adicionarRodape();
+             
+            assinaturaefolhas();
+            
+
+            y = 60;
+            yInicialBloco19 = y;
+            blocoAtual19 = [];
+        }
+
+        if (blocoAtual19.length === 0) {
+            yInicialBloco19 = y;
+        }
+
+        blocoAtual19.push(linhasTexto19[i]);
+        y += alturaLinha19;
     }
 
+    if (blocoAtual19.length > 0) {
+        doc.text(blocoAtual19, margemEsquerda19, yInicialBloco19, {
+            maxWidth: larguraTexto19,
+            align: 'justify'
+        });
+    }
 
-          doc.setFont("helvetica", "bold");
-          doc.text(`    Relato da vitima (${index + 1}): ${nomeVVitima}`, 100, y, { align: "center" }); 
-             doc.line(10, y+1, 200, y+1);
-             
-            y += 15;
-             verificapagina4()
-doc.setFont("helvetica", "normal");
-doc.text(textoRelatoVitima, 20, y, { maxWidth: 170, align: 'justify'});
+    y += 10;
 
+    if (y + 20 > limitePagina19) {
+        doc.addPage();
+        pageCount++; // Incrementa contador de páginas
+        adicionarCabecalho();
+        adicionarRodape();
+         
+        assinaturaefolhas();
+        
+        y = 60;
+    }
 
-
-y += numeroDeLinhas * 5;
-
-
-y += 10;
-verificapagina4()
-doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
-doc.text(`   ${nomeVVitima}`, 100, y, { align: "center" });
-y += 5;
-doc.text(`  CPF: ${cpfVVitima}`, 100, y, { align: "center" });
-y += 15;
-
-           
-
-///-----------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
+    doc.text("__________________________________________________", 100, y - 4, { align: "center" });
+   // doc.text(nomeVVitima19, 100, y, { align: "center" });
+    
+   doc.text(nomeVVitima19.trim(), 100, y, { align: "center" });
+   
+   y += 5;
+    doc.text(`CPF: ${cpfVVitima19}`, 100, y, { align: "center" });
+    y += 25;
+verificapagina7()
 });
 
-//--------------- parte para pag nova 
-//doc.addPage(); // Cria uma nova página
-//pageCount++; // Incrementa contador de páginas
-//assinaturaefolhas()
 
-//adicionarCabecalho()
-//adicionarRodape()
-//y = 60
-//////
-
-//-------------------------------------------------------
-function verificapagina5() {
-    if (y > 260) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
-    }
-        }
-verificapagina5()
-
+// ========================= TESTEMUNHAS =========================
 
 document.getElementsByName("nome_testemunha[]").forEach((input, index) => {
-                const nomeTTestemunha = input.value;
-            const relatoTestemunhaCorreto = document.getElementsByName("relato_testemunha[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-const cpfTTestemunha = document.getElementsByName("cpf_passaporte_testemunha[]")[index]?.value || "N/A"; // Se não houver nom
-          
-          let textoRelatoTestemunha = relatoTestemunhaCorreto 
-          
-          const linhas2 = doc.splitTextToSize(textoRelatoTestemunha, 170);
-          // Número de linhas geradas
-const numeroDeLinhas2 = linhas2.length;
-const numeroDeLinhasmultiplcado2 = linhas2.length * 6;
 
-          verificapagina5()
-          
+    const nomeTTestemunha19 = input.value;
+    const relatoTestemunhaCorreto19 = document.getElementsByName("relato_testemunha[]")[index]?.value || "N/A";
+    const cpfTTestemunha19 = document.getElementsByName("cpf_passaporte_testemunha[]")[index]?.value || "N/A";
 
-          if (y + numeroDeLinhasmultiplcado2 + 15 + 15 > 270) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
+    doc.setFont("helvetica", "bold");
+
+    if (y + 15 > limitePagina19) {
+        doc.addPage();
+        pageCount++; // Incrementa contador de páginas
+        adicionarCabecalho();
+        adicionarRodape();
+         
+        assinaturaefolhas();
+        
+        y = 60;
     }
 
-    doc.setFontSize(10);
-          doc.setFont("helvetica", "bold");
-          doc.text(`    Relato da testemunha (${index + 1}): ${nomeTTestemunha}`, 100, y, { align: "center" }); 
-          doc.setFontSize(10);
-             doc.line(10, y+1, 200, y+1);
+    doc.text(`Relato da testemunha (${index + 1}): ${nomeTTestemunha19}`, 100, y, { align: "center" });
+    doc.line(10, y + 1, 200, y + 1);
+    y += 15;
+
+    doc.setFont("helvetica", "normal");
+
+    const linhasTexto19b = doc.splitTextToSize(relatoTestemunhaCorreto19, larguraTexto19);
+    let blocoAtual19b = [];
+    let yInicialBloco19b = y;
+
+    for (let i = 0; i < linhasTexto19b.length; i++) {
+
+        if (y + alturaLinha19 > limitePagina19) {
+
+            doc.text(blocoAtual19b, margemEsquerda19, yInicialBloco19b, {
+                maxWidth: larguraTexto19,
+                align: 'justify'
+            });
+
+            doc.addPage();
+            pageCount++; // Incrementa contador de páginas
+            adicionarCabecalho();
+            adicionarRodape();
              
-            y += 15;
-             verificapagina5()
-doc.setFont("helvetica", "normal");
-doc.setFontSize(10);
-doc.text(textoRelatoTestemunha, 20, y, { maxWidth: 170, align: 'justify'});
+            assinaturaefolhas();
+            
 
+            y = 60;
+            yInicialBloco19b = y;
+            blocoAtual19b = [];
+        }
 
+        if (blocoAtual19b.length === 0) {
+            yInicialBloco19b = y;
+        }
 
-y += numeroDeLinhas2 * 7;
+        blocoAtual19b.push(linhasTexto19b[i]);
+        y += alturaLinha19;
+    }
 
+    if (blocoAtual19b.length > 0) {
+        doc.text(blocoAtual19b, margemEsquerda19, yInicialBloco19b, {
+            maxWidth: larguraTexto19,
+            align: 'justify'
+        });
+    }
 
-y += 10;
-doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
-doc.text(`   ${nomeTTestemunha}`, 100, y, { align: "center" });
-y += 5;
-doc.text(`  CPF: ${cpfTTestemunha}`, 100, y, { align: "center" });
-y += 30;
+    y += 10;
 
-               
+    if (y + 20 > limitePagina19) {
+        doc.addPage();
+        pageCount++; // Incrementa contador de páginas
+        adicionarCabecalho();
+        adicionarRodape();
+         
+        assinaturaefolhas();
+        
+        y = 60;
+    }
 
-
+    doc.text("__________________________________________________", 100, y - 4, { align: "center" });
+    doc.text(nomeTTestemunha19.trim(), 100, y, { align: "center" });
+    y += 5;
+    doc.text(`CPF: ${cpfTTestemunha19}`, 100, y, { align: "center" });
+    y += 25;
+verificapagina7()
 });
 
 
-
-         //-------------------------------------------------------
-function verificapagina6() {
-    if (y > 260) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
-    }
-        }
-verificapagina6()
-
+// ========================= AUTORES =========================
 
 document.getElementsByName("nome_autor[]").forEach((input, index) => {
-                const nomeAAutor = input.value;
-            const relatoAutorCorreto = document.getElementsByName("relato_autor[]")[index]?.value || "N/A"; // Se não houver nome social, exibe "N/A"
-const cpfAutor = document.getElementsByName("cpf_passaporte_autor[]")[index]?.value || "N/A"; // Se não houver nome social, 
-          
-          let textoRelatoAutor = relatoAutorCorreto 
-          
-          const linhas3 = doc.splitTextToSize(textoRelatoAutor, 170);
-          // Número de linhas geradas
-const numeroDeLinhas3 = linhas3.length;
-const numeroDeLinhasmultiplcado3 = linhas3.length * 6;
 
-          ///verificapagina6()
-          
+    const nomeAAutor19 = input.value;
+    const relatoAutorCorreto19 = document.getElementsByName("relato_autor[]")[index]?.value || "N/A";
+    const cpfAutor19 = document.getElementsByName("cpf_passaporte_autor[]")[index]?.value || "N/A";
 
-          if (y + numeroDeLinhasmultiplcado3 + 15 +15 > 270) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
+    doc.setFont("helvetica", "bold");
+
+    if (y + 15 > limitePagina19) {
+        doc.addPage();
+        adicionarCabecalho();
+        adicionarRodape();
+        pageCount++;
+        assinaturaefolhas();
+        
+        y = 60;
     }
 
+    doc.text(`Relato do Autor do fato (${index + 1}): ${nomeAAutor19}`, 100, y, { align: "center" });
+    doc.line(10, y + 1, 200, y + 1);
+    y += 15;
 
-          doc.setFont("helvetica", "bold");
-          doc.text(`   Relato do Autor do fato (${index + 1}) : ${nomeAAutor}`, 100, y, { align: "center" }); 
-             doc.line(10, y+1, 200, y+1);
-             
-            y += 15;
-             verificapagina6()
-doc.setFont("helvetica", "normal");
-doc.setFontSize(10);
-doc.text(textoRelatoAutor, 20, y, { maxWidth: 170, align: 'justify'});
+    doc.setFont("helvetica", "normal");
 
+    const linhasTexto19c = doc.splitTextToSize(relatoAutorCorreto19, larguraTexto19);
+    let blocoAtual19c = [];
+    let yInicialBloco19c = y;
 
+    for (let i = 0; i < linhasTexto19c.length; i++) {
 
-y += numeroDeLinhas3 * 7;
+        if (y + alturaLinha19 > limitePagina19) {
 
-y += 10;
-doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
-doc.text(`   ${nomeAAutor}`, 100, y, { align: "center" });
-y += 5;
-doc.text(`  CPF: ${cpfAutor}`, 100, y, { align: "center" });
-y += 10;
-//verificapagina6()
-               
+            doc.text(blocoAtual19c, margemEsquerda19, yInicialBloco19c, {
+                maxWidth: larguraTexto19,
+                align: 'justify'
+            });
 
+            doc.addPage();
+             pageCount++; // Incrementa contador de páginas
+            adicionarCabecalho();
+            adicionarRodape();
+
+            assinaturaefolhas();
+            
+
+            y = 60;
+            yInicialBloco19c = y;
+            blocoAtual19c = [];
+        }
+
+        if (blocoAtual19c.length === 0) {
+            yInicialBloco19c = y;
+        }
+
+        blocoAtual19c.push(linhasTexto19c[i]);
+        y += alturaLinha19;
+    }
+
+    if (blocoAtual19c.length > 0) {
+        doc.text(blocoAtual19c, margemEsquerda19, yInicialBloco19c, {
+            maxWidth: larguraTexto19,
+            align: 'justify'
+            
+        });
+    }
+
+    y += 10;
+
+    if (y + 20 > limitePagina19) {
+        doc.addPage();
+                     pageCount++; // Incrementa contador de páginas
+        adicionarCabecalho();
+        adicionarRodape();
+        
+        assinaturaefolhas();
+       
+        y = 60;
+    }
+
+    doc.text("__________________________________________________", 100, y - 4, { align: "center" });
+    doc.text(nomeAAutor19.trim(), 100, y, { align: "center" });
+    y += 5;
+    doc.text(`CPF: ${cpfAutor19}`, 100, y, { align: "center" });
+    y += 25;
 
 });
-
 doc.setFont("helvetica", "bold");
 doc.setFont("helvetica", "normal");
 
   //aqui começa a conclusão policial
 
   doc.addPage(); // Cria uma nova página
+               pageCount++; // Incrementa contador de páginas
             adicionarCabecalho()
             adicionarRodape()
             doc.setFontSize(12);
             const artigoo = document.getElementById("artigo").value
            // const condicoesFisicas = document.getElementById("local_trabalho_autor").value
-           pageCount++; // Incrementa contador de páginas
+           
            assinaturaefolhas()
            
 y = 60    
