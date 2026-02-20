@@ -4797,19 +4797,19 @@ doc.setFontSize(14);
 const numeroDeLinhas4 = linhas4.length;
 const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
 
-          //verificapagina7()
+         // verificapagina7()
           
 
-          if (y + numeroDeLinhasmultiplcado4 + 15 > 260) {
-            doc.addPage(); // Cria uma nova página
-            adicionarCabecalho()
-            adicionarRodape()
-            doc.setFontSize(10);
-            y = 60; // Reinicia a posição no topo da nova página
-            pageCount++; // Incrementa contador de páginas
-            assinaturaefolhas()
+    //      if (y + numeroDeLinhasmultiplcado4 + 15 > 260) {
+     ///    //   doc.addPage(); // Cria uma nova página
+       ///     adicionarCabecalho()
+         ///   adicionarRodape()
+    ///        doc.setFontSize(10);
+       ///     y = 60; // Reinicia a posição no topo da nova página
+       ///     pageCount++; // Incrementa contador de páginas
+      ///      assinaturaefolhas()
            
-    }
+    ///}
 
     doc.text("C- HISTORICO:", 30, y);
             y += 20;
@@ -4830,17 +4830,66 @@ doc.setFont("helvetica", "normal");
 
 // Quebrar texto automaticamente para manter formatação no PDF
 const margemEsquerda = 20;
-const larguraTexto = 170; // Ajuste conforme necessário
-const tamanhoFonte = 12;
-const textoFormatado = doc.splitTextToSize(relatoCondutorCorreto, larguraTexto);
-
-doc.text(textoFormatado, 20, y, { maxWidth: 170, align: 'justify'});
+const larguraTexto = 170;
+const alturaLinha = 6;
+//const limitePagina2 = 260;
 
 
+const alturaPagina = doc.internal.pageSize.getHeight();
+const limitePagina2 = alturaPagina - 30;
 
 
+const linhasTexto = doc.splitTextToSize(relatoCondutorCorreto, larguraTexto);
 
-y += numeroDeLinhasmultiplcado4 /2;
+let blocoAtual = [];
+
+for (let i = 0; i < linhasTexto.length; i++) {
+
+    // Se atingir o limite da página
+    if (y + alturaLinha > limitePagina2) {
+        
+        // Escreve o bloco acumulado JUSTIFICADO
+        doc.text(blocoAtual, margemEsquerda, yInicialBloco, {
+            maxWidth: larguraTexto,
+            align: 'justify'
+        });
+
+        doc.addPage();
+        adicionarCabecalho();
+        adicionarRodape();
+        pageCount++; // Incrementa contador de páginas
+        assinaturaefolhas();
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+
+        y = 60;
+        blocoAtual = [];
+        yInicialBloco = y;
+    }
+
+    // Se for o primeiro item do bloco
+    if (blocoAtual.length === 0) {
+        var yInicialBloco = y;
+    }
+
+    blocoAtual.push(linhasTexto[i]);
+    y += alturaLinha;
+}
+
+// Escreve o restante do texto
+if (blocoAtual.length > 0) {
+    doc.text(blocoAtual, margemEsquerda, yInicialBloco, {
+        maxWidth: larguraTexto,
+        align: 'justify'
+        
+    });
+    
+}
+
+
+////////
+//y += numeroDeLinhasmultiplcado4 /2;
 y += 15;
 doc.text(`__________________________________________________`, 100, y-4, { align: "center" });
 doc.text(`   ${nomeCondutor}- ${posto_grad}`, 100, y, { align: "center" });
@@ -4853,7 +4902,7 @@ verificapagina7()
 
            
 
-
+///FIMMMMM HISTORICO
             
             function verificapagina4() {
     if (y > 260) {
