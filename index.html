@@ -6288,6 +6288,8 @@ doc.save(`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`);
    EXPORTAR (BASEADO NA ORDEM DO DOM)
 ===================================== */
 
+
+
 function adicionarMultiplos(tipo, quantidade = 1) {
     if (typeof adicionarPessoa !== "function") return;
 
@@ -6295,6 +6297,9 @@ function adicionarMultiplos(tipo, quantidade = 1) {
         adicionarPessoa(tipo);
     }
 }
+
+
+
 
 function adicionarTodos(qAutor = 1, qVitima = 1, qTestemunha = 1, abrirMat = false) {
     adicionarMultiplos('Autor', qAutor);
@@ -6344,6 +6349,22 @@ function exportarDados() {
 ===================================== */
 
 function importarDados(event) {
+
+
+  if (event) event.preventDefault();
+
+    const confirmar = confirm(
+        "Para fazer a importação, primeiro é necessário restaurar os dados completos.\n\nDeseja restaurar agora?"
+    );
+
+    if (!confirmar) {
+        event.target.value = ""; // limpa mesmo cancelando
+        return;
+    }
+
+    resetarCampos();
+
+
 
      console.log("IMPORTAR CHAMOU");
   adicionarTodos(0,0,0,true);
