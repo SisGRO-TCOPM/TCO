@@ -55,6 +55,13 @@
     <hr>
 
 
+<div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+  <button 
+    type="button"
+    onclick="document.getElementById('importFile').click()">
+    📤 Importar Dados
+  </button>
+</div>
 
 <!--manual-->
 <a href="https://drive.google.com/file/d/1ve0414MRHa9jjnInLhpqc696UW43eG6E/view"
@@ -6279,7 +6286,14 @@ doc.save(`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`);
 <!--inicio do import e exporta-->
 <div style="margin:10px 0;">
     <button type="button" onclick="exportarDados()">📥 Exportar Dados</button>
-    <button type="button" onclick="document.getElementById('importFile').click()">📤 Importar Dados</button>
+    <!--<button type="button" onclick="document.getElementById('importFile').click()">📤 Importar Dados</button>>-->
+
+
+
+<!-- resto do seu formulário vem aqui embaixo -->
+<form>
+
+
 
 
 <span
@@ -6376,19 +6390,6 @@ function exportarDados() {
 
 function importarDados(event) {
 
-
-  if (event) event.preventDefault();
-
-    const confirmar = confirm(
-        "Para fazer a importação, primeiro é necessário restaurar os dados completos.\n\nDeseja restaurar agora?"
-    );
-
-    if (!confirmar) {
-        event.target.value = ""; // limpa mesmo cancelando
-        return;
-    }
-
-    resetarCampos();
 
 
 
