@@ -6280,6 +6280,32 @@ doc.save(`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`);
 <div style="margin:10px 0;">
     <button type="button" onclick="exportarDados()">📥 Exportar Dados</button>
     <button type="button" onclick="document.getElementById('importFile').click()">📤 Importar Dados</button>
+
+
+<span
+  data-bs-toggle="tooltip"
+  data-bs-trigger="hover click"
+  data-bs-placement="right"
+  
+  title="Exportar: gera um arquivo com todos os dados do TCO, permitindo salvar como cópia de segurança, continuar o registro posteriormente ou encaminhar para outro policial concluir em outro computador.
+
+Importar: carrega um arquivo salvo anteriormente, restaurando todas as informações para dar continuidade ao preenchimento ou realizar alterações futuras."
+  style="cursor:pointer; margin-left:8px;"
+>
+❓ Ajuda
+</span>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  tooltipTriggerList.map(function (el) {
+    return new bootstrap.Tooltip(el)
+  })
+})
+</script>
+
+
+
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
 </div>
 
