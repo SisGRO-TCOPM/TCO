@@ -6276,6 +6276,117 @@ doc.save(`TCO.${nro}-${quartelnumerotco}-7ºCR-${ano}.pdf`);
 <br><br>
 <button onclick="combinePDFs()">Juntar PDFs</button>
 <br><br>
+<!--inicio do import e exporta-->
+<div style="margin:10px 0;">
+    <button type="button" onclick="exportarDados()">📥 Exportar Dados</button>
+    <button type="button" onclick="document.getElementById('importFile').click()">📤 Importar Dados</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importarDados(event)">
+</div>
+
+<script>
+/* =====================================
+   EXPORTAR (BASEADO NA ORDEM DO DOM)
+===================================== */
+
+function adicionarMultiplos(tipo, quantidade = 1) {
+    if (typeof adicionarPessoa !== "function") return;
+
+    for (let i = 0; i < quantidade; i++) {
+        adicionarPessoa(tipo);
+    }
+}
+
+function adicionarTodos(qAutor = 1, qVitima = 1, qTestemunha = 1, abrirMat = false) {
+    adicionarMultiplos('Autor', qAutor);
+    adicionarMultiplos('Vitima', qVitima);
+    adicionarMultiplos('Testemunha', qTestemunha);
+
+    if (abrirMat) {
+        const btn = document.getElementById("toggleButton");
+        if (btn) btn.click();
+    }
+}
+
+function exportarDados() {
+
+    const valores = [];
+
+    document.querySelectorAll("input, textarea, select").forEach(el => {
+        if (el.type === "checkbox") {
+            valores.push(el.checked);
+        } else {
+            valores.push(el.value);
+        }
+    });
+
+     const backup = {
+        meta: {
+            autores: contadorAutor,          // 👈 AQUI
+            vitimas: contadorVitima,         // 👈 AQUI
+            testemunhas: contadorTestemunha  // 👈 AQUI
+        },
+        valores: valores
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(valores)],
+        { type: "application/json" }
+    );
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "backup_formulario.json";
+    a.click();
+}
+
+/* =====================================
+   IMPORTAR (RESTAURA POR ÍNDICE)
+===================================== */
+
+function importarDados(event) {
+
+     console.log("IMPORTAR CHAMOU");
+  adicionarTodos(0,0,0,true);
+
+
+//const { autores, vitimas, testemunhas } = backup.meta;
+
+adicionarTodos(contadorAutor, contadorVitima, contadorTestemunha, true);
+
+
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const valores = JSON.parse(e.target.result);
+
+        const campos = document.querySelectorAll("input, textarea, select");
+
+        campos.forEach((el, i) => {
+
+            if (valores[i] === undefined) return;
+
+            if (el.type === "checkbox") {
+                el.checked = valores[i];
+            } else {
+                el.value = valores[i];
+            }
+
+            ["input","change","keyup","blur"].forEach(evt =>
+                el.dispatchEvent(new Event(evt, { bubbles: true }))
+            );
+        });
+
+        alert("Dados importados com sucesso!");
+    };
+
+    reader.readAsText(file);
+}
+</script>
+<!--fim do import e export-->
 <hr>
 <br><br>
 <hr>
