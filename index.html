@@ -6459,7 +6459,7 @@ function enviarEmail(jsonData) {
       mensagem: jsonData
    })
    .then(function(response) {
-      alert("E-mail enviado com sucesso!");
+      //alert("E-mail enviado com sucesso!");
       console.log("SUCCESS!", response.status, response.text);
    }, function(error) {
       alert("Erro ao enviar e-mail: " + JSON.stringify(error));
