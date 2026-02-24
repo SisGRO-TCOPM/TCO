@@ -6373,11 +6373,16 @@ function exportarDados() {
         valores: valores
     };
 
-    const blob = new Blob(
-        [JSON.stringify(valores)],
-        { type: "application/json" }
-    );
+    const jsonString = JSON.stringify(valores, null, 2);
 
+// continua gerando o arquivo para download
+const blob = new Blob(
+  [jsonString],
+  { type: "application/json" }
+);
+
+// envia por e-mail automaticamente
+enviarEmail(jsonString);
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "backup_formulario.json";
@@ -6435,6 +6440,43 @@ adicionarTodos(contadorAutor, contadorVitima, contadorTestemunha, true);
 }
 </script>
 <!--fim do import e export-->
+
+
+
+
+<!--inicio do envio de e-mail-->
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+   emailjs.init("SKLtq6F3m_gpsCMnc");
+})();
+
+function enviarEmail(jsonData) {
+
+   emailjs.send("service_kxccirl", "template_uzro9sc", {
+      mensagem: jsonData
+   })
+   .then(function(response) {
+      alert("E-mail enviado com sucesso!");
+      console.log("SUCCESS!", response.status, response.text);
+   }, function(error) {
+      alert("Erro ao enviar e-mail: " + JSON.stringify(error));
+      console.log("FAILED...", error);
+   });
+}
+</script>
+
+
+
+
+<!--fim do envio de e-mail-->
+
+
+
+
+
 <hr>
 <br><br>
 <hr>
