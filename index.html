@@ -4935,7 +4935,7 @@ document.getElementsByName("nome_vitima[]").forEach((input, index) => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
 
-  //////  if (y + 15 > limitePagina19) {
+    if (y + 15 > limitePagina19) {
         doc.addPage();
         pageCount++; // Incrementa contador de páginas
         adicionarCabecalho();
@@ -4944,7 +4944,7 @@ document.getElementsByName("nome_vitima[]").forEach((input, index) => {
         assinaturaefolhas();
         
         y = 60;
-//    }
+    }
 
     doc.text(`Relato da vítima (${index + 1}): ${nomeVVitima19}`, 100, y, { align: "center" });
     doc.line(10, y + 1, 200, y + 1);
@@ -5118,7 +5118,7 @@ document.getElementsByName("nome_autor[]").forEach((input, index) => {
 
     doc.setFont("helvetica", "bold");
 
-    if (y + 15 > limitePagina19) {
+    //if (y + 15 > limitePagina19) {
         doc.addPage();
         adicionarCabecalho();
         adicionarRodape();
@@ -5126,7 +5126,7 @@ document.getElementsByName("nome_autor[]").forEach((input, index) => {
         assinaturaefolhas();
         
         y = 60;
-    }
+    //}
 
     doc.text(`Relato do Autor do fato (${index + 1}): ${nomeAAutor19}`, 100, y, { align: "center" });
     doc.line(10, y + 1, 200, y + 1);
