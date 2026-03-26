@@ -3707,10 +3707,44 @@ input[type="text"]{
    <script>
    function confirmarGeracaoPDF() {
        if (confirm("Tem certeza que deseja gerar o PDF completo?\nCertifique-se de ter preenchido todos os campos corretos! \n\nCaso o Autor do Fato não tenha sido cadastrado, o código não será executado e, consequentemente, o arquivo não será gerado na pasta de download.")) {
-           gerarPDF(); // Chama a função apenas se o usuário confirmar
+          
+       
+       //
+        let camposs = document.getElementById("relato_policial_correto"); // ID do seu textarea
+    let textoss = camposs.value;
+
+    // 🔥 remove espaços duplicados
+    textoss = textoss.replace(/\s+/g, ' ');
+
+    // 🔥 corrige espaços antes de pontuação
+    textoss = textoss.replace(/\s+\./g, '.');
+    textoss = textoss.replace(/\s+,/g, ',');
+    textoss = textoss.replace(/\s+!/g, '!');
+    textoss = textoss.replace(/\s+\?/g, '?');
+
+    // 🔥 corrige parágrafos (ENTER)
+    textoss = textoss.replace(/\n+/g, '\n\n');
+
+    // 🔥 adiciona espaço após ponto (se faltar)
+    textoss = textoss.replace(/\.(\w)/g, '. $1');
+
+    camposs
+    .value = textoss;
+//
+
+        
+        
+        gerarPDF(); // Chama a função apenas se o usuário confirmar
            
        }
    }
+
+
+
+
+
+
+   
    </script>
    
 
@@ -4823,6 +4857,12 @@ const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
       ///      assinaturaefolhas()
            
     ///}
+
+
+
+
+   
+
 
     doc.text("C- HISTORICO:", 30, y);
             y += 20;
