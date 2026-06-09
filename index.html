@@ -5256,7 +5256,10 @@ const comarca2 = document.getElementById("cidade").value
             doc.text(`  CONCLUSÃO POLICIAL`, 100, y, { align: "center" });
             doc.setFontSize(10);
 y += 20
-            let textoconclusaopolicial = `Diante das circunstâncias e de tudo o que foi relatado, resta acrescentar que o autor infringiu o artigo n.º ${artigo} da ${lei}, Nada mais havendo a tratar, deu-se por findo o presente termo circunstanciado de ocorrência que vai devidamente assinado por uma testemunha (se houver), pelo autor e por mim, condutor da ocorrência, que o digitei.  E pelo fato do autor ter se comprometido a comparecer ao Juizado Especial Criminal da Comarca de ${comarca2}, este foi liberado sem lesões corporais, após a assinatura do termo de compromisso.`;
+
+const artigo_concatenado2 = document.getElementById("artigo_concatenado").value
+const lei_concatenado2 = document.getElementById("lei_concatenada").value
+            let textoconclusaopolicial = `Diante das circunstâncias e de tudo o que foi relatado, resta acrescentar que o autor infringiu o artigo n.º ${artigo_concatenado2}  ${lei_concatenado2}, Nada mais havendo a tratar, deu-se por findo o presente termo circunstanciado de ocorrência que vai devidamente assinado por uma testemunha (se houver), pelo autor e por mim, condutor da ocorrência, que o digitei.  E pelo fato do autor ter se comprometido a comparecer ao Juizado Especial Criminal da Comarca de ${comarca2}, este foi liberado sem lesões corporais, após a assinatura do termo de compromisso.`;
 
             
 
