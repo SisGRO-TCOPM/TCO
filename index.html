@@ -2121,8 +2121,50 @@ nomeSelect.appendChild(new Option("Selecione uma opção", ""));
         <input type="text" id="comunicante" value="" required style="width: 500px";>
 </div>
 
+
+
+
+
+
+
         <hr>
-       
+      <button onclick="copiarSelecao()">Copiar seleção</button>
+
+<script>
+async function copiarSelecao() {
+    let texto = window.getSelection().toString();
+
+    // Se a seleção estiver dentro de um input ou textarea
+    if (!texto && document.activeElement) {
+        const el = document.activeElement;
+
+        if (
+            el.tagName === "TEXTAREA" ||
+            (el.tagName === "INPUT" && typeof el.selectionStart === "number")
+        ) {
+            texto = el.value.substring(
+                el.selectionStart,
+                el.selectionEnd
+            );
+        }
+    }
+
+    if (!texto) {
+        alert("Nenhum texto selecionado.");
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(texto);
+        alert("Texto copiado!");
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao copiar.");
+    }
+}
+</script>
+
+
         <label for="relato_policial_correto">RELATO DO POLICIAL:</label>
 
         <span style="color: gray; font-size: 12px; margin-left: 8px;">
@@ -4874,6 +4916,7 @@ const numeroDeLinhasmultiplcado4 = linhas4.length * 6;
           doc.text(`Relato do Condutor da ocorrência: ${nomeCondutor} `, 100, y, { align: "center" });
              doc.line(10, y+1, 200, y+1);
              
+
             y += 15;
              verificapagina7()
 doc.setFont("helvetica", "normal");
